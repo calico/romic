@@ -19,7 +19,7 @@ remotes::install_github(
 
 # Concept
 
-![Romic Logo](https://github.com/calico/romic/blob/master/assets/romic_art/romic.png)
+![Romic Logo](https://github.com/calico/romic/blob/main/assets/romic_art/romic.png)
 
 Romic structures high-dimensional 'omic datasets using a flexible format that can easily be modified using tidyverse-like verbs and visualized using ggplot. These operations can be dynamically applied using romic's shiny applications and modules to support exploratory data analysis and summarize results.
 
@@ -47,7 +47,7 @@ Romic structures high-dimensional 'omic datasets using a flexible format that ca
   - This representation is powerful because feature- or sample-level attributes can be directly manipulated, and attributes of interest can be added to measurements on demand.
   - The major downside of this representation is the need for a more complex list data structure and the need to perform joins to pull in relevant information.
 
-![Romic Functions](https://github.com/calico/romic/blob/master/assets/romic_summary.png)
+![Romic Functions](https://github.com/calico/romic/blob/main/assets/romic_summary.png)
 
 Romic harnesses the tidy and the triple omic representations through the **tidy_omic** and **triple_omic** S3 classes. These formats each have their own pros and cons, and one is generally better than the other depending on the task. Taking advantage of this fact, tidy and triple omic objects can readily be interconverted by tracking a dataset's **design**.
 
