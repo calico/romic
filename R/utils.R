@@ -23,7 +23,6 @@ format_names_for_plotting <- function(chars, width = 40, truncate_at = 80) {
     )
 }
 
-
 coerce_to_classes <- function(obj, reference_obj) {
   reference_obj_class <- class(reference_obj)
 
