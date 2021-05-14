@@ -1,0 +1,36 @@
+Package: romic
+Type: Package
+Title: R for High-Dimensional 'Omic Data
+Version: 1.0.0
+Authors@R: c(
+    person("Sean", "Hackett", email = "sean@calicolabs.com", role = c("aut", "cre"))
+    )
+Author: Sean Hackett
+Maintainer: Sean Hackett <sean@calicolabs.com>
+Description: Romic represents high-dimensional data as tables of features, samples and measurements, and a design list for tracking the meaning of individual variables. Using this format, filtering, normalization, and other transformations of a dataset can be carried out in a flexible manner. Romic takes advantage of these transformations to create interactive shiny apps for exploratory data analysis such as an interactive heatmap. 
+Depends: R (>= 3.2.3)
+BiocViews:
+Imports: checkmate,
+    dplyr,
+    ggplot2,
+    glue,
+    purrr,
+    readr,
+    reshape2,
+    rlang,
+    shiny (>= 1.5.0),
+    stringr,
+    tibble,
+    tidyr (>= 1.0.0)
+Suggests: 
+    knitr,
+    lazyeval,
+    plotly,
+    rmarkdown,
+    usethis,
+    testthat
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr

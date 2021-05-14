@@ -1,0 +1,65 @@
+reference:
+- title: "Core Data Structures"
+  desc: "Represent high-dimensional datasets as features, samples and measurements"
+- contents:
+  - create_tidy_omic
+  - check_tidy_omic
+  - create_triple_omic
+  - check_triple_omic
+- subtitle: "Converters"
+- contents:
+  - tomic_to
+  - check_tomic
+  - tidy_to_triple
+  - triple_to_tidy
+  - convert_wide_to_tidy_omic
+- subtitle: "Exports"
+- contents:
+  - starts_with("export")
+- title: "Transformation"
+- subtitle: "Filtering"
+- contents:
+  - filter_tomic
+  - reconcile_triple_omic
+  - remove_missing_values
+- subtitle: "Mutates"
+- contents:
+  - update_tomic
+  - update_tidy_omic
+  - center_tomic
+  - add_pca_loadings
+  - starts_with("sort")
+- title: "Shiny Apps"
+- subtitle: "Full Apps"
+- contents:
+  - starts_with("app")
+- subtitle: "Mini Apps for Testing"
+- contents:
+  - starts_with("shiny")
+- subtitle: "Shiny Modules"
+- contents:
+  - ends_with("Input")
+  - ends_with("Output")
+  - ends_with("Server")
+- title: "Static Visualizations"
+  desc: "Plotting functions which work will with tomic datasets"
+- contents:
+  - starts_with("plot")
+  - format_names_for_plotting
+- title: "Example Data"
+  desc: "Datasets bundled with romic"
+- contents:
+  - brauer_2008
+- title: "Developer Zone"
+- contents:
+  - romic
+  - prepare_example_datasets
+- subtitle: "Utils"
+- contents:
+  - get_design_tbl
+  - hclust_order
+  - infer_tomic_table_type
+  - tomic_sort_status
+template:
+  params:
+    bootswatch: flatly
