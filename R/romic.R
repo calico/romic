@@ -8,7 +8,7 @@
 #'   individual variables. Using this format, filtering, normalization, and
 #'   other transformations of a dataset can be carried out in a flexible
 #'   manner. Romic takes advantage of these transformations to create
-#'   interactive shiny apps for explorator data analysis such as an
+#'   interactive shiny apps for exploratory data analysis such as an
 #'   interactive heatmap.
 #'
 #' @importFrom dplyr %>%
