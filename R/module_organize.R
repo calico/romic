@@ -1,8 +1,10 @@
 #' Shiny Organize Test
 #'
-#' Tests the shiny organization module.
+#' Tests the shiny organization module as stand-alone application.
 #'
 #' @inheritParams organizeServer
+#'
+#' @returns a \code{shiny} app
 #'
 #' @examples
 #'
@@ -14,6 +16,8 @@
 #'     value_var = "expression"
 #'   )
 #' }
+#'
+#' @export
 shiny_organize_test <- function(
   tidy_omic,
   feature_vars,
@@ -56,7 +60,13 @@ shiny_organize_test <- function(
 
 #' Organize Input
 #'
+#' UI components for the organize input module.
+#'
 #' @inheritParams shiny::moduleServer
+#'
+#' @returns A \code{shiny} UI
+#'
+#' @export
 organizeInput <- function(id) {
   ns <- NS(id)
 
@@ -80,16 +90,24 @@ organizeInput <- function(id) {
 
 #' Organize Servers
 #'
+#' Server components for the organize input module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams check_tidy_omic
 #' @param feature_vars variables available for arranging features
 #' @param sample_vars variables available for arrange samples
 #' @inheritParams sort_tomic
-organizeServer <- function(id,
-                           tidy_omic,
-                           feature_vars,
-                           sample_vars,
-                           value_var) {
+#'
+#' @returns A \code{tomic} with sorted features and/or samples.
+#'
+#' @export
+organizeServer <- function(
+  id,
+  tidy_omic,
+  feature_vars,
+  sample_vars,
+  value_var
+  ) {
   checkmate::assertClass(tidy_omic, "tomic")
 
   moduleServer(

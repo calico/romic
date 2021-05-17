@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Triple Omic to Tidy Omic — triple_to_tidy" />
-<meta property="og:description" content="Triple Omic to Tidy Omic" />
+<meta property="og:description" content="Convert a triple_omic object into a tidy_omic oobject." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Triple Omic to Tidy Omic</p>
+    <p>Convert a <code>triple_omic</code> object into a <code>tidy_omic</code> oobject.</p>
     </div>
 
     <pre class="usage"><span class='fu'>triple_to_tidy</span><span class='op'>(</span><span class='va'>triple_omic</span><span class='op'>)</span></pre>
@@ -127,6 +127,14 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>tidy_omic</code> object as created by
+  <code><a href='create_tidy_omic.html'>create_tidy_omic</a></code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Features, samples and measurements will be merged into a single <code>data</code>
+  table, and the <code>design</code> will be preserved as-is.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -199,7 +207,8 @@
 #&gt; 
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "tidy_omic" "tomic"     "general"  </div></span></pre>
+#&gt; [1] "tidy_omic" "tomic"     "general"  </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -211,7 +220,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Sean Hackett.</p>
+  <p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
 </div>
 
 <div class="pkgdown">

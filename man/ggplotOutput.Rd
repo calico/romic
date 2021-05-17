@@ -10,6 +10,9 @@ ggplotOutput(id)
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
 }
+\value{
+A \code{shiny} UI
+}
 \description{
-ggplot Output
+UI components for the ggplot module.
 }

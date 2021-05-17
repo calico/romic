@@ -17,7 +17,7 @@ in \code{updated_tidy_data} (names) and the table {features, samples,
 measurements} they apply to (values).}
 }
 \value{
-an updated \code{tidy_omic}
+a \code{tidy_omic} object with an updated schema and/or data.
 }
 \description{
 Update a Tidy 'Omics data and schema to reflect newly added fields.

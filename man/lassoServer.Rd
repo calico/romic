@@ -15,9 +15,11 @@ UI function.}
 \item{tomic_table}{A table taken from a tidy (i.e., augmented measurements)
 or triple omic dataset}
 }
+\value{
+A \code{tomic} object ammended based on the lasso selection.
+}
 \description{
 Take a subset of entries from a tomic table (generally selected using the
-  lasso function) and then either filter
-a tomic object to these entries or tag the entries of interest with a
-  user-specified variable
+  lasso function) and then either filter a tomic object to these entries
+  or tag the entries of interest with a user-specified variable.
 }

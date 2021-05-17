@@ -12,6 +12,9 @@ UI function.}
 
 \item{sort_table}{table to sort}
 }
+\value{
+A \code{shiny} UI
+}
 \description{
-Sort Input
+UI components for the sort module.
 }

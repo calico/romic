@@ -12,10 +12,15 @@ update_tomic(tomic, tomic_table)
 \item{tomic_table}{A table taken from a tidy (i.e., augmented measurements)
 or triple omic dataset}
 }
+\value{
+A \code{tomic} object with updated features, samples or measurements.
+}
 \description{
-Provide an updated features, samples or measurements table to a tomic
+Provide an updated features, samples or measurements table to a
+  \code{tomic}.
 }
 \examples{
+
 library(dplyr)
 updated_features <- brauer_2008_triple$features \%>\%
   dplyr::filter(BP == "biological process unknown") \%>\%
@@ -24,4 +29,5 @@ updated_features <- brauer_2008_triple$features \%>\%
   }))
 
 update_tomic(brauer_2008_triple, updated_features)
+
 }

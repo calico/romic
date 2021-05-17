@@ -11,8 +11,11 @@ shiny_gguniv_test(tomic, plot_table = "samples")
 
 \item{plot_table}{table containing the data to be plotted}
 }
+\value{
+A \code{shiny} app
+}
 \description{
-Test the shiny ggUnivariate module
+Test the shiny ggUnivariate module as a stand-alone application.
 }
 \examples{
 
@@ -24,4 +27,5 @@ if (interactive()) {
   shiny_gguniv_test(brauer_2008_triple, plot_table = "measurements")
   shiny_gguniv_test(brauer_2008_triple, plot_table = "features")
 }
+
 }

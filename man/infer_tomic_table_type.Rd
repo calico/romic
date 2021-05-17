@@ -12,6 +12,9 @@ infer_tomic_table_type(tomic, tomic_table)
 \item{tomic_table}{A table taken from a tidy (i.e., augmented measurements)
 or triple omic dataset}
 }
+\value{
+features, samples or measurements
+}
 \description{
 From a tomic_table, choose whether it reflects features, samples or
   measurements

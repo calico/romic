@@ -1,18 +1,19 @@
 #' Format Names for Plotting
 #'
-#' Wrap long names over multple lines so that they will look better on plots
+#' Wrap long names over multiple lines so that they will look better on plots.
 #'
 #' @param chars a character vector (or a variable that can be converted to one)
 #' @inheritParams stringr::str_wrap
 #' @param truncate_at max character length
 #'
-#' @return reformatted chars
+#' @return a reformatted character vector of the same length as the input.
 #'
 #' @examples
 #' chars <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
 #'   ac arcu semper erat porttitor egestas. Etiam sagittis, sapien at mattis."
 #'
 #' format_names_for_plotting(chars)
+#'
 #' @export
 format_names_for_plotting <- function(chars, width = 40, truncate_at = 80) {
   as.character(chars) %>%

@@ -10,8 +10,16 @@ triple_to_tidy(triple_omic)
 \item{triple_omic}{an object of class triple_omic produced by
 \code{\link{create_triple_omic}}}
 }
+\value{
+A \code{tidy_omic} object as created by
+  \code{\link{create_tidy_omic}}.
+}
 \description{
-Triple Omic to Tidy Omic
+Convert a \code{triple_omic} object into a \code{tidy_omic} oobject.
+}
+\details{
+Features, samples and measurements will be merged into a single \code{data}
+  table, and the \code{design} will be preserved as-is.
 }
 \examples{
 
@@ -37,4 +45,5 @@ triple_omic <- create_triple_omic(
   "feature_id", "sample_id"
 )
 triple_to_tidy(triple_omic)
+
 }

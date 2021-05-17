@@ -12,8 +12,11 @@ shiny_lasso_test(tomic, tomic_table)
 \item{tomic_table}{A table taken from a tidy (i.e., augmented measurements)
 or triple omic dataset}
 }
+\value{
+A \code{shiny} app
+}
 \description{
-Tests the shiny lasso module
+Tests the shiny lasso module as a stand-alone application.
 }
 \examples{
 if (interactive()) {
@@ -21,4 +24,5 @@ if (interactive()) {
   tomic_table <- tomic[["samples"]] \%>\% dplyr::filter(nutrient == "G")
   shiny_lasso_test(tomic, tomic_table)
 }
+
 }

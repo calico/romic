@@ -36,8 +36,14 @@
 #' @rdname brauer_2008
 "brauer_2008_triple"
 
-#' Format example datasets and add them to the package
-prepare_example_datasets <- function() {
+#' Prepare Example Datasets
+#'
+#' Format example datasets and add them to the package.
+#'
+#' @param seed a seed value used to reproducibly sample random genes.
+#'
+#' @returns None; used for side-effects.
+prepare_example_datasets <- function(seed = 1234) {
 
   # microarray dataset
 
@@ -64,7 +70,7 @@ prepare_example_datasets <- function() {
 
   # shrink the dataset so it'll fit in the <1Mb limit
 
-  set.seed(1234)
+  set.seed(seed)
   reduced_genes <- brauer_2008 %>%
     dplyr::distinct(name) %>%
     dplyr::sample_n(500)

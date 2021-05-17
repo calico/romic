@@ -11,14 +11,15 @@ app_scatter(tidy_omic)
 \code{\link{create_tidy_omic}}}
 }
 \value{
-a shiny app
+A \code{shiny} app
 }
 \description{
 Generate a Shiny interactive scatter plot which allows visualization of
-features, measurements, and samples (w/ principal components added).
+features, measurements, and samples (with principal components added).
 }
 \examples{
 if (interactive()) {
   app_scatter(brauer_2008_tidy)
 }
+
 }

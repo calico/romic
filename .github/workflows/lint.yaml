@@ -1,7 +1,4 @@
 on:
-  push:
-    paths:
-      - 'R/*.R'
   pull_request:
 
 name: lint

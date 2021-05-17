@@ -13,7 +13,7 @@ tomic_to(tomic, to_class)
 \code{triple_omic}}
 }
 \value{
-tomic transformed to \code{to_class} class (or untransformed if
+tomic transformed to \code{to_class} class (or un-transformed if
   it started that way).
 }
 \description{
@@ -21,5 +21,7 @@ Takes in any \code{romic} reprsentation of a dataset and returns a specific
   representation.
 }
 \examples{
+
 tomic_to(brauer_2008_tidy, "triple_omic")
+
 }

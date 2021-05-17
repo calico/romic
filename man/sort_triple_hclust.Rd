@@ -14,6 +14,9 @@ sort_triple_hclust(triple_omic, sort_table, value_var)
 
 \item{value_var}{An abundance value to use with \code{hclust}}
 }
+\value{
+A \code{triple_omic} with clustered features or samples.
+}
 \description{
-Sort Triple Hclust
+Sort a \code{triple_omic} object using hierarchical clustering
 }

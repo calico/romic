@@ -1,6 +1,6 @@
 #' Create Tidy Omic
 #'
-#' A tidy omics class contains a formatted dataset and a summary of the
+#' A tidy omics object contains a formatted dataset and a summary of the
 #'   experimental design.
 #'
 #' @param df a data.frame (or tibble) containing some combination of feature,
@@ -10,6 +10,21 @@
 #'   variables (or NULL if there are no additional variables)
 #' @param sample_vars a character vector of additional sample-level variables
 #'   (or NULL if there are no additional variables)
+#'
+#' @returns An S3 \code{tidy_omic}/\code{tomic} object built on a \code{list}:
+#'  \describe{
+#'    \item{data}{A tibble with one row per measurement (i.e., features x
+#'      samples)}
+#'    \item{design}{A list which organized the dataset's meta-data:
+#'      \describe{
+#'        \item{feature_pk}{variable specifying a unique feature}
+#'        \item{sample_pk}{variable specifying a unique sample}
+#'        \item{features}{tibble of feature attributes}
+#'        \item{samples}{tibble of sample attributes}
+#'        \item{measurements}{tibble of measurement attributes}
+#'      }
+#'    }
+#'  }
 #'
 #' @examples
 #'
@@ -41,13 +56,16 @@
 #'   feature_vars = "feature_group", sample_pk = "sample_id",
 #'   sample_vars = "sample_group"
 #' )
+#'
 #' @export
-create_tidy_omic <- function(df,
-                             feature_pk,
-                             feature_vars = NULL,
-                             sample_pk,
-                             sample_vars = NULL,
-                             omic_type_tag = "general") {
+create_tidy_omic <- function(
+  df,
+  feature_pk,
+  feature_vars = NULL,
+  sample_pk,
+  sample_vars = NULL,
+  omic_type_tag = "general"
+  ) {
   checkmate::assertDataFrame(df)
   checkmate::assertString(omic_type_tag)
   checkmate::assertChoice(feature_pk, colnames(df))
@@ -117,8 +135,9 @@ create_tidy_omic <- function(df,
 
 #' Check Tidy Omic
 #'
-#' Check a tidy omic dataset to determine whether it complies to the expected
-#' formatting: one row per measurement per feature x sample
+#' Check a tidy omic dataset for consistency between the data and design and
+#'   validate that the dataset follows the \code{tidy_omic}/\code{tomic}
+#'   specification.
 #'
 #' @param tidy_omic an object of class tidy_omic produced by
 #' \code{\link{create_tidy_omic}}
@@ -263,7 +282,7 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 #'   large amount of meta data associated with features or samples.
 #'
 #' @details for now primary keys are unique (rather than allowing for a
-#'   composite key)
+#'   multi-index)
 #'
 #' @param measurement_df A data.frame (or tibble) of measurements - one row
 #'   for each combination of feature and sample
@@ -273,6 +292,23 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 #' @param sample_pk A unique identifier for samples
 #' @param omic_type_tag an optional subtype of omic data: metabolomics,
 #'   lipidomics, proteomics, genomics, general
+#'
+#' @returns An S3 \code{triple_omic}/\code{tomic} object built on a \code{list}:
+#'  \describe{
+#'    \item{features}{A tibble of feature meta-data (one row per feature)}
+#'    \item{samples}{A tibble of sample meta-data (one row per sample)}
+#'    \item{measurements}{A tibble with one row per measurement
+#'      (i.e., features x samples)}
+#'    \item{design}{A list which organized the dataset's meta-data:
+#'      \describe{
+#'        \item{feature_pk}{variable specifying a unique feature}
+#'        \item{sample_pk}{variable specifying a unique sample}
+#'        \item{features}{tibble of feature attributes}
+#'        \item{samples}{tibble of sample attributes}
+#'        \item{measurements}{tibble of measurement attributes}
+#'      }
+#'    }
+#'  }
 #'
 #' @examples
 #'
@@ -297,13 +333,16 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 #'   measurement_df, feature_df, sample_df,
 #'   "feature_id", "sample_id"
 #' )
+#'
 #' @export
-create_triple_omic <- function(measurement_df,
-                               feature_df = NULL,
-                               sample_df = NULL,
-                               feature_pk,
-                               sample_pk,
-                               omic_type_tag = "general") {
+create_triple_omic <- function(
+  measurement_df,
+  feature_df = NULL,
+  sample_df = NULL,
+  feature_pk,
+  sample_pk,
+  omic_type_tag = "general"
+  ) {
 
   # testing
 
@@ -393,6 +432,10 @@ create_triple_omic <- function(measurement_df,
 }
 
 #' Check Triple Omic
+#'
+#' Check a triple omic dataset for consistency between the data and design and
+#'   validate that the dataset follows the \code{triple_omic}/\code{tomic}
+#'   specification.
 #'
 #' @param triple_omic an object of class triple_omic produced by
 #'   \code{\link{create_triple_omic}}
@@ -505,7 +548,15 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
 
 #' Triple Omic to Tidy Omic
 #'
+#' Convert a \code{triple_omic} object into a \code{tidy_omic} oobject.
+#'
+#' Features, samples and measurements will be merged into a single \code{data}
+#'   table, and the \code{design} will be preserved as-is.
+#'
 #' @inheritParams check_triple_omic
+#'
+#' @returns A \code{tidy_omic} object as created by
+#'   \code{\link{create_tidy_omic}}.
 #'
 #' @examples
 #'
@@ -531,6 +582,7 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
 #'   "feature_id", "sample_id"
 #' )
 #' triple_to_tidy(triple_omic)
+#'
 #' @export
 triple_to_tidy <- function(triple_omic) {
   check_triple_omic(triple_omic)
@@ -555,12 +607,22 @@ triple_to_tidy <- function(triple_omic) {
 
 #' Tidy omic to triple omic
 #'
+#' Convert a \code{tidy_omic} object into a \code{triple_omic} object.
+#'
+#' The \code{data} table will be converted into \code{features},
+#'   \code{samples}, and \code{measurements} tables using the \code{design}
+#'   to determine which variables belong in each table. The \code{design}
+#'   will be preserved as-is.
+#'
 #' @inheritParams check_tidy_omic
 #'
-#' @export
+#' @returns A \code{triple_omic} object as created by
+#'   \code{\link{create_triple_omic}}
 #'
 #' @examples
 #' tidy_to_triple(brauer_2008_tidy)
+#'
+#' @export
 tidy_to_triple <- function(tidy_omic) {
   check_tidy_omic(tidy_omic)
 
@@ -603,10 +665,10 @@ tidy_to_triple <- function(tidy_omic) {
 #' @param sample_var variable name to use for samples
 #' @param measurement_var variable name to use for measurements
 #'
-#' @details other_feature_variable_types doesn't currently do anything -
-#'   need to use this to apply class changes
+#' @returns A \code{tidy_omic} object as produced by \code{create_tidy_omic}.
 #'
 #' @examples
+#'
 #' library(dplyr)
 #'
 #' wide_measurements <- brauer_2008_triple[["measurements"]] %>%
@@ -619,13 +681,16 @@ tidy_to_triple <- function(tidy_omic) {
 #'   feature_pk = "name",
 #'   feature_vars = c("BP", "MF", "systematic_name")
 #' )
+#'
 #' @export
-convert_wide_to_tidy_omic <- function(wide_df,
-                                      feature_pk,
-                                      feature_vars = NULL,
-                                      sample_var = "sample",
-                                      measurement_var = "abundance",
-                                      omic_type_tag = "general") {
+convert_wide_to_tidy_omic <- function(
+  wide_df,
+  feature_pk,
+  feature_vars = NULL,
+  sample_var = "sample",
+  measurement_var = "abundance",
+  omic_type_tag = "general"
+  ) {
   checkmate::assertDataFrame(wide_df)
   checkmate::assertChoice(feature_pk, colnames(wide_df))
   stopifnot(class(feature_vars) %in% c("character", "NULL"))
@@ -746,11 +811,13 @@ convert_wide_to_tidy_omic <- function(wide_df,
 #' @param to_class The class to return, either \code{tidy_omic} or
 #'   \code{triple_omic}
 #'
-#' @return tomic transformed to \code{to_class} class (or untransformed if
+#' @returns tomic transformed to \code{to_class} class (or un-transformed if
 #'   it started that way).
 #'
 #' @examples
+#'
 #' tomic_to(brauer_2008_tidy, "triple_omic")
+#'
 #' @export
 tomic_to <- function(tomic, to_class) {
   checkmate::assertClass(tomic, "tomic")

@@ -1,5 +1,7 @@
 #' Filter T* Omics
 #'
+#' Filter a tidy or triple omic to entries of interest.
+#'
 #' @inheritParams tomic_to
 #' @param filter_type
 #' \describe{
@@ -12,6 +14,9 @@
 #' @param filter_table table where the filter should be applied
 #' @param filter_variable variable to apply the filter to
 #' @param filter_value values to filter based on
+#'
+#' @returns A \code{tomic} object where a subset of features, samples or
+#'   measurmenets have been filtered.
 #'
 #' @examples
 #'
@@ -45,6 +50,7 @@
 #'   filter_table = "features",
 #'   filter_value = rlang::quo(BP == "biological process unknown")
 #' )
+#'
 #' @export
 filter_tomic <- function(
   tomic,
@@ -138,7 +144,7 @@ filter_tomic <- function(
 #' Reconcile Triple Omic
 #'
 #' If some samples, feature or measurements have been dropped; update other
-#'   tables
+#'   tables.
 #'
 #' @inheritParams check_triple_omic
 #'

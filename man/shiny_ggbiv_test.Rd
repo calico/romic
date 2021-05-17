@@ -11,8 +11,11 @@ shiny_ggbiv_test(tomic, plot_table = "samples")
 
 \item{plot_table}{table containing the data to be plotted}
 }
+\value{
+a \code{shiny} app
+}
 \description{
-Test the shiny ggBivariate module
+Test the shiny ggBivariate module as a stand-alone application.
 }
 \examples{
 
@@ -26,4 +29,5 @@ if (interactive()) {
     plot_table = "measurements"
   )
 }
+
 }

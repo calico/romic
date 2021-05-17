@@ -6,12 +6,16 @@
 \usage{
 shiny_plotsaver_test()
 }
+\value{
+a \code{shiny} app
+}
 \description{
-Test the shiny plotsaver module
+Test the shiny plotsaver module as a stand-alone application.
 }
 \examples{
 
 if (interactive()) {
   shiny_plotsaver_test()
 }
+
 }

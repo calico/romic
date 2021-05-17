@@ -12,6 +12,9 @@ UI function.}
 
 \item{grob}{a ggplot2 plot}
 }
+\value{
+None
+}
 \description{
-Plot Saver Server
+Server components for the plot saver module.
 }

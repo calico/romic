@@ -11,11 +11,11 @@ app_heatmap(tidy_omic)
 \code{\link{create_tidy_omic}}}
 }
 \value{
-a shiny app
+A \code{shiny} app
 }
 \description{
-Generate a Shiny interactive heatmap which allows for on demand filtering,
-ordering and faceting by variables of interest
+Generate a \code{shiny} interactive heatmap that allows for on demand
+  filtering, ordering and faceting by variables of interest.
 }
 \examples{
 

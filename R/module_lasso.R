@@ -1,9 +1,11 @@
 #' Shiny Lasso Test
 #'
-#' Tests the shiny lasso module
+#' Tests the shiny lasso module as a stand-alone application.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
@@ -11,6 +13,8 @@
 #'   tomic_table <- tomic[["samples"]] %>% dplyr::filter(nutrient == "G")
 #'   shiny_lasso_test(tomic, tomic_table)
 #' }
+#'
+#' @export
 shiny_lasso_test <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertClass(tomic_table, "data.frame")
@@ -47,10 +51,13 @@ shiny_lasso_test <- function(tomic, tomic_table) {
 
 #' Shiny Lasso Test w/ Reactive Values
 #'
-#' Tests the shiny lasso module
+#' Tests the shiny lasso module as a stand-alone application when the
+#'   \code{tomic} is a \code{reativeVal}.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
@@ -61,6 +68,8 @@ shiny_lasso_test <- function(tomic, tomic_table) {
 #'   tomic_table <- tomic[["measurements"]] %>% dplyr::filter(expression < -3)
 #'   shiny_lasso_test_reactval(tomic, tomic_table)
 #' }
+#'
+#' @export
 shiny_lasso_test_reactval <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertClass(tomic_table, "data.frame")
@@ -105,7 +114,13 @@ shiny_lasso_test_reactval <- function(tomic, tomic_table) {
 
 #' Lasso Input
 #'
+#' UI components for the lasso module.
+#'
 #' @inheritParams shiny::moduleServer
+#'
+#' @returns A \code{shiny} UI
+#'
+#' @export
 lassoInput <- function(id) {
   ns <- shiny::NS(id)
 
@@ -136,13 +151,16 @@ lassoInput <- function(id) {
 #' Lasso Server
 #'
 #' Take a subset of entries from a tomic table (generally selected using the
-#'   lasso function) and then either filter
-#' a tomic object to these entries or tag the entries of interest with a
-#'   user-specified variable
+#'   lasso function) and then either filter a tomic object to these entries
+#'   or tag the entries of interest with a user-specified variable.
 #'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns A \code{tomic} object ammended based on the lasso selection.
+#'
+#' @export
 lassoServer <- function(id, tomic, tomic_table) {
   shiny::moduleServer(
     id,
@@ -250,6 +268,8 @@ get_identifying_keys <- function(tomic, table) {
 #'
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns features, samples or measurements
 infer_tomic_table_type <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertClass(tomic_table, "data.frame")

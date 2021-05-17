@@ -33,14 +33,14 @@ reference:
 - subtitle: "Full Apps"
 - contents:
   - starts_with("app")
-- subtitle: "Mini Apps for Testing"
-- contents:
-  - starts_with("shiny")
-- subtitle: "Shiny Modules"
+- subtitle: "Modules (app components)"
 - contents:
   - ends_with("Input")
   - ends_with("Output")
   - ends_with("Server")
+- subtitle: "Module Examples"
+- contents:
+  - starts_with("shiny")
 - title: "Static Visualizations"
   desc: "Plotting functions which work will with tomic datasets"
 - contents:
@@ -50,16 +50,20 @@ reference:
   desc: "Datasets bundled with romic"
 - contents:
   - brauer_2008
-- title: "Developer Zone"
+- subtitle: "Utils"
+- contents:
+  - get_design_tbl
+  - tomic_sort_status
+- title: "Internal Functions"
+- subtitle: "Meta"
 - contents:
   - romic
   - prepare_example_datasets
 - subtitle: "Utils"
 - contents:
-  - get_design_tbl
   - hclust_order
   - infer_tomic_table_type
-  - tomic_sort_status
+  - try_brushedPoints
 template:
   params:
     bootswatch: flatly

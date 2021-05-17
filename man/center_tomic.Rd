@@ -12,11 +12,13 @@ center_tomic(tomic, measurement_vars = "all")
 \item{measurement_vars}{measurement variables to center}
 }
 \value{
-An object of the same class as \code{tomic_to}
+A \code{tomic} object where one or more measurements have
+  been centered on a feature-by-feature basis.
 }
 \description{
 Center each measurement by subtracting the mean.
 }
 \examples{
 center_tomic(brauer_2008_tidy)
+
 }

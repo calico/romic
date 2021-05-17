@@ -1,10 +1,16 @@
 #' Update T* Omic
 #'
-#' Provide an updated features, samples or measurements table to a tomic
+#' Provide an updated features, samples or measurements table to a
+#'   \code{tomic}.
 #'
 #' @inheritParams infer_tomic_table_type
 #'
+#' @returns
+#'
+#' A \code{tomic} object with updated features, samples or measurements.
+#'
 #' @examples
+#'
 #' library(dplyr)
 #' updated_features <- brauer_2008_triple$features %>%
 #'   dplyr::filter(BP == "biological process unknown") %>%
@@ -13,6 +19,7 @@
 #'   }))
 #'
 #' update_tomic(brauer_2008_triple, updated_features)
+#'
 #' @export
 update_tomic <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
@@ -54,10 +61,12 @@ update_tomic <- function(tomic, tomic_table) {
 #' @inheritParams tomic_to
 #' @param measurement_vars measurement variables to center
 #'
-#' @return An object of the same class as \code{tomic_to}
+#' @return A \code{tomic} object where one or more measurements have
+#'   been centered on a feature-by-feature basis.
 #'
 #' @examples
 #' center_tomic(brauer_2008_tidy)
+#'
 #' @export
 center_tomic <- function(tomic, measurement_vars = "all") {
   checkmate::assertClass(tomic, "tomic")
@@ -124,7 +133,7 @@ center <- function(x) {
 #'   in \code{updated_tidy_data} (names) and the table {features, samples,
 #'   measurements} they apply to (values).
 #'
-#' @returns an updated \code{tidy_omic}
+#' @returns a \code{tidy_omic} object with an updated schema and/or data.
 #'
 #' @examples
 #'
@@ -243,8 +252,12 @@ update_tidy_omic <- function(
 
 #' Sort Triple Hclust
 #'
+#' Sort a \code{triple_omic} object using hierarchical clustering
+#'
 #' @inheritParams check_triple_omic
 #' @inheritParams sort_tomic
+#'
+#' @returns A \code{triple_omic} with clustered features or samples.
 sort_triple_hclust <- function(triple_omic, sort_table, value_var) {
   stopifnot(
     any(c("character", "factor", "ordered") %in% class(value_var)),
@@ -308,8 +321,13 @@ sort_triple_hclust <- function(triple_omic, sort_table, value_var) {
 
 #' Sort Triple Arrange
 #'
+#' Sort a \code{triple_omic} object based on the values of one or more
+#'   variables.
+#'
 #' @inheritParams check_triple_omic
 #' @inheritParams sort_tomic
+#'
+#' @returns A \code{triple_omic} with sorted features or samples.
 sort_triple_arrange <- function(triple_omic, sort_table, sort_variables) {
   stopifnot(
     any(
@@ -341,7 +359,12 @@ sort_triple_arrange <- function(triple_omic, sort_table, sort_variables) {
 
 #' Sort Triple Omic
 #'
-#' Sort an experiments features or samples
+#' Sort a dataset's features or samples
+#'
+#' \code{sort_tomic} supports the reordering of features or samples using
+#'   either hierarchical clustering or based on the levels of other variables.
+#'   Sorting occurs by turning either the feature or sample primary key
+#'   into a factor whose levels reflect the sort.
 #'
 #' @inheritParams tomic_to
 #' @param sort_type
@@ -355,6 +378,9 @@ sort_triple_arrange <- function(triple_omic, sort_table, sort_variables) {
 #' @param sort_variables A set of attributes in sort_table to sort with in
 #'   \code{arrange}.
 #' @param value_var An abundance value to use with \code{hclust}
+#'
+#' @returns A \code{tomic} object where feature or sample primary keys have
+#'   been turned into a factor reflecting how they are sorted.
 #'
 #' @examples
 #'
@@ -440,11 +466,14 @@ sort_tomic <- function(
 #'
 #' @inheritParams tomic_to
 #'
-#' @returns length 1 string of sort status
+#' @returns length 1 character string indicating whether the \code{tomic}
+#'   is sorted.
 #'
 #' @examples
 #'
-#' romic:::tomic_sort_status(brauer_2008_tidy)
+#' tomic_sort_status(brauer_2008_tidy)
+#'
+#' @export
 tomic_sort_status <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
 

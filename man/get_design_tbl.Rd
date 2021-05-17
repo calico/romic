@@ -10,10 +10,10 @@ get_design_tbl(tomic)
 \item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
 }
 \value{
-a tibble
+a tibble reflecting the \code{tomic} object's design.
 }
 \description{
-Get a tabular summary of all variables
+Get a tabular summary of all variables.
 }
 \examples{
 get_design_tbl(brauer_2008_triple)

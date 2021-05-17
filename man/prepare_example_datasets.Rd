@@ -2,10 +2,16 @@
 % Please edit documentation in R/data.R
 \name{prepare_example_datasets}
 \alias{prepare_example_datasets}
-\title{Format example datasets and add them to the package}
+\title{Prepare Example Datasets}
 \usage{
-prepare_example_datasets()
+prepare_example_datasets(seed = 1234)
+}
+\arguments{
+\item{seed}{a seed value used to reproducibly sample random genes.}
+}
+\value{
+None; used for side-effects.
 }
 \description{
-Format example datasets and add them to the package
+Format example datasets and add them to the package.
 }

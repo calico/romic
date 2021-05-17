@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Omics Heatmap — plot_heatmap • romic</title>
+<title>Plot Heatmap — plot_heatmap • romic</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Omics Heatmap — plot_heatmap" />
-<meta property="og:description" content="Generate a basic heatmap of all of your metabolomic and lipidomic data" />
+<meta property="og:title" content="Plot Heatmap — plot_heatmap" />
+<meta property="og:description" content="Generate a heatmap visualization of a features x samples matrix of
+  measurements." />
 
 
 
@@ -72,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -106,13 +107,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Omics Heatmap</h1>
+    <h1>Plot Heatmap</h1>
     
     <div class="hidden name"><code>plot_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate a basic heatmap of all of your metabolomic and lipidomic data</p>
+    <p>Generate a heatmap visualization of a features x samples matrix of
+  measurements.</p>
     </div>
 
     <pre class="usage"><span class='fu'>plot_heatmap</span><span class='op'>(</span>
@@ -174,6 +176,9 @@ thresholded to this value.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a ggplot2 grob</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -199,7 +204,8 @@ thresholded to this value.</p></td>
   distance_measure <span class='op'>=</span> <span class='st'>"corr"</span>,
   hclust_method <span class='op'>=</span> <span class='st'>"complete"</span>
 <span class='op'>)</span>
-</div><div class='img'><img src='plot_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='plot_heatmap-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -211,7 +217,7 @@ thresholded to this value.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Sean Hackett.</p>
+  <p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
 </div>
 
 <div class="pkgdown">

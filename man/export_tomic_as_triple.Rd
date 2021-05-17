@@ -30,4 +30,5 @@ Export features, samples and measurements tables
 if (dir.exists("/tmp")) {
   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 }
+
 }

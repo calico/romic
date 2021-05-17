@@ -1,9 +1,11 @@
 #' Shiny ggBivariate Test
 #'
-#' Test the shiny ggBivariate module
+#' Test the shiny ggBivariate module as a stand-alone application.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams ggBivServer
+#'
+#' @returns a \code{shiny} app
 #'
 #' @examples
 #'
@@ -17,6 +19,8 @@
 #'     plot_table = "measurements"
 #'   )
 #' }
+#'
+#' @export
 shiny_ggbiv_test <- function(tomic, plot_table = "samples") {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(plot_table, c("features", "samples", "measurements"))
@@ -44,8 +48,14 @@ shiny_ggbiv_test <- function(tomic, plot_table = "samples") {
 
 #' ggBivariate Output
 #'
+#' UI components for the ggBivariate module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams ggBivServer
+#'
+#' @returns A \code{shiny} UI
+#'
+#' @export
 ggBivOutput <- function(id, return_brushed_points = FALSE) {
   checkmate::assertLogical(return_brushed_points, len = 1)
 
@@ -81,13 +91,16 @@ ggBivOutput <- function(id, return_brushed_points = FALSE) {
 
 #' ggBivariate Server
 #'
+#' Server components for the ggBivariate module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams tomic_to
 #' @param plot_table table containing the data to be plotted
 #' @param return_brushed_points Return values selected on the plot
 #'
-#' @return a tomic_table if return_brushed_points is TRUE, and 0 otherwise
+#' @returns a tomic_table if return_brushed_points is TRUE, and 0 otherwise
 #'
+#' @export
 ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(plot_table, c("features", "samples", "measurements"))
@@ -224,7 +237,7 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 
 #' Bivariate Plot
 #'
-#' Create a scatter or boxplot from a tomic dataset
+#' Create a scatter or boxplot from a tomic dataset.
 #'
 #' @param tomic_table A table taken from a tidy (i.e., augmented measurements)
 #'   or triple omic dataset
@@ -232,7 +245,7 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' @param y_var y-axis variable
 #' @param color_var coloring variable (NULL to suppress coloring)
 #'
-#' @return a grob
+#' @return a ggplot2 grob
 #'
 #' @examples
 #' library(dplyr)
@@ -245,6 +258,7 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' plot_bivariate(tomic_table, "PC1", "PC2", "nutrient")
 #' plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 #' plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
+#'
 #' @export
 plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")
@@ -348,7 +362,7 @@ get_design_vars <- function(tomic, plot_table, filter_type) {
 #'
 #' @param ... args to pass to \link[shiny]{brushedPoints}
 #'
-#' @return a df of brushed points
+#' @returns a df of brushed points
 try_brushedPoints <- function(...) {
   obs <- try(brushedPoints(...), silent = TRUE)
 

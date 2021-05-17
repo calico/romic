@@ -14,6 +14,10 @@ UI function.}
 
 \item{return_brushed_points}{Return values selected on the plot}
 }
+\value{
+a \code{tibble} of selected observations if
+  \code{return_brushed_points} is TRUE. Otherwise, returns NULL.
+}
 \description{
-ggplot Server
+Server components for the ggplot module.
 }

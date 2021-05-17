@@ -2,7 +2,7 @@
 % Please edit documentation in R/app_heatmap.R
 \name{plot_heatmap}
 \alias{plot_heatmap}
-\title{Omics Heatmap}
+\title{Plot Heatmap}
 \usage{
 plot_heatmap(
   tomic,
@@ -41,8 +41,12 @@ thresholded to this value.}
 
 \item{plot_type}{plotly (for interactivity) or grob (for a static ggplot)}
 }
+\value{
+a ggplot2 grob
+}
 \description{
-Generate a basic heatmap of all of your metabolomic and lipidomic data
+Generate a heatmap visualization of a features x samples matrix of
+  measurements.
 }
 \examples{
 
@@ -68,4 +72,5 @@ plot_heatmap(
   distance_measure = "corr",
   hclust_method = "complete"
 )
+
 }

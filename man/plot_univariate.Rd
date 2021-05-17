@@ -15,10 +15,10 @@ or triple omic dataset}
 \item{color_var}{coloring variable (NULL to suppress coloring)}
 }
 \value{
-a grob
+A ggplot2 grob
 }
 \description{
-Create a histogram from a tomic dataset
+Create a histogram from a tomic dataset.
 }
 \examples{
 library(dplyr)
@@ -29,4 +29,5 @@ brauer_augmented <- brauer_2008_tidy \%>\%
 
 plot_univariate(brauer_augmented$samples, "PC1", "nutrient")
 plot_univariate(brauer_augmented$measurements, "expression", NULL)
+
 }

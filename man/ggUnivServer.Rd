@@ -17,8 +17,8 @@ UI function.}
 \item{return_brushed_points}{Return values selected on the plot}
 }
 \value{
-a tomic_table if return_brushed_points is TRUE, and 0 otherwise
+a tomic_table if return_brushed_points is TRUE, and 0 otherwise.
 }
 \description{
-ggUnivariate Server
+Server components for the ggUnivariate module
 }

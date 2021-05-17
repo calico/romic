@@ -2,7 +2,7 @@
 % Please edit documentation in R/dim_reduction.R
 \name{add_pca_loadings}
 \alias{add_pca_loadings}
-\title{Add Principal Components Analysis Loadings to a triple omics dataset}
+\title{Add PCA Loadings}
 \usage{
 add_pca_loadings(
   tomic,
@@ -30,9 +30,14 @@ add_pca_loadings(
   \item{impute}{Impute missing values}
 }}
 }
+\value{
+A \code{tomic} object with principal components added to samples.
+}
 \description{
-Add Principal Components Analysis Loadings to a triple omics dataset
+Add Principal Components Analysis Loadings to a tidy or triple omics
+  dataset.
 }
 \examples{
 add_pca_loadings(brauer_2008_triple, npcs = 5)
+
 }

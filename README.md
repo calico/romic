@@ -2,6 +2,7 @@ ROMIC standardizes the formatting of genomic data to open up general visualizati
 
 <!-- badges: start -->
 [![R build status](https://github.com/calico/romic/workflows/R-CMD-check/badge.svg)](https://github.com/calico/romic/actions)
+[![R-CMD-check](https://github.com/calico/romic/workflows/R-CMD-check/badge.svg)](https://github.com/calico/romic/actions)
 <!-- badges: end -->
 
 ## Package Setup

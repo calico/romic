@@ -19,6 +19,9 @@ UI function.}
 
 \item{value_var}{An abundance value to use with \code{hclust}}
 }
+\value{
+A \code{tomic} with sorted features and/or samples.
+}
 \description{
-Organize Servers
+Server components for the organize input module.
 }

@@ -30,8 +30,24 @@ variables (or NULL if there are no additional variables)}
 \item{omic_type_tag}{an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general}
 }
+\value{
+An S3 \code{tidy_omic}/\code{tomic} object built on a \code{list}:
+ \describe{
+   \item{data}{A tibble with one row per measurement (i.e., features x
+     samples)}
+   \item{design}{A list which organized the dataset's meta-data:
+     \describe{
+       \item{feature_pk}{variable specifying a unique feature}
+       \item{sample_pk}{variable specifying a unique sample}
+       \item{features}{tibble of feature attributes}
+       \item{samples}{tibble of sample attributes}
+       \item{measurements}{tibble of measurement attributes}
+     }
+   }
+ }
+}
 \description{
-A tidy omics class contains a formatted dataset and a summary of the
+A tidy omics object contains a formatted dataset and a summary of the
   experimental design.
 }
 \examples{
@@ -64,4 +80,5 @@ create_tidy_omic(raw_tidy_omic,
   feature_vars = "feature_group", sample_pk = "sample_id",
   sample_vars = "sample_group"
 )
+
 }

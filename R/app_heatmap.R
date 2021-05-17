@@ -1,12 +1,12 @@
 #' Interactive Heatmap
 #'
-#' Generate a Shiny interactive heatmap which allows for on demand filtering,
-#' ordering and faceting by variables of interest
+#' Generate a \code{shiny} interactive heatmap that allows for on demand
+#'   filtering, ordering and faceting by variables of interest.
 #'
 #' @param tidy_omic a tidy_omic object constructed from
 #'   \code{\link{create_tidy_omic}}
 #'
-#' @return  a shiny app
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #'
@@ -242,9 +242,10 @@ app_heatmap <- function(tidy_omic) {
   )
 }
 
-#' Omics Heatmap
+#' Plot Heatmap
 #'
-#' Generate a basic heatmap of all of your metabolomic and lipidomic data
+#' Generate a heatmap visualization of a features x samples matrix of
+#'   measurements.
 #'
 #' @inheritParams tomic_to
 #' @param feature_var variable from "features" to use as a unique feature
@@ -255,6 +256,8 @@ app_heatmap <- function(tidy_omic) {
 #' @param change_threshold values with a more extreme absolute change will be
 #'   thresholded to this value.
 #' @param plot_type plotly (for interactivity) or grob (for a static ggplot)
+#'
+#' @returns a ggplot2 grob
 #'
 #' @examples
 #'
@@ -280,16 +283,19 @@ app_heatmap <- function(tidy_omic) {
 #'   distance_measure = "corr",
 #'   hclust_method = "complete"
 #' )
+#'
 #' @export
-plot_heatmap <- function(tomic,
-                         feature_var = NULL,
-                         sample_var = NULL,
-                         value_var = NULL,
-                         cluster_dim = "both",
-                         distance_measure = "dist",
-                         hclust_method = "ward.D2",
-                         change_threshold = Inf,
-                         plot_type = "grob") {
+plot_heatmap <- function(
+  tomic,
+  feature_var = NULL,
+  sample_var = NULL,
+  value_var = NULL,
+  cluster_dim = "both",
+  distance_measure = "dist",
+  hclust_method = "ward.D2",
+  change_threshold = Inf,
+  plot_type = "grob"
+  ) {
   checkmate::assertClass(tomic, "tomic")
 
   if ("NULL" %in% class(feature_var)) {
@@ -369,7 +375,11 @@ plot_heatmap <- function(tomic,
 
   heatmap_plot <- ggplot(
     augmented_tidy_omic_data,
-    aes_string(x = "ordered_sampleId", y = "ordered_featureId", fill = value_var)
+    aes_string(
+      x = "ordered_sampleId",
+      y = "ordered_featureId",
+      fill = value_var
+      )
   ) +
     geom_tile() +
     scale_fill_gradient2(
@@ -404,13 +414,15 @@ plot_heatmap <- function(tomic,
 }
 
 
-hclust_tidy_omic <- function(tidy_omic,
-                             feature_var,
-                             sample_var,
-                             value_var,
-                             cluster_dim,
-                             distance_measure = "dist",
-                             hclust_method = "ward.D2") {
+hclust_tidy_omic <- function(
+  tidy_omic,
+  feature_var,
+  sample_var,
+  value_var,
+  cluster_dim,
+  distance_measure = "dist",
+  hclust_method = "ward.D2"
+  ) {
   check_tidy_omic(tidy_omic)
 
   checkmate::assertChoice(feature_var, tidy_omic$design$features$variable)
@@ -586,7 +598,6 @@ hclust_tidy_omic <- function(tidy_omic,
 }
 
 
-
 #' Hierarchical clustering order
 #'
 #' Format and hierarchically cluster a data.frame. If hclust could not normally
@@ -605,7 +616,7 @@ hclust_tidy_omic <- function(tidy_omic,
 #' }
 #' @param hclust_method method from stats::hclust to use for clustering
 #'
-#' @return a list containing a hierarchically clustered set of rows and/or
+#' @returns a list containing a hierarchically clustered set of rows and/or
 #'   columns
 #'
 #' @examples
@@ -615,14 +626,17 @@ hclust_tidy_omic <- function(tidy_omic,
 #' df <- tidyr::crossing(letters = LETTERS, numbers = 1:10) %>%
 #'   mutate(noise = rnorm(n()))
 #' hclust_order(df, "letters", "numbers", "noise", "rows")
+#'
 #' @export
-hclust_order <- function(df,
-                         feature_pk,
-                         sample_pk,
-                         value_var,
-                         cluster_dim,
-                         distance_measure = "dist",
-                         hclust_method = "ward.D2") {
+hclust_order <- function(
+  df,
+  feature_pk,
+  sample_pk,
+  value_var,
+  cluster_dim,
+  distance_measure = "dist",
+  hclust_method = "ward.D2"
+  ) {
   checkmate::assertDataFrame(df)
   checkmate::assertChoice(feature_pk, colnames(df))
   checkmate::assertChoice(sample_pk, colnames(df))

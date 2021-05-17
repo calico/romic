@@ -14,8 +14,8 @@ export_tomic_as_tidy(tomic, dir_path, name_preamble)
 \item{name_preamble}{start of output file name}
 }
 \value{
-Export one table which is one row per peak, which includes all feature and
-  sample attributes.
+Export one table which is one row per peak, which includes
+  all feature and sample attributes.
 }
 \description{
 Export a data table including all fields from features, samples and

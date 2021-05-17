@@ -12,6 +12,9 @@ UI function.}
 
 \item{return_brushed_points}{Return values selected on the plot}
 }
+\value{
+A \code{shiny} UI
+}
 \description{
-ggUnivariate Output
+UI components for the ggUnivariate module.
 }

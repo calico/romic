@@ -1,4 +1,7 @@
-#' Add Principal Components Analysis Loadings to a triple omics dataset
+#' Add PCA Loadings
+#'
+#' Add Principal Components Analysis Loadings to a tidy or triple omics
+#'   dataset.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams sort_tomic
@@ -7,8 +10,11 @@
 #'   (default is number of samples)
 #' @inheritParams remove_missing_values
 #'
+#' @returns A \code{tomic} object with principal components added to samples.
+#'
 #' @examples
 #' add_pca_loadings(brauer_2008_triple, npcs = 5)
+#'
 #' @export
 add_pca_loadings <- function(tomic, value_var = NULL, center_rows = TRUE,
                              npcs = NULL, missing_val_method = "drop_samples") {
@@ -70,12 +76,10 @@ add_pca_loadings <- function(tomic, value_var = NULL, center_rows = TRUE,
   return(tomic_to(triple_omic, class(tomic)[1]))
 }
 
-
-add_tsne_loadings <- function() {
-  # TO DO
-}
-
 #' Remove Missing Values
+#'
+#' Account for missing values by dropping features, samples or using
+#'   imputation.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams sort_tomic
@@ -87,11 +91,18 @@ add_tsne_loadings <- function() {
 #'   \item{impute}{Impute missing values}
 #' }
 #'
+#' @returns A \code{tomic} object where missing values have been accounted
+#'   for.
+#'
 #' @examples
 #' remove_missing_values(brauer_2008_triple)
+#'
 #' @export
-remove_missing_values <- function(tomic, value_var = NULL,
-                                  missing_val_method = "drop_samples") {
+remove_missing_values <- function(
+  tomic,
+  value_var = NULL,
+  missing_val_method = "drop_samples"
+  ) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(
     missing_val_method,
