@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
 
       
 
-      </header><script src="romic_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="romic_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>R’Omic: high-dimensional data manipulation</h1>
@@ -97,7 +97,7 @@
 <h1 class="hasAnchor">
 <a href="#dataset-creation" class="anchor"></a>Dataset Creation</h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">romic</span><span class="op">)</span></code></pre></div>
 <p>A tidy_omic dataset can be loaded by passing a data table and specifying which variables are unique to features, samples and measurements</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -175,7 +175,7 @@
   <span class="va">centered_tidy</span><span class="op">$</span><span class="va">data</span>,
   x_var <span class="op">=</span> <span class="st">"expression"</span>
   <span class="op">)</span></code></pre></div>
-<p><img src="romic_files/figure-html/bivariate_plot-1.png" width="576"></p>
+<p><img src="romic_files/figure-html/univariate_plot-1.png" width="576"></p>
 <div id="interactive-visualisation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interactive-visualisation" class="anchor"></a>Interactive Visualisation</h2>
@@ -196,7 +196,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Sean Hackett.</p>
+  <p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
 </div>
 
 <div class="pkgdown">

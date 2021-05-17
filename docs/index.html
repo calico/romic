@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="R for High-Dimensional 'Omic Data">
-<meta property="og:description" content="Romic represents high-dimensional data as tables of features, samples and measurements, and a design list for tracking the meaning of individual variables. Using this format, filtering, normalization, and other transformations of a dataset can be carried out in a flexible manner. Romic takes advantage of these transformations to create interactive shiny apps for exploratory data analysis such as an interactive heatmap. ">
+<meta property="og:description" content="Represents high-dimensional data as tables of features, samples and measurements, and a design list for tracking the meaning of individual variables. Using this format, filtering, normalization, and other transformations of a dataset can be carried out in a flexible manner. romic takes advantage of these transformations to create interactive shiny apps for exploratory data analysis such as an interactive heatmap. ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -65,12 +65,18 @@
 
 <p>ROMIC standardizes the formatting of genomic data to open up general visualizations approaches which can be used for exploratory data analysis (EDA).</p>
 <!-- badges: start -->
-<p><a href="https://docs.calicolabs.com/romic"><img src="https://img.shields.io/badge/docs-Calico%20Docs-28A049.svg" alt="docs: Calico Docs"></a> <a href="https://github.com/calico/romic/actions"><img src="https://github.com/calico/romic/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <!-- badges: end --></p>
+<p><a href="https://github.com/calico/romic/actions"><img src="https://github.com/calico/romic/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://github.com/calico/romic/actions"><img src="https://github.com/calico/romic/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <!-- badges: end --></p>
 <div id="package-setup" class="section level2">
 <h2 class="hasAnchor">
 <a href="#package-setup" class="anchor"></a>Package Setup</h2>
-<p>Because this package is in a private GitHub repository, to install this package you will need a personal access token, see <a href="https://github.com/calico/computing/wiki/R#install-an-r-package-out-of-a-private-github-repo-without-cloning-a-full-repo">link</a></p>
-<p><code>{r eval = FALSE} remotes::install_github("calico/romic",                          auth_token = Sys.getenv("GITHUB_PAT"),                          dependencies = TRUE)</code></p>
+<p>To install <em>romic</em> run the following code in R:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span>
+  <span class="st">"calico/romic"</span>,
+  dependencies <span class="op">=</span> <span class="cn">TRUE</span>
+  <span class="op">)</span></code></pre></div>
 </div>
 <div id="concept" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -178,14 +184,15 @@
     <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li>file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Sean Hackett <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Sean Hackett <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9553-4341" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Calico Life Sciences LLC <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
 
@@ -194,7 +201,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Sean Hackett.</p>
+  <p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
 </div>
 
 <div class="pkgdown">

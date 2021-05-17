@@ -13,7 +13,7 @@ UI function.}
 \item{sort_table}{table to sort}
 }
 \value{
-a \code{shiny} UI
+A \code{shiny} UI
 }
 \description{
 UI components for the sort module.

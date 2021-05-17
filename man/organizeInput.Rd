@@ -11,7 +11,7 @@ organizeInput(id)
 UI function.}
 }
 \value{
-a \code{shiny} UI
+A \code{shiny} UI
 }
 \description{
 UI components for the organize input module.

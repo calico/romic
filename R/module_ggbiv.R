@@ -53,7 +53,9 @@ shiny_ggbiv_test <- function(tomic, plot_table = "samples") {
 #' @inheritParams shiny::moduleServer
 #' @inheritParams ggBivServer
 #'
-#' @returns a \code{shiny} UI.
+#' @returns A \code{shiny} UI
+#'
+#' @export
 ggBivOutput <- function(id, return_brushed_points = FALSE) {
   checkmate::assertLogical(return_brushed_points, len = 1)
 
@@ -97,6 +99,8 @@ ggBivOutput <- function(id, return_brushed_points = FALSE) {
 #' @param return_brushed_points Return values selected on the plot
 #'
 #' @returns a tomic_table if return_brushed_points is TRUE, and 0 otherwise
+#'
+#' @export
 ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(plot_table, c("features", "samples", "measurements"))

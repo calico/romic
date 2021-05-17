@@ -61,7 +61,9 @@ shiny_sort_test <- function(triple_omic, valid_sort_vars, value_var) {
 #' @inheritParams shiny::moduleServer
 #' @param sort_table table to sort
 #'
-#' @returns a \code{shiny} UI
+#' @returns A \code{shiny} UI
+#'
+#' @export
 sortInput <- function(id, sort_table) {
   ns <- NS(id)
 
@@ -85,6 +87,8 @@ sortInput <- function(id, sort_table) {
 #' @inheritParams sort_tomic
 #'
 #' @returns A sorted \code{tomic} object.
+#'
+#' @export
 sortServer <- function(id,
                        tomic,
                        sort_table,

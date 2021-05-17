@@ -62,6 +62,8 @@ shiny_filter_test <- function(tidy_omic, filter_table = "features") {
 #' @param filter_table table to filter
 #'
 #' @returns A \code{shiny} UI
+#'
+#' @export
 filterInput <- function(id, filter_table) {
   ns <- shiny::NS(id)
 
@@ -84,6 +86,8 @@ filterInput <- function(id, filter_table) {
 #' @inheritParams filterInput
 #'
 #' @returns A \code{tidy_omic} with some features and/or samples filtered.
+#'
+#' @export
 filterServer <- function(id, tidy_omic, filter_table) {
   shiny::moduleServer(
     id,

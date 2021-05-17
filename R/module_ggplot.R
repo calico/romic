@@ -46,6 +46,8 @@ shiny_ggplot_test <- function(tomic) {
 #' @inheritParams shiny::moduleServer
 #'
 #' @returns A \code{shiny} UI
+#'
+#' @export
 ggplotOutput <- function(id) {
   ns <- shiny::NS(id)
 
@@ -86,6 +88,8 @@ ggplotOutput <- function(id) {
 #'
 #' @returns a \code{tibble} of selected observations if
 #'   \code{return_brushed_points} is TRUE. Otherwise, returns NULL.
+#'
+#' @export
 ggplotServer <- function(id, tomic, return_brushed_points = FALSE) {
   shiny::moduleServer(
     id,

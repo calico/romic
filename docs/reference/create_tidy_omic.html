@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Create Tidy Omic — create_tidy_omic" />
-<meta property="og:description" content="A tidy omics class contains a formatted dataset and a summary of the
+<meta property="og:description" content="A tidy omics object contains a formatted dataset and a summary of the
   experimental design." />
 
 
@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
     </div>
 
     <div class="ref-description">
-    <p>A tidy omics class contains a formatted dataset and a summary of the
+    <p>A tidy omics object contains a formatted dataset and a summary of the
   experimental design.</p>
     </div>
 
@@ -158,6 +158,21 @@ variables (or NULL if there are no additional variables)</p></td>
 lipidomics, proteomics, genomics, general</p></td>
     </tr>
     </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An S3 <code>tidy_omic</code>/<code>tomic</code> object built on a <code>list</code>:</p><dl>
+   <dt>data</dt><dd><p>A tibble with one row per measurement (i.e., features x
+     samples)</p></dd>
+   <dt>design</dt><dd><p>A list which organized the dataset's meta-data:
+     <dl>
+       <dt>feature_pk</dt><dd><p>variable specifying a unique feature</p></dd>
+       <dt>sample_pk</dt><dd><p>variable specifying a unique sample</p></dd>
+       <dt>features</dt><dd><p>tibble of feature attributes</p></dd>
+       <dt>samples</dt><dd><p>tibble of sample attributes</p></dd>
+       <dt>measurements</dt><dd><p>tibble of measurement attributes</p></dd></dl></p></dd>
+ 
+</dl>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -237,7 +252,8 @@ lipidomics, proteomics, genomics, general</p></td>
 #&gt; 
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "tidy_omic" "tomic"     "general"  </div></span></pre>
+#&gt; [1] "tidy_omic" "tomic"     "general"  </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -249,7 +265,7 @@ lipidomics, proteomics, genomics, general</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Sean Hackett.</p>
+  <p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
 </div>
 
 <div class="pkgdown">

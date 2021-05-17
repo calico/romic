@@ -41,6 +41,8 @@ shiny_plotsaver_test <- function() {
 #' @inheritParams shiny::moduleServer
 #'
 #' @returns a \code{shiny} UI
+#'
+#' @export
 plotsaverInput <- function(id) {
   ns <- NS(id)
 
@@ -69,6 +71,8 @@ plotsaverInput <- function(id) {
 #' @param grob a ggplot2 plot
 #'
 #' @returns None
+#'
+#' @export
 plotsaverServer <- function(id, grob) {
   moduleServer(
     id,

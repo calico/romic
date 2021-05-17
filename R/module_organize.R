@@ -64,7 +64,9 @@ shiny_organize_test <- function(
 #'
 #' @inheritParams shiny::moduleServer
 #'
-#' @returns a \code{shiny} UI
+#' @returns A \code{shiny} UI
+#'
+#' @export
 organizeInput <- function(id) {
   ns <- NS(id)
 
@@ -96,7 +98,9 @@ organizeInput <- function(id) {
 #' @param sample_vars variables available for arrange samples
 #' @inheritParams sort_tomic
 #'
-#' @returns a \code{tomic} with sorted features and/or samples.
+#' @returns A \code{tomic} with sorted features and/or samples.
+#'
+#' @export
 organizeServer <- function(
   id,
   tidy_omic,

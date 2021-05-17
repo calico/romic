@@ -13,7 +13,7 @@ UI function.}
 \item{return_brushed_points}{Return values selected on the plot}
 }
 \value{
-a \code{shiny} UI.
+A \code{shiny} UI
 }
 \description{
 UI components for the ggBivariate module.
