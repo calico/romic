@@ -1,9 +1,11 @@
 #' Shiny ggUnivariate Test
 #'
-#' Test the shiny ggUnivariate module
+#' Test the shiny ggUnivariate module as a stand-alone application.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams ggBivServer
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #'
@@ -15,6 +17,8 @@
 #'   shiny_gguniv_test(brauer_2008_triple, plot_table = "measurements")
 #'   shiny_gguniv_test(brauer_2008_triple, plot_table = "features")
 #' }
+#'
+#' @export
 shiny_gguniv_test <- function(tomic, plot_table = "samples") {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(plot_table, c("features", "samples", "measurements"))
@@ -42,8 +46,12 @@ shiny_gguniv_test <- function(tomic, plot_table = "samples") {
 
 #' ggUnivariate Output
 #'
+#' UI components for the ggUnivariate module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams ggplotServer
+#'
+#' @returns A \code{shiny} UI
 ggUnivOutput <- function(id, return_brushed_points = FALSE) {
   checkmate::assertLogical(return_brushed_points, len = 1)
 
@@ -74,6 +82,8 @@ ggUnivOutput <- function(id, return_brushed_points = FALSE) {
 }
 
 #' ggUnivariate Server
+#'
+#' Server components for the ggUnivariate module
 #'
 #' @inheritParams ggBivServer
 #'
@@ -196,11 +206,11 @@ ggUnivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 
 #' Univariate Plot
 #'
-#' Create a histogram from a tomic dataset
+#' Create a histogram from a tomic dataset.
 #'
 #' @inheritParams plot_bivariate
 #'
-#' @return a grob
+#' @return A ggplot2 grob
 #'
 #' @examples
 #' library(dplyr)
@@ -211,6 +221,7 @@ ggUnivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #'
 #' plot_univariate(brauer_augmented$samples, "PC1", "nutrient")
 #' plot_univariate(brauer_augmented$measurements, "expression", NULL)
+#'
 #' @export
 plot_univariate <- function(tomic_table, x_var, color_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")

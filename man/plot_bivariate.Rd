@@ -17,10 +17,10 @@ or triple omic dataset}
 \item{color_var}{coloring variable (NULL to suppress coloring)}
 }
 \value{
-a grob
+a ggplot2 grob
 }
 \description{
-Create a scatter or boxplot from a tomic dataset
+Create a scatter or boxplot from a tomic dataset.
 }
 \examples{
 library(dplyr)
@@ -33,4 +33,5 @@ tomic_table <- brauer_augmented$samples
 plot_bivariate(tomic_table, "PC1", "PC2", "nutrient")
 plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
+
 }

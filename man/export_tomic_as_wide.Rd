@@ -24,7 +24,8 @@ export_tomic_as_wide(
 \item{transpose}{if TRUE then samples will be stored as rows}
 }
 \value{
-Export one table which contains metabolites as rows and samples as columns.
+Export one table which contains metabolites as rows and samples
+  as columns.
 }
 \description{
 abundances form a matrix with metabolites as rows and samples as columns.

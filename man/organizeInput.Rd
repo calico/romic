@@ -10,6 +10,9 @@ organizeInput(id)
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
 }
+\value{
+a \code{shiny} UI
+}
 \description{
-Organize Input
+UI components for the organize input module.
 }

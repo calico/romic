@@ -18,5 +18,7 @@ Error and warning messages are printed and the input tidy_omic
   object is returned
 }
 \description{
-Check Triple Omic
+Check a triple omic dataset for consistency between the data and design and
+  validate that the dataset follows the \code{triple_omic}/\code{tomic}
+  specification.
 }

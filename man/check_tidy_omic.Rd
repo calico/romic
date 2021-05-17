@@ -18,6 +18,7 @@ Error and warning messages are printed and the input tidy_omic
 object is returned
 }
 \description{
-Check a tidy omic dataset to determine whether it complies to the expected
-formatting: one row per measurement per feature x sample
+Check a tidy omic dataset for consistency between the data and design and
+  validate that the dataset follows the \code{tidy_omic}/\code{tomic}
+  specification.
 }

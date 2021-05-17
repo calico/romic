@@ -1,9 +1,11 @@
 #' Shiny Sort Test
 #'
-#' Test the shiny sorting module
+#' Test the shiny sorting module as a stand-alone app.
 #'
 #' @inheritParams check_triple_omic
 #' @inheritParams sortServer
+#'
+#' @returns a \code{shiny} app
 #'
 #' @examples
 #'
@@ -13,6 +15,8 @@
 #'     value_var = "expression"
 #'   )
 #' }
+#'
+#' @export
 shiny_sort_test <- function(triple_omic, valid_sort_vars, value_var) {
   checkmate::assertClass(triple_omic, "triple_omic")
 
@@ -52,8 +56,12 @@ shiny_sort_test <- function(triple_omic, valid_sort_vars, value_var) {
 
 #' Sort Input
 #'
+#' UI components for the sort module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @param sort_table table to sort
+#'
+#' @returns a \code{shiny} UI
 sortInput <- function(id, sort_table) {
   ns <- NS(id)
 
@@ -69,10 +77,14 @@ sortInput <- function(id, sort_table) {
 
 #' Sort Server
 #'
+#' Server components for the sort module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams tomic_to
 #' @param valid_sort_vars variables available for categorical arranging
 #' @inheritParams sort_tomic
+#'
+#' @returns A sorted \code{tomic} object.
 sortServer <- function(id,
                        tomic,
                        sort_table,

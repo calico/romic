@@ -15,14 +15,15 @@ width less than or equal to 1 will put each word on its own line.}
 \item{truncate_at}{max character length}
 }
 \value{
-reformatted chars
+a reformatted character vector of the same length as the input.
 }
 \description{
-Wrap long names over multple lines so that they will look better on plots
+Wrap long names over multiple lines so that they will look better on plots.
 }
 \examples{
 chars <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
   ac arcu semper erat porttitor egestas. Etiam sagittis, sapien at mattis."
 
 format_names_for_plotting(chars)
+
 }

@@ -14,8 +14,11 @@ shiny_sort_test(triple_omic, valid_sort_vars, value_var)
 
 \item{value_var}{An abundance value to use with \code{hclust}}
 }
+\value{
+a \code{shiny} app
+}
 \description{
-Test the shiny sorting module
+Test the shiny sorting module as a stand-alone app.
 }
 \examples{
 
@@ -25,4 +28,5 @@ if (interactive()) {
     value_var = "expression"
   )
 }
+
 }

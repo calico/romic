@@ -1,17 +1,18 @@
 #' Scatter Plot
 #'
 #' Generate a Shiny interactive scatter plot which allows visualization of
-#' features, measurements, and samples (w/ principal components added).
+#' features, measurements, and samples (with principal components added).
 #'
 #' @param tidy_omic a tidy_omic object constructed from
 #'   \code{\link{create_tidy_omic}}
 #'
-#' @return  a shiny app
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
 #'   app_scatter(brauer_2008_tidy)
 #' }
+#'
 #' @export
 app_scatter <- function(tidy_omic) {
   checkmate::assertClass(tidy_omic, "tidy_omic")

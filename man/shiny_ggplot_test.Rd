@@ -9,8 +9,11 @@ shiny_ggplot_test(tomic)
 \arguments{
 \item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
 }
+\value{
+A \code{shiny} app
+}
 \description{
-Test the shiny ggplot module
+Test the shiny ggplot module as a stand-alone application.
 }
 \examples{
 
@@ -18,4 +21,5 @@ if (interactive()) {
   shiny_ggplot_test(add_pca_loadings(brauer_2008_triple, npcs = 5))
   shiny_ggplot_test(brauer_2008_triple)
 }
+
 }

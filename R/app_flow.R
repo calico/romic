@@ -1,9 +1,11 @@
 #' Flow
 #'
-#' Comb through datasets by iterating between plotting steps, and lassoing
-#'   steps to select points of interest
+#' Using \code{shiny} comb through datasets by iterating between
+#'   plotting steps, and lassoing steps to select points of interest.
 #'
 #' @inheritParams tomic_to
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #'
@@ -13,6 +15,7 @@
 #'   app_flow(brauer_2008_triple)
 #'   # shiny::reactlogShow()
 #' }
+#'
 #' @export
 app_flow <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")

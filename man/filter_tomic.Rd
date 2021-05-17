@@ -29,8 +29,12 @@ filter_tomic(
 
 \item{filter_variable}{variable to apply the filter to}
 }
+\value{
+A \code{tomic} object where a subset of features, samples or
+  measurmenets have been filtered.
+}
 \description{
-Filter T* Omics
+Filter a tidy or triple omic to entries of interest.
 }
 \examples{
 
@@ -64,4 +68,5 @@ filter_tomic(
   filter_table = "features",
   filter_value = rlang::quo(BP == "biological process unknown")
 )
+
 }

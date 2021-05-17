@@ -15,6 +15,10 @@ sort_triple_arrange(triple_omic, sort_table, sort_variables)
 \item{sort_variables}{A set of attributes in sort_table to sort with in
 \code{arrange}.}
 }
+\value{
+A \code{triple_omic} with sorted features or samples.
+}
 \description{
-Sort Triple Arrange
+Sort a \code{triple_omic} object based on the values of one or more
+  variables.
 }

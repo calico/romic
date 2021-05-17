@@ -1,12 +1,16 @@
 #' Shiny Plot Saver Test
 #'
-#' Test the shiny plotsaver module
+#' Test the shiny plotsaver module as a stand-alone application.
+#'
+#' @returns a \code{shiny} app
 #'
 #' @examples
 #'
 #' if (interactive()) {
 #'   shiny_plotsaver_test()
 #' }
+#'
+#' @export
 shiny_plotsaver_test <- function() {
   shinyApp(
     ui = fluidPage(
@@ -32,7 +36,11 @@ shiny_plotsaver_test <- function() {
 
 #' Plot Saver Input
 #'
+#' UI components for the plot saver module.
+#'
 #' @inheritParams shiny::moduleServer
+#'
+#' @returns a \code{shiny} UI
 plotsaverInput <- function(id) {
   ns <- NS(id)
 
@@ -55,8 +63,12 @@ plotsaverInput <- function(id) {
 
 #' Plot Saver Server
 #'
+#' Server components for the plot saver module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @param grob a ggplot2 plot
+#'
+#' @returns None
 plotsaverServer <- function(id, grob) {
   moduleServer(
     id,

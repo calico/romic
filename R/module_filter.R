@@ -1,14 +1,18 @@
 #' Shiny Filter Test
 #'
-#' Tests the shiny filter module
+#' Tests the shiny filter module as a stand-alone application.
 #'
 #' @inheritParams check_tidy_omic
 #' @inheritParams filterInput
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
 #'   shiny_filter_test(brauer_2008_tidy)
 #' }
+#'
+#' @export
 shiny_filter_test <- function(tidy_omic, filter_table = "features") {
   stopifnot("tidy_omic" %in% class(tidy_omic))
 
@@ -52,8 +56,12 @@ shiny_filter_test <- function(tidy_omic, filter_table = "features") {
 
 #' Filter Input
 #'
+#' UI components for the filter module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @param filter_table table to filter
+#'
+#' @returns A \code{shiny} UI
 filterInput <- function(id, filter_table) {
   ns <- shiny::NS(id)
 
@@ -69,9 +77,13 @@ filterInput <- function(id, filter_table) {
 
 #' Filter Server
 #'
+#' Server components for the filter module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams check_tidy_omic
 #' @inheritParams filterInput
+#'
+#' @returns A \code{tidy_omic} with some features and/or samples filtered.
 filterServer <- function(id, tidy_omic, filter_table) {
   shiny::moduleServer(
     id,

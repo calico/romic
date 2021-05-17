@@ -10,6 +10,9 @@ plotsaverInput(id)
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
 }
+\value{
+a \code{shiny} UI
+}
 \description{
-Plot Saver Input
+UI components for the plot saver module.
 }

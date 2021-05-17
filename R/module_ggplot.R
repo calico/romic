@@ -1,8 +1,10 @@
 #' Shiny ggplot Test
 #'
-#' Test the shiny ggplot module
+#' Test the shiny ggplot module as a stand-alone application.
 #'
 #' @inheritParams tomic_to
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #'
@@ -10,6 +12,8 @@
 #'   shiny_ggplot_test(add_pca_loadings(brauer_2008_triple, npcs = 5))
 #'   shiny_ggplot_test(brauer_2008_triple)
 #' }
+#'
+#' @export
 shiny_ggplot_test <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
 
@@ -37,7 +41,11 @@ shiny_ggplot_test <- function(tomic) {
 
 #' ggplot Output
 #'
+#' UI components for the ggplot module.
+#'
 #' @inheritParams shiny::moduleServer
+#'
+#' @returns A \code{shiny} UI
 ggplotOutput <- function(id) {
   ns <- shiny::NS(id)
 
@@ -70,9 +78,14 @@ ggplotOutput <- function(id) {
 
 #' ggplot Server
 #'
+#' Server components for the ggplot module.
+#'
 #' @inheritParams shiny::moduleServer
 #' @inheritParams tomic_to
 #' @param return_brushed_points Return values selected on the plot
+#'
+#' @returns a \code{tibble} of selected observations if
+#'   \code{return_brushed_points} is TRUE. Otherwise, returns NULL.
 ggplotServer <- function(id, tomic, return_brushed_points = FALSE) {
   shiny::moduleServer(
     id,

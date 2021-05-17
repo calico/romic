@@ -12,11 +12,15 @@ shiny_filter_test(tidy_omic, filter_table = "features")
 
 \item{filter_table}{table to filter}
 }
+\value{
+A \code{shiny} app
+}
 \description{
-Tests the shiny filter module
+Tests the shiny filter module as a stand-alone application.
 }
 \examples{
 if (interactive()) {
   shiny_filter_test(brauer_2008_tidy)
 }
+
 }

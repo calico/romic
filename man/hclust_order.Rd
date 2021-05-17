@@ -49,4 +49,5 @@ library(dplyr)
 df <- tidyr::crossing(letters = LETTERS, numbers = 1:10) \%>\%
   mutate(noise = rnorm(n()))
 hclust_order(df, "letters", "numbers", "noise", "rows")
+
 }

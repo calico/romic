@@ -10,7 +10,8 @@ tomic_sort_status(tomic)
 \item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
 }
 \value{
-length 1 string of sort status
+length 1 character string indicating whether the \code{tomic}
+  is sorted.
 }
 \description{
 Determine whether features &/or samples have been sorted and stored as
@@ -18,5 +19,6 @@ Determine whether features &/or samples have been sorted and stored as
 }
 \examples{
 
-romic:::tomic_sort_status(brauer_2008_tidy)
+tomic_sort_status(brauer_2008_tidy)
+
 }

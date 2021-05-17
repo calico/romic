@@ -15,5 +15,5 @@ a triple_omic object
 }
 \description{
 If some samples, feature or measurements have been dropped; update other
-  tables
+  tables.
 }

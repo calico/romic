@@ -6,8 +6,7 @@
 #' @param dir_path path to save outputs
 #' @param name_preamble start of output file name
 #'
-#' @return
-#' Export three tables:
+#' @returns Export three tables:
 #' \itemize{
 #'     \item{features: one row per features measured (i.e., a metabolite)}
 #'     \item{sample: one row per sample}
@@ -20,6 +19,7 @@
 #' if (dir.exists("/tmp")) {
 #'   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 #' }
+#'
 #' @export
 export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
 
@@ -45,9 +45,8 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
 #'
 #' @inheritParams export_tomic_as_triple
 #'
-#' @return
-#' Export one table which is one row per peak, which includes all feature and
-#'   sample attributes.
+#' @returns Export one table which is one row per peak, which includes
+#'   all feature and sample attributes.
 #'
 #' @examples
 #'
@@ -79,8 +78,8 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #' @param value_var measurement variable to use for the matrix
 #' @param transpose if TRUE then samples will be stored as rows
 #'
-#' @return
-#' Export one table which contains metabolites as rows and samples as columns.
+#' @returns Export one table which contains metabolites as rows and samples
+#'   as columns.
 #'
 #' @examples
 #'

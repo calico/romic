@@ -29,15 +29,15 @@ variables (or NULL if there are no additional variables)}
 \item{omic_type_tag}{an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general}
 }
+\value{
+A \code{tidy_omic} object as produced by \code{create_tidy_omic}.
+}
 \description{
 Convert a wide dataset of species' abundances (gene product, metabolites,
   lipids, ...) into a triple_omic dataset (one observation per row)
 }
-\details{
-other_feature_variable_types doesn't currently do anything -
-  need to use this to apply class changes
-}
 \examples{
+
 library(dplyr)
 
 wide_measurements <- brauer_2008_triple[["measurements"]] \%>\%
@@ -50,4 +50,5 @@ convert_wide_to_tidy_omic(wide_df,
   feature_pk = "name",
   feature_vars = c("BP", "MF", "systematic_name")
 )
+
 }

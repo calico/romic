@@ -12,6 +12,9 @@ UI function.}
 
 \item{filter_table}{table to filter}
 }
+\value{
+A \code{shiny} UI
+}
 \description{
-Filter Input
+UI components for the filter module.
 }

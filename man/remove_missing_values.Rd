@@ -23,9 +23,15 @@ remove_missing_values(
   \item{impute}{Impute missing values}
 }}
 }
+\value{
+A \code{tomic} object where missing values have been accounted
+  for.
+}
 \description{
-Remove Missing Values
+Account for missing values by dropping features, samples or using
+  imputation.
 }
 \examples{
 remove_missing_values(brauer_2008_triple)
+
 }

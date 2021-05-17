@@ -28,6 +28,24 @@ for each combination of feature and sample}
 \item{omic_type_tag}{an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general}
 }
+\value{
+An S3 \code{triple_omic}/\code{tomic} object built on a \code{list}:
+ \describe{
+   \item{features}{A tibble of feature meta-data (one row per feature)}
+   \item{samples}{A tibble of sample meta-data (one row per sample)}
+   \item{measurements}{A tibble with one row per measurement
+     (i.e., features x samples)}
+   \item{design}{A list which organized the dataset's meta-data:
+     \describe{
+       \item{feature_pk}{variable specifying a unique feature}
+       \item{sample_pk}{variable specifying a unique sample}
+       \item{features}{tibble of feature attributes}
+       \item{samples}{tibble of sample attributes}
+       \item{measurements}{tibble of measurement attributes}
+     }
+   }
+ }
+}
 \description{
 A triple omics class contains three data.frames, one for features, one for
   samples, and one for abundances. This is a good format when there is a
@@ -35,7 +53,7 @@ A triple omics class contains three data.frames, one for features, one for
 }
 \details{
 for now primary keys are unique (rather than allowing for a
-  composite key)
+  multi-index)
 }
 \examples{
 
@@ -60,4 +78,5 @@ triple_omic <- create_triple_omic(
   measurement_df, feature_df, sample_df,
   "feature_id", "sample_id"
 )
+
 }

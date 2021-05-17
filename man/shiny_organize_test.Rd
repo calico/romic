@@ -16,8 +16,11 @@ shiny_organize_test(tidy_omic, feature_vars, sample_vars, value_var)
 
 \item{value_var}{An abundance value to use with \code{hclust}}
 }
+\value{
+a \code{shiny} app
+}
 \description{
-Tests the shiny organization module.
+Tests the shiny organization module as stand-alone application.
 }
 \examples{
 
@@ -29,4 +32,5 @@ if (interactive()) {
     value_var = "expression"
   )
 }
+
 }

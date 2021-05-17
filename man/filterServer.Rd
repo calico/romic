@@ -15,6 +15,9 @@ UI function.}
 
 \item{filter_table}{table to filter}
 }
+\value{
+A \code{tidy_omic} with some features and/or samples filtered.
+}
 \description{
-Filter Server
+Server components for the filter module.
 }

@@ -10,9 +10,20 @@ tidy_to_triple(tidy_omic)
 \item{tidy_omic}{an object of class tidy_omic produced by
 \code{\link{create_tidy_omic}}}
 }
+\value{
+A \code{triple_omic} object as created by
+  \code{\link{create_triple_omic}}
+}
 \description{
-Tidy omic to triple omic
+Convert a \code{tidy_omic} object into a \code{triple_omic} object.
+}
+\details{
+The \code{data} table will be converted into \code{features},
+  \code{samples}, and \code{measurements} tables using the \code{design}
+  to determine which variables belong in each table. The \code{design}
+  will be preserved as-is.
 }
 \examples{
 tidy_to_triple(brauer_2008_tidy)
+
 }

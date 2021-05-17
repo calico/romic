@@ -29,8 +29,18 @@ sort_tomic(
 
 \item{value_var}{An abundance value to use with \code{hclust}}
 }
+\value{
+A \code{tomic} object where feature or sample primary keys have
+  been turned into a factor reflecting how they are sorted.
+}
 \description{
-Sort an experiments features or samples
+Sort a dataset's features or samples
+}
+\details{
+\code{sort_tomic} supports the reordering of features or samples using
+  either hierarchical clustering or based on the levels of other variables.
+  Sorting occurs by turning either the feature or sample primary key
+  into a factor whose levels reflect the sort.
 }
 \examples{
 

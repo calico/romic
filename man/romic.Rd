@@ -5,11 +5,11 @@
 \alias{romic}
 \title{\code{romic} package}
 \description{
-Romic represents high-dimensional data as tables of features,
+'romic' represents high-dimensional data as tables of features,
   samples and measurements, and a design list for tracking the meaning of
   individual variables. Using this format, filtering, normalization, and
   other transformations of a dataset can be carried out in a flexible
-  manner. Romic takes advantage of these transformations to create
-  interactive shiny apps for explorator data analysis such as an
+  manner. 'romic' takes advantage of these transformations to create
+  interactive shiny apps for exploratory data analysis such as an
   interactive heatmap.
 }

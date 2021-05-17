@@ -1,9 +1,11 @@
 #' Shiny Lasso Test
 #'
-#' Tests the shiny lasso module
+#' Tests the shiny lasso module as a stand-alone application.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
@@ -11,6 +13,8 @@
 #'   tomic_table <- tomic[["samples"]] %>% dplyr::filter(nutrient == "G")
 #'   shiny_lasso_test(tomic, tomic_table)
 #' }
+#'
+#' @export
 shiny_lasso_test <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertClass(tomic_table, "data.frame")
@@ -47,10 +51,13 @@ shiny_lasso_test <- function(tomic, tomic_table) {
 
 #' Shiny Lasso Test w/ Reactive Values
 #'
-#' Tests the shiny lasso module
+#' Tests the shiny lasso module as a stand-alone application when the
+#'   \code{tomic} is a \code{reativeVal}.
 #'
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
@@ -61,6 +68,8 @@ shiny_lasso_test <- function(tomic, tomic_table) {
 #'   tomic_table <- tomic[["measurements"]] %>% dplyr::filter(expression < -3)
 #'   shiny_lasso_test_reactval(tomic, tomic_table)
 #' }
+#'
+#' @export
 shiny_lasso_test_reactval <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertClass(tomic_table, "data.frame")
@@ -105,7 +114,11 @@ shiny_lasso_test_reactval <- function(tomic, tomic_table) {
 
 #' Lasso Input
 #'
+#' UI components for the lasso module.
+#'
 #' @inheritParams shiny::moduleServer
+#'
+#' @returns a \code{shiny} UI
 lassoInput <- function(id) {
   ns <- shiny::NS(id)
 
@@ -143,6 +156,8 @@ lassoInput <- function(id) {
 #' @inheritParams shiny::moduleServer
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
+#'
+#' @returns A \code{tomic} object ammended based on the lasso selection.
 lassoServer <- function(id, tomic, tomic_table) {
   shiny::moduleServer(
     id,

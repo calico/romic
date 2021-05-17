@@ -20,5 +20,5 @@ UI function.}
 a tomic_table if return_brushed_points is TRUE, and 0 otherwise
 }
 \description{
-ggBivariate Server
+Server components for the ggBivariate module.
 }

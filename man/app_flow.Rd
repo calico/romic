@@ -9,9 +9,12 @@ app_flow(tomic)
 \arguments{
 \item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
 }
+\value{
+A \code{shiny} app
+}
 \description{
-Comb through datasets by iterating between plotting steps, and lassoing
-  steps to select points of interest
+Using \code{shiny} comb through datasets by iterating between
+  plotting steps, and lassoing steps to select points of interest.
 }
 \examples{
 
@@ -21,4 +24,5 @@ if (interactive()) {
   app_flow(brauer_2008_triple)
   # shiny::reactlogShow()
 }
+
 }
