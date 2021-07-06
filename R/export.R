@@ -15,8 +15,7 @@
 #' }
 #'
 #' @examples
-#'
-#' if (dir.exists("/tmp")) {
+#' if (interactive()) {
 #'   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 #' }
 #'
@@ -27,6 +26,11 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
   checkmate::assertString(name_preamble)
 
   triple_omic <- tomic_to(tomic, "triple_omic")
+
+  message(glue::glue(
+    "Saving {name_preamble}_features.tsv, {name_preamble}_samples.tsv, and
+     {name_preamble}_measurements.tsv to {dir_path}"
+    ))
 
   for (k in c("features", "samples", "measurements")) {
     readr::write_tsv(
@@ -50,7 +54,7 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
 #'
 #' @examples
 #'
-#' if (dir.exists("/tmp")) {
+#' if (interactive()) {
 #'   export_tomic_as_tidy(brauer_2008_triple, "/tmp", "brauer")
 #' }
 #' @export
@@ -61,9 +65,12 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 
   tidy_omic <- tomic_to(tomic, "tidy_omic")
 
+  filename <- paste0(name_preamble, "_tidy.tsv")
+  message(glue::glue("Saving {filename} to {dir_path}"))
+
   readr::write_tsv(
     tidy_omic$data,
-    file = file.path(dir_path, paste0(name_preamble, "_tidy.tsv"))
+    file = file.path(dir_path, filename)
   )
 
   invisible(0)
@@ -73,7 +80,7 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #'
 #' abundances form a matrix with metabolites as rows and samples as columns.
 #'   Use transpose to treat samples as rows
-#'
+#'filename
 #' @inheritParams export_tomic_as_triple
 #' @param value_var measurement variable to use for the matrix
 #' @param transpose if TRUE then samples will be stored as rows
@@ -83,7 +90,7 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #'
 #' @examples
 #'
-#' if (dir.exists("/tmp")) {
+#' if (interactive()) {
 #'   export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
 #' }
 #'
@@ -243,10 +250,13 @@ export_tomic_as_wide <- function(
     output <- cbind(left_matrix, right_matrix)
   }
 
+  filename <- paste0(name_preamble, "_", "wide.tsv")
+  message(glue::glue("Saving {filename} to {dir_path}"))
+
   output %>%
     as.data.frame() %>%
     readr::write_tsv(
-      file = file.path(dir_path, paste0(name_preamble, "_", "wide.tsv")),
+      file = file.path(dir_path, filename),
       col_names = FALSE
     )
 

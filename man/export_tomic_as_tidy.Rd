@@ -23,7 +23,7 @@ Export a data table including all fields from features, samples and
 }
 \examples{
 
-if (dir.exists("/tmp")) {
+if (interactive()) {
   export_tomic_as_tidy(brauer_2008_triple, "/tmp", "brauer")
 }
 }
