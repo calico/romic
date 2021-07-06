@@ -30,10 +30,11 @@ Export one table which contains metabolites as rows and samples
 \description{
 abundances form a matrix with metabolites as rows and samples as columns.
   Use transpose to treat samples as rows
+filename
 }
 \examples{
 
-if (dir.exists("/tmp")) {
+if (interactive()) {
   export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
 }
 

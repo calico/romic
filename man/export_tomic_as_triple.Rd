@@ -26,8 +26,7 @@ Export three tables:
 Export features, samples and measurements tables
 }
 \examples{
-
-if (dir.exists("/tmp")) {
+if (interactive()) {
   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 }
 
