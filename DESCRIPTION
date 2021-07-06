@@ -1,6 +1,6 @@
 Package: romic
 Type: Package
-Title: R for High-Dimensional 'Omic Data
+Title: R for High-Dimensional Omic Data
 Version: 1.0.0
 Authors@R: c(
     person(
