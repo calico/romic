@@ -181,16 +181,17 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
     # check that each measurement is uniquely defined by its feature
     # and sample keys
 
-    measurements_not_unique <- tidy_omic$data %>%
-      dplyr::count(
+    unique_measurement_keys <- tidy_omic$data %>%
+      dplyr::distinct(
         !!rlang::sym(tidy_omic$design$feature_pk),
         !!rlang::sym(tidy_omic$design$sample_pk)
-      ) %>%
-      dplyr::filter(n > 1)
+      )
 
-    if (nrow(measurements_not_unique) != 0) {
+    n_degenerate_keys <- nrow(tidy_omic$data) - nrow(unique_measurement_keys)
+
+    if (n_degenerate_keys != 0) {
       stop(glue::glue(
-        "{nrow(measurements_not_unique)} measurements were present multiple times with
+        "{nrow(n_degenerate_keys)} measurements were present multiple times with
         the same feature and sample primary keys"
       ))
     }
@@ -475,25 +476,25 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
   measurements_features <- triple_omic$measurements[[
   triple_omic$design$feature_pk
   ]]
-  if (class(features_features) != class(measurements_features)) {
+  if (!all(class(features_features) == class(measurements_features))) {
     stop(glue::glue(
       "{triple_omic$design$feature_pk} classes differ between the features
         and measurements table"
     ))
   }
-  if (class(features_features) %in% c("factor", "ordered")) {
+  if (any(class(features_features) %in% c("factor", "ordered"))) {
     checkmate::checkFactor(features_features, levels(measurements_features))
   }
 
   samples_samples <- triple_omic$samples[[triple_omic$design$sample_pk]]
   measurements_samples <- triple_omic$measurements[[triple_omic$design$sample_pk]]
-  if (class(samples_samples) != class(measurements_samples)) {
+  if (!all(class(samples_samples) == class(measurements_samples))) {
     stop(glue::glue(
       "{triple_omic$design$sample_pk} classes differ between the samples
         and measurements table"
     ))
   }
-  if (class(samples_samples) %in% c("factor", "ordered")) {
+  if (any(class(samples_samples) %in% c("factor", "ordered"))) {
     checkmate::checkFactor(samples_samples, levels(measurements_samples))
   }
 
