@@ -22,7 +22,7 @@ CRAN repository db overrides:
 
   Detritus in /tmp
 
-To address this issue I wrapped all export function's examples in interactive()
+To address this issue I wrapped all export functions' examples in interactive()
 checks. Since these examples would no longer run regularly I instead added
 tests of each export function. To ensure this wouldn't cause similar problem
 to the above, I deleted all objects added to /tmp and confirmed removal.

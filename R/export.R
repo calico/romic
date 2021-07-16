@@ -91,11 +91,13 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #'   export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
 #' }
 #' @export
-export_tomic_as_wide <- function(tomic,
-                                 dir_path,
-                                 name_preamble,
-                                 value_var = NULL,
-                                 transpose = FALSE) {
+export_tomic_as_wide <- function(
+  tomic,
+  dir_path,
+  name_preamble,
+  value_var = NULL,
+  transpose = FALSE
+  ) {
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
   checkmate::assertLogical(transpose, len = 1)
