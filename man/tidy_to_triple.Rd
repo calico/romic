@@ -25,5 +25,4 @@ The \code{data} table will be converted into \code{features},
 }
 \examples{
 tidy_to_triple(brauer_2008_tidy)
-
 }

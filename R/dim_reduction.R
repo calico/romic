@@ -14,7 +14,6 @@
 #'
 #' @examples
 #' add_pca_loadings(brauer_2008_triple, npcs = 5)
-#'
 #' @export
 add_pca_loadings <- function(tomic, value_var = NULL, center_rows = TRUE,
                              npcs = NULL, missing_val_method = "drop_samples") {
@@ -96,13 +95,10 @@ add_pca_loadings <- function(tomic, value_var = NULL, center_rows = TRUE,
 #'
 #' @examples
 #' remove_missing_values(brauer_2008_triple)
-#'
 #' @export
-remove_missing_values <- function(
-  tomic,
-  value_var = NULL,
-  missing_val_method = "drop_samples"
-  ) {
+remove_missing_values <- function(tomic,
+                                  value_var = NULL,
+                                  missing_val_method = "drop_samples") {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(
     missing_val_method,

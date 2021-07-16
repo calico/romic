@@ -17,10 +17,17 @@ Maintainer: ‘Sean Hackett <sean@calicolabs.com>’
 
 New submission
 
-Unknown, possibly mis-spelled, fields in DESCRIPTION:
-  ‘BiocViews’
+CRAN repository db overrides:
+  X-CRAN-Comment: Removed on 2021-05-18 for policy violation.
 
-BiocView was needed to find the qvalue package on bioconductor.
+  Detritus in /tmp
+
+To address this issue I wrapped all export functions' examples in interactive()
+checks. Since these examples would no longer run regularly, I instead added
+tests of each export function. To ensure this wouldn't cause similar problem
+to the above, I deleted all objects added to /tmp and confirmed removal.
+Apologies to the CRAN team for this oversight. At Professor Brian Ripley's
+request I delayed resubmission of romic until July.
 
 ## Downstream dependencies
 None

@@ -28,5 +28,4 @@ if (interactive()) {
   tomic_table <- tomic[["measurements"]] \%>\% dplyr::filter(expression < -3)
   shiny_lasso_test_reactval(tomic, tomic_table)
 }
-
 }

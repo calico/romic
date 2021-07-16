@@ -21,5 +21,4 @@ Generate a \code{shiny} interactive heatmap that allows for on demand
 if (interactive()) {
   app_heatmap(brauer_2008_tidy)
 }
-
 }

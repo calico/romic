@@ -33,5 +33,4 @@ tomic_table <- brauer_augmented$samples
 plot_bivariate(tomic_table, "PC1", "PC2", "nutrient")
 plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
-
 }

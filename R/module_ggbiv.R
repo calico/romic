@@ -19,7 +19,6 @@
 #'     plot_table = "measurements"
 #'   )
 #' }
-#'
 #' @export
 shiny_ggbiv_test <- function(tomic, plot_table = "samples") {
   checkmate::assertClass(tomic, "tomic")
@@ -258,7 +257,6 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' plot_bivariate(tomic_table, "PC1", "PC2", "nutrient")
 #' plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 #' plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
-#'
 #' @export
 plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")

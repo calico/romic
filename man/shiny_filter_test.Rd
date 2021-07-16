@@ -22,5 +22,4 @@ Tests the shiny filter module as a stand-alone application.
 if (interactive()) {
   shiny_filter_test(brauer_2008_tidy)
 }
-
 }

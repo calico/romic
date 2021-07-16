@@ -37,5 +37,4 @@ filename
 if (interactive()) {
   export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
 }
-
 }

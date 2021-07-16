@@ -42,7 +42,7 @@ reference:
 - contents:
   - starts_with("shiny")
 - title: "Static Visualizations"
-  desc: "Plotting functions which work will with tomic datasets"
+  desc: "Plotting functions for tomic datasets"
 - contents:
   - starts_with("plot")
   - format_names_for_plotting

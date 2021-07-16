@@ -11,7 +11,6 @@
 #' if (interactive()) {
 #'   shiny_filter_test(brauer_2008_tidy)
 #' }
-#'
 #' @export
 shiny_filter_test <- function(tidy_omic, filter_table = "features") {
   stopifnot("tidy_omic" %in% class(tidy_omic))

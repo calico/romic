@@ -8,7 +8,6 @@
 #'
 #' @examples
 #' get_design_tbl(brauer_2008_triple)
-#'
 #' @export
 get_design_tbl <- function(tomic) {
   tomic$design[c("features", "samples", "measurements")] %>%

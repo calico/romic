@@ -13,7 +13,6 @@
 #'   ac arcu semper erat porttitor egestas. Etiam sagittis, sapien at mattis."
 #'
 #' format_names_for_plotting(chars)
-#'
 #' @export
 format_names_for_plotting <- function(chars, width = 40, truncate_at = 80) {
   as.character(chars) %>%

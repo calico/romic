@@ -29,5 +29,4 @@ if (interactive()) {
     plot_table = "measurements"
   )
 }
-
 }

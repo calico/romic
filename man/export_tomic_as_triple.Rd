@@ -29,5 +29,4 @@ Export features, samples and measurements tables
 if (interactive()) {
   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 }
-
 }

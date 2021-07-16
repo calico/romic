@@ -23,5 +23,4 @@ Takes in any \code{romic} reprsentation of a dataset and returns a specific
 \examples{
 
 tomic_to(brauer_2008_tidy, "triple_omic")
-
 }

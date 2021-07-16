@@ -24,5 +24,4 @@ if (interactive()) {
   tomic_table <- tomic[["samples"]] \%>\% dplyr::filter(nutrient == "G")
   shiny_lasso_test(tomic, tomic_table)
 }
-
 }

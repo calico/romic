@@ -29,5 +29,4 @@ brauer_augmented <- brauer_2008_tidy \%>\%
 
 plot_univariate(brauer_augmented$samples, "PC1", "nutrient")
 plot_univariate(brauer_augmented$measurements, "expression", NULL)
-
 }

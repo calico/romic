@@ -39,5 +39,4 @@ Add Principal Components Analysis Loadings to a tidy or triple omics
 }
 \examples{
 add_pca_loadings(brauer_2008_triple, npcs = 5)
-
 }

@@ -17,7 +17,6 @@
 #'   shiny_gguniv_test(brauer_2008_triple, plot_table = "measurements")
 #'   shiny_gguniv_test(brauer_2008_triple, plot_table = "features")
 #' }
-#'
 #' @export
 shiny_gguniv_test <- function(tomic, plot_table = "samples") {
   checkmate::assertClass(tomic, "tomic")
@@ -225,7 +224,6 @@ ggUnivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #'
 #' plot_univariate(brauer_augmented$samples, "PC1", "nutrient")
 #' plot_univariate(brauer_augmented$measurements, "expression", NULL)
-#'
 #' @export
 plot_univariate <- function(tomic_table, x_var, color_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")

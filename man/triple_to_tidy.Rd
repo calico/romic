@@ -45,5 +45,4 @@ triple_omic <- create_triple_omic(
   "feature_id", "sample_id"
 )
 triple_to_tidy(triple_omic)
-
 }

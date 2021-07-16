@@ -12,7 +12,6 @@
 #' if (interactive()) {
 #'   app_heatmap(brauer_2008_tidy)
 #' }
-#'
 #' @export
 app_heatmap <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
@@ -229,7 +228,11 @@ app_heatmap <- function(tomic) {
           # return either a faceted or unfaced plot
           if (!(is.null(input$feature_facets) & is.null(input$sample_facets))) {
             heatmap_plot() +
-              facet_grid(as.formula(facet_expression()), space = "free", scales = "free")
+              facet_grid(
+                stats::as.formula(facet_expression()),
+                space = "free",
+                scales = "free"
+                )
           } else {
             heatmap_plot()
           }
@@ -291,19 +294,16 @@ app_heatmap <- function(tomic) {
 #'   distance_measure = "corr",
 #'   hclust_method = "complete"
 #' )
-#'
 #' @export
-plot_heatmap <- function(
-  tomic,
-  feature_var = NULL,
-  sample_var = NULL,
-  value_var = NULL,
-  cluster_dim = "both",
-  distance_measure = "dist",
-  hclust_method = "ward.D2",
-  change_threshold = Inf,
-  plot_type = "grob"
-  ) {
+plot_heatmap <- function(tomic,
+                         feature_var = NULL,
+                         sample_var = NULL,
+                         value_var = NULL,
+                         cluster_dim = "both",
+                         distance_measure = "dist",
+                         hclust_method = "ward.D2",
+                         change_threshold = Inf,
+                         plot_type = "grob") {
   checkmate::assertClass(tomic, "tomic")
 
   if ("NULL" %in% class(feature_var)) {
@@ -331,8 +331,8 @@ plot_heatmap <- function(
   if (tomic_sort_status(tidy_omic) == "fully sorted") {
     # pre-sorted data
     clustered_tidy_omic <- tidy_omic
-    # add fields that would be expected had organization occurred using
-    # hclust_tidy_omic()
+    # add fields that would be expected had organization occurred
+    # using hclust_tidy_omic()
     clustered_tidy_omic$data <- clustered_tidy_omic$data %>%
       dplyr::mutate(
         ordered_featureId = !!rlang::sym(clustered_tidy_omic$design$feature_pk),
@@ -396,7 +396,7 @@ plot_heatmap <- function(
       x = "ordered_sampleId",
       y = "ordered_featureId",
       fill = value_var
-      )
+    )
   ) +
     geom_tile() +
     scale_fill_gradient2(
@@ -431,15 +431,13 @@ plot_heatmap <- function(
 }
 
 
-hclust_tidy_omic <- function(
-  tidy_omic,
-  feature_var,
-  sample_var,
-  value_var,
-  cluster_dim,
-  distance_measure = "dist",
-  hclust_method = "ward.D2"
-  ) {
+hclust_tidy_omic <- function(tidy_omic,
+                             feature_var,
+                             sample_var,
+                             value_var,
+                             cluster_dim,
+                             distance_measure = "dist",
+                             hclust_method = "ward.D2") {
   check_tidy_omic(tidy_omic)
 
   checkmate::assertChoice(feature_var, tidy_omic$design$features$variable)
@@ -643,17 +641,14 @@ hclust_tidy_omic <- function(
 #' df <- tidyr::crossing(letters = LETTERS, numbers = 1:10) %>%
 #'   mutate(noise = rnorm(n()))
 #' hclust_order(df, "letters", "numbers", "noise", "rows")
-#'
 #' @export
-hclust_order <- function(
-  df,
-  feature_pk,
-  sample_pk,
-  value_var,
-  cluster_dim,
-  distance_measure = "dist",
-  hclust_method = "ward.D2"
-  ) {
+hclust_order <- function(df,
+                         feature_pk,
+                         sample_pk,
+                         value_var,
+                         cluster_dim,
+                         distance_measure = "dist",
+                         hclust_method = "ward.D2") {
   checkmate::assertDataFrame(df)
   checkmate::assertChoice(feature_pk, colnames(df))
   checkmate::assertChoice(sample_pk, colnames(df))
