@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interactive Heatmap — app_heatmap • romic</title>
+<title>PC Plot — app_pcs • romic</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Interactive Heatmap — app_heatmap" />
-<meta property="og:description" content="Generate a shiny interactive heatmap that allows for on demand
-  filtering, ordering and faceting by variables of interest." />
+<meta property="og:title" content="PC Plot — app_pcs" />
+<meta property="og:description" content="Generate a Shiny interactive scatter plot which allows visualization of
+features, measurements, and samples (with principal components added)." />
 
 
 
@@ -107,17 +107,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interactive Heatmap</h1>
+    <h1>PC Plot</h1>
     
-    <div class="hidden name"><code>app_heatmap.Rd</code></div>
+    <div class="hidden name"><code>app_pcs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate a <code>shiny</code> interactive heatmap that allows for on demand
-  filtering, ordering and faceting by variables of interest.</p>
+    <p>Generate a Shiny interactive scatter plot which allows visualization of
+features, measurements, and samples (with principal components added).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>app_heatmap</span><span class='op'>(</span><span class='va'>tomic</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>app_pcs</span><span class='op'>(</span><span class='va'>tomic</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,9 +133,8 @@
     <p>A <code>shiny</code> app</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>app_heatmap</span><span class='op'>(</span><span class='va'>brauer_2008_tidy</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>app_pcs</span><span class='op'>(</span><span class='va'>brauer_2008_tidy</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 </div></pre>
