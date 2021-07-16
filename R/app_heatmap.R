@@ -3,8 +3,7 @@
 #' Generate a \code{shiny} interactive heatmap that allows for on demand
 #'   filtering, ordering and faceting by variables of interest.
 #'
-#' @param tidy_omic a tidy_omic object constructed from
-#'   \code{\link{create_tidy_omic}}
+#' @inheritParams tomic_to
 #'
 #' @returns A \code{shiny} app
 #'
@@ -15,8 +14,8 @@
 #' }
 #'
 #' @export
-app_heatmap <- function(tidy_omic) {
-  stopifnot("tidy_omic" %in% class(tidy_omic))
+app_heatmap <- function(tomic) {
+  checkmate::assertClass(tomic, "tomic")
 
   shinyApp(
     ui = fluidPage(
@@ -77,23 +76,32 @@ app_heatmap <- function(tidy_omic) {
     server = function(input, output, session) {
 
       # defining options available to user for sorting and filtering
-      design <- tidy_omic$design
-      feature_pk <- design$feature_pk
-      sample_pk <- design$sample_pk
+      design <- tomic$design
+      feature_pk <- tomic$feature_pk
+      sample_pk <- tomic$sample_pk
+
+      # create tomic from tidy_omic or triple_omic
+
+      tidy_omic <- reactive({
+        tomic_to(tomic, "tidy_omic")
+      })
 
       # call filtering module
 
-      tidy_filtered_features <- filterServer(
-        "filter_features",
-        tidy_omic,
-        "features"
-      )
+      tidy_filtered_features <- reactive({
+        req(tidy_omic())
+        tidy_filtered_features <- filterServer(
+          "filter_features",
+          tidy_omic(),
+          "features"
+        )
+      })
 
       tidy_filtered_samples <- reactive({
         req(tidy_filtered_features())
         tidy_filtered_samples <- filterServer(
           "filter_samples",
-          tidy_filtered_features(),
+          tidy_filtered_features()(),
           "samples"
         )
       })
@@ -140,7 +148,7 @@ app_heatmap <- function(tidy_omic) {
 
       shiny::observe({
         shiny::req(facet_expression())
-        print(glue::glue("Faceting with formlua: {facet_expression()}"))
+        print(glue::glue("Faceting with formula: {facet_expression()}"))
       })
 
       # define measurement variables
@@ -221,7 +229,7 @@ app_heatmap <- function(tidy_omic) {
           # return either a faceted or unfaced plot
           if (!(is.null(input$feature_facets) & is.null(input$sample_facets))) {
             heatmap_plot() +
-              facet_grid(facet_expression(), space = "free", scales = "free")
+              facet_grid(as.formula(facet_expression()), space = "free", scales = "free")
           } else {
             heatmap_plot()
           }
@@ -323,6 +331,15 @@ plot_heatmap <- function(
   if (tomic_sort_status(tidy_omic) == "fully sorted") {
     # pre-sorted data
     clustered_tidy_omic <- tidy_omic
+    # add fields that would be expected had organization occurred using
+    # hclust_tidy_omic()
+    clustered_tidy_omic$data <- clustered_tidy_omic$data %>%
+      dplyr::mutate(
+        ordered_featureId = !!rlang::sym(clustered_tidy_omic$design$feature_pk),
+        feature_label = format_names_for_plotting(ordered_featureId),
+        ordered_sampleId = !!rlang::sym(clustered_tidy_omic$design$sample_pk),
+        sample_label = format_names_for_plotting(ordered_sampleId)
+      )
   } else {
     clustered_tidy_omic <- hclust_tidy_omic(
       tidy_omic = tidy_omic,

@@ -477,10 +477,25 @@ sort_tomic <- function(
 tomic_sort_status <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
 
+  if ("tidy_omic" %in% class(tomic)) {
+    is_sorted_features <- class(tomic$data[[tomic$design$feature_pk]]) %in%
+      c("factor", "ordered")
+    is_sorted_samples <- class(tomic$data[[tomic$design$sample_pk]]) %in%
+      c("factor", "ordered")
+  } else if ("tidy_omic" %in% class(brauer_2008_tidy)) {
+    is_sorted_features <- class(tomic$features[[tomic$design$feature_pk]]) %in%
+      c("factor", "ordered")
+    is_sorted_samples <- class(tomic$samples[[tomic$design$sample_pk]]) %in%
+      c("factor", "ordered")
+  } else {
+    stop("undefined behavior")
+  }
+
   status <- dplyr::case_when(
-    !("ordered_featureId" %in% tomic$design$features$variable) ~ "unsorted",
-    !("ordered_sampleId" %in% tomic$design$features$variable) ~ "unsorted",
-    TRUE ~ "fully sorted"
+    is_sorted_features & is_sorted_samples ~ "fully sorted",
+    is_sorted_features ~ "sorted features, unsorted samples",
+    is_sorted_samples ~ "sorted_samples, unsorted features",
+    TRUE ~ "unsorted"
   )
 
   return(status)
