@@ -89,11 +89,13 @@ sortInput <- function(id, sort_table) {
 #' @returns A sorted \code{tomic} object.
 #'
 #' @export
-sortServer <- function(id,
-                       tomic,
-                       sort_table,
-                       valid_sort_vars = NULL,
-                       value_var = NULL) {
+sortServer <- function(
+  id,
+  tomic,
+  sort_table,
+  valid_sort_vars = NULL,
+  value_var = NULL
+  ) {
   checkmate::assertClass(tomic, "tomic")
 
   moduleServer(
