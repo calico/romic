@@ -1,21 +1,20 @@
-#' Scatter Plot
+#' PC Plot
 #'
 #' Generate a Shiny interactive scatter plot which allows visualization of
 #' features, measurements, and samples (with principal components added).
 #'
-#' @param tidy_omic a tidy_omic object constructed from
-#'   \code{\link{create_tidy_omic}}
+#' @inheritParams tomic_to
 #'
 #' @returns A \code{shiny} app
 #'
 #' @examples
 #' if (interactive()) {
-#'   app_scatter(brauer_2008_tidy)
+#'   app_pcs(brauer_2008_tidy)
 #' }
 #'
 #' @export
-app_scatter <- function(tidy_omic) {
-  checkmate::assertClass(tidy_omic, "tidy_omic")
+app_pcs <- function(tomic) {
+  checkmate::assertClass(tomic, "tidy_omic")
 
   shinyApp(
     ui = fluidPage(
@@ -52,27 +51,32 @@ app_scatter <- function(tidy_omic) {
     server = function(input, output, session) {
 
       # defining options available to user for sorting and filtering
-      design <- tidy_omic$design
-      feature_pk <- design$features$variable[
-        design$features$type == "feature_primary_key"
-      ]
-      sample_pk <- design$samples$variable[
-        design$samples$type == "sample_primary_key"
-      ]
+      design <- tomic$design
+      feature_pk <- tomic$feature_pk
+      sample_pk <- tomic$sample_pk
+
+      # create tomic from tidy_omic or triple_omic
+
+      tidy_omic <- reactive({
+        tomic_to(tomic, "tidy_omic")
+      })
 
       # call filtering module
 
-      tidy_filtered_features <- filterServer(
-        "filter_features",
-        tidy_omic,
-        "features"
-      )
+      tidy_filtered_features <- reactive({
+        req(tidy_omic())
+        tidy_filtered_features <- filterServer(
+          "filter_features",
+          tidy_omic(),
+          "features"
+        )
+      })
 
       tidy_filtered_samples <- reactive({
         req(tidy_filtered_features())
         tidy_filtered_samples <- filterServer(
           "filter_samples",
-          tidy_filtered_features(),
+          tidy_filtered_features()(),
           "samples"
         )
       })

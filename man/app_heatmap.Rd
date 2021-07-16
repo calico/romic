@@ -4,11 +4,10 @@
 \alias{app_heatmap}
 \title{Interactive Heatmap}
 \usage{
-app_heatmap(tidy_omic)
+app_heatmap(tomic)
 }
 \arguments{
-\item{tidy_omic}{a tidy_omic object constructed from
-\code{\link{create_tidy_omic}}}
+\item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
 }
 \value{
 A \code{shiny} app
