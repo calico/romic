@@ -18,6 +18,8 @@ remotes::install_github(
   )
 ```
 
+And, check out romic's [https://calico.github.io/romic/index.html](pkgdown site) for organized documentation.
+
 # Concept
 
 ![Romic Logo](https://github.com/calico/romic/blob/main/assets/romic_art/romic.png)
