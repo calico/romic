@@ -21,5 +21,4 @@ Check a tidy or triple 'omic object for common pathologies, such as a
 }
 \examples{
 check_tomic(brauer_2008_triple)
-
 }

@@ -20,5 +20,4 @@ Center each measurement by subtracting the mean.
 }
 \examples{
 center_tomic(brauer_2008_tidy)
-
 }

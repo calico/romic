@@ -27,5 +27,4 @@ if (interactive()) {
   shiny_gguniv_test(brauer_2008_triple, plot_table = "measurements")
   shiny_gguniv_test(brauer_2008_triple, plot_table = "features")
 }
-
 }

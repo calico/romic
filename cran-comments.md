@@ -12,15 +12,8 @@ There were no ERRORs or WARNINGs.
 
 There was 1 NOTE:
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: ‘Sean Hackett <sean@calicolabs.com>’
+x
 
-New submission
-
-Unknown, possibly mis-spelled, fields in DESCRIPTION:
-  ‘BiocViews’
-
-BiocView was needed to find the qvalue package on bioconductor.
 
 ## Downstream dependencies
 None

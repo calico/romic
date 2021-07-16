@@ -68,5 +68,4 @@ filter_tomic(
   filter_table = "features",
   filter_value = rlang::quo(BP == "biological process unknown")
 )
-
 }

@@ -13,7 +13,6 @@
 #'   tomic_table <- tomic[["samples"]] %>% dplyr::filter(nutrient == "G")
 #'   shiny_lasso_test(tomic, tomic_table)
 #' }
-#'
 #' @export
 shiny_lasso_test <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
@@ -68,7 +67,6 @@ shiny_lasso_test <- function(tomic, tomic_table) {
 #'   tomic_table <- tomic[["measurements"]] %>% dplyr::filter(expression < -3)
 #'   shiny_lasso_test_reactval(tomic, tomic_table)
 #' }
-#'
 #' @export
 shiny_lasso_test_reactval <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
@@ -286,7 +284,8 @@ infer_tomic_table_type <- function(tomic, tomic_table) {
 
   if (is.na(table_type)) {
     stop(
-      "based on the \"tomic\" primary keys, tomic_table doesn't appear to be features, samples or measurements"
+      "based on the \"tomic\" primary keys, tomic_table doesn't appear to
+       be features, samples or measurements"
     )
   }
 

@@ -19,7 +19,6 @@
 #'   }))
 #'
 #' update_tomic(brauer_2008_triple, updated_features)
-#'
 #' @export
 update_tomic <- function(tomic, tomic_table) {
   checkmate::assertClass(tomic, "tomic")
@@ -37,8 +36,16 @@ update_tomic <- function(tomic, tomic_table) {
     type = tomic_table %>% purrr::map_chr(~ class(.)[1])
   ) %>%
     dplyr::mutate(
-      type = ifelse(variable == new_design$feature_pk, "feature_primary_key", type),
-      type = ifelse(variable == new_design$sample_pk, "sample_primary_key", type)
+      type = ifelse(
+        variable == new_design$feature_pk,
+        "feature_primary_key",
+        type
+        ),
+      type = ifelse(
+        variable == new_design$sample_pk,
+        "sample_primary_key",
+        type
+        )
     )
 
   triple_omic$design <- new_design
@@ -66,7 +73,6 @@ update_tomic <- function(tomic, tomic_table) {
 #'
 #' @examples
 #' center_tomic(brauer_2008_tidy)
-#'
 #' @export
 center_tomic <- function(tomic, measurement_vars = "all") {
   checkmate::assertClass(tomic, "tomic")
@@ -144,13 +150,10 @@ center <- function(x) {
 #'   mutate(new_sample_var = "foo") %>%
 #'   select(-DR)
 #' new_variable_tables <- c("new_sample_var" = "samples")
-#'
 #' @export
-update_tidy_omic <- function(
-  tidy_omic,
-  updated_tidy_data,
-  new_variable_tables = c()) {
-
+update_tidy_omic <- function(tidy_omic,
+                             updated_tidy_data,
+                             new_variable_tables = c()) {
   checkmate::assertClass(tidy_omic, "tomic")
   checkmate::assertClass(tidy_omic, "tidy_omic")
   checkmate::assertDataFrame(updated_tidy_data)
@@ -395,16 +398,12 @@ sort_triple_arrange <- function(triple_omic, sort_table, sort_variables) {
 #'     sort_table = "features",
 #'     value_var = "expression"
 #'   )
-#'
 #' @export
-sort_tomic <- function(
-  tomic,
-  sort_type,
-  sort_table,
-  sort_variables = NULL,
-  value_var = NULL
-  ) {
-
+sort_tomic <- function(tomic,
+                       sort_type,
+                       sort_table,
+                       sort_variables = NULL,
+                       value_var = NULL) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(sort_type, c("hclust", "arrange"))
   checkmate::assertChoice(sort_table, c("features", "samples"))
@@ -472,7 +471,6 @@ sort_tomic <- function(
 #' @examples
 #'
 #' tomic_sort_status(brauer_2008_tidy)
-#'
 #' @export
 tomic_sort_status <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
@@ -482,7 +480,7 @@ tomic_sort_status <- function(tomic) {
       c("factor", "ordered")
     is_sorted_samples <- class(tomic$data[[tomic$design$sample_pk]]) %in%
       c("factor", "ordered")
-  } else if ("tidy_omic" %in% class(brauer_2008_tidy)) {
+  } else if ("tidy_omic" %in% class(tomic)) {
     is_sorted_features <- class(tomic$features[[tomic$design$feature_pk]]) %in%
       c("factor", "ordered")
     is_sorted_samples <- class(tomic$samples[[tomic$design$sample_pk]]) %in%

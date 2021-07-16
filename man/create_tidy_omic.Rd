@@ -80,5 +80,4 @@ create_tidy_omic(raw_tidy_omic,
   feature_vars = "feature_group", sample_pk = "sample_id",
   sample_vars = "sample_group"
 )
-
 }

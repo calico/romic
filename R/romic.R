@@ -49,4 +49,3 @@ utils::globalVariables(c(
   "Sepal.Length",
   "Sepal.Width"
 ))
-

@@ -33,5 +33,4 @@ Account for missing values by dropping features, samples or using
 }
 \examples{
 remove_missing_values(brauer_2008_triple)
-
 }

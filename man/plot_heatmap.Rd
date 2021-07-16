@@ -72,5 +72,4 @@ plot_heatmap(
   distance_measure = "corr",
   hclust_method = "complete"
 )
-
 }

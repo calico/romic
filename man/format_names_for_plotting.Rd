@@ -25,5 +25,4 @@ chars <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
   ac arcu semper erat porttitor egestas. Etiam sagittis, sapien at mattis."
 
 format_names_for_plotting(chars)
-
 }

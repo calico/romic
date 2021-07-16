@@ -20,5 +20,4 @@ Determine whether features &/or samples have been sorted and stored as
 \examples{
 
 tomic_sort_status(brauer_2008_tidy)
-
 }

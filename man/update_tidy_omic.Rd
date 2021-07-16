@@ -31,5 +31,4 @@ updated_tidy_data <- tidy_omic$data \%>\%
   mutate(new_sample_var = "foo") \%>\%
   select(-DR)
 new_variable_tables <- c("new_sample_var" = "samples")
-
 }

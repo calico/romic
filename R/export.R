@@ -18,10 +18,8 @@
 #' if (interactive()) {
 #'   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 #' }
-#'
 #' @export
 export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
-
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
 
@@ -30,11 +28,11 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
   message(glue::glue(
     "Saving {name_preamble}_features.tsv, {name_preamble}_samples.tsv, and
      {name_preamble}_measurements.tsv to {dir_path}"
-    ))
+  ))
 
   for (k in c("features", "samples", "measurements")) {
     readr::write_tsv(
-      tomic[[k]],
+      triple_omic[[k]],
       file = file.path(dir_path, paste0(name_preamble, "_", k, ".tsv"))
     )
   }
@@ -59,7 +57,6 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
 #' }
 #' @export
 export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
-
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
 
@@ -80,7 +77,7 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #'
 #' abundances form a matrix with metabolites as rows and samples as columns.
 #'   Use transpose to treat samples as rows
-#'filename
+#' filename
 #' @inheritParams export_tomic_as_triple
 #' @param value_var measurement variable to use for the matrix
 #' @param transpose if TRUE then samples will be stored as rows
@@ -93,16 +90,12 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #' if (interactive()) {
 #'   export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
 #' }
-#'
 #' @export
-export_tomic_as_wide <- function(
-  tomic,
-  dir_path,
-  name_preamble,
-  value_var = NULL,
-  transpose = FALSE
-) {
-
+export_tomic_as_wide <- function(tomic,
+                                 dir_path,
+                                 name_preamble,
+                                 value_var = NULL,
+                                 transpose = FALSE) {
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
   checkmate::assertLogical(transpose, len = 1)
@@ -113,8 +106,10 @@ export_tomic_as_wide <- function(
   valid_value_vars <- design$measurements %>%
     dplyr::filter(
       !(type %in% c("feature_primary_key", "sample_primary_key"))
-      ) %>%
-    {.$variable}
+    ) %>%
+    {
+      .$variable
+    }
 
   if (is.null(value_var)) {
     if (length(valid_value_vars) == 1) {
@@ -124,7 +119,7 @@ export_tomic_as_wide <- function(
         "\"value_var\" was not provided and an appropriate value could not
         - be automatically chosen since there are {length(valid_value_vars)}
         - valid value variables: {paste(valid_value_vars, collapse = ', ')}"
-        ))
+      ))
     }
   } else {
     checkmate::assertChoice(value_var, valid_value_vars)
@@ -134,7 +129,7 @@ export_tomic_as_wide <- function(
   if (transpose) {
     cast_formula <- stats::as.formula(glue::glue(
       "{design$sample_pk} ~ {design$feature_pk}"
-      ))
+    ))
   } else {
     cast_formula <- stats::as.formula(glue::glue(
       "{design$feature_pk} ~ {design$sample_pk}"
@@ -170,8 +165,8 @@ export_tomic_as_wide <- function(
   ordered_samples <- triple_omic$samples %>%
     dplyr::mutate(!!rlang::sym(design$sample_pk) := factor(
       !!rlang::sym(design$sample_pk),
-      levels = sample_labels)
-      ) %>%
+      levels = sample_labels
+    )) %>%
     dplyr::arrange(!!rlang::sym(design$sample_pk)) %>%
     dplyr::mutate_all(as.character)
 
@@ -179,19 +174,18 @@ export_tomic_as_wide <- function(
     dplyr::mutate(!!rlang::sym(design$feature_pk) := factor(
       !!rlang::sym(design$feature_pk),
       levels = feature_labels
-      )) %>%
+    )) %>%
     dplyr::arrange(!!rlang::sym(design$feature_pk)) %>%
     dplyr::mutate_if(is.numeric, round, 3) %>%
     dplyr::mutate_all(as.character)
 
   if (transpose) {
-
     stopifnot(
       rownames(measurements_matrix) == ordered_samples[[design$sample_pk]]
-      )
+    )
     stopifnot(
       colnames(measurements_matrix) == ordered_features[[design$feature_pk]]
-      )
+    )
 
     left_matrix <- rbind(
       top_left_void,
@@ -217,13 +211,12 @@ export_tomic_as_wide <- function(
 
     output <- cbind(left_matrix, right_matrix)
   } else {
-
     stopifnot(
       rownames(measurements_matrix) == ordered_features[[design$feature_pk]]
-      )
+    )
     stopifnot(
       colnames(measurements_matrix) == ordered_samples[[design$sample_pk]]
-      )
+    )
 
     left_matrix <- rbind(
       top_left_void,

@@ -29,5 +29,4 @@ updated_features <- brauer_2008_triple$features \%>\%
   }))
 
 update_tomic(brauer_2008_triple, updated_features)
-
 }

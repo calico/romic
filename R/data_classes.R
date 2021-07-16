@@ -56,16 +56,13 @@
 #'   feature_vars = "feature_group", sample_pk = "sample_id",
 #'   sample_vars = "sample_group"
 #' )
-#'
 #' @export
-create_tidy_omic <- function(
-  df,
-  feature_pk,
-  feature_vars = NULL,
-  sample_pk,
-  sample_vars = NULL,
-  omic_type_tag = "general"
-  ) {
+create_tidy_omic <- function(df,
+                             feature_pk,
+                             feature_vars = NULL,
+                             sample_pk,
+                             sample_vars = NULL,
+                             omic_type_tag = "general") {
   checkmate::assertDataFrame(df)
   checkmate::assertString(omic_type_tag)
   checkmate::assertChoice(feature_pk, colnames(df))
@@ -334,16 +331,13 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 #'   measurement_df, feature_df, sample_df,
 #'   "feature_id", "sample_id"
 #' )
-#'
 #' @export
-create_triple_omic <- function(
-  measurement_df,
-  feature_df = NULL,
-  sample_df = NULL,
-  feature_pk,
-  sample_pk,
-  omic_type_tag = "general"
-  ) {
+create_triple_omic <- function(measurement_df,
+                               feature_df = NULL,
+                               sample_df = NULL,
+                               feature_pk,
+                               sample_pk,
+                               omic_type_tag = "general") {
 
   # testing
 
@@ -487,7 +481,9 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
   }
 
   samples_samples <- triple_omic$samples[[triple_omic$design$sample_pk]]
-  measurements_samples <- triple_omic$measurements[[triple_omic$design$sample_pk]]
+  measurements_samples <- triple_omic$measurements[[
+    triple_omic$design$sample_pk
+    ]]
   if (!all(class(samples_samples) == class(measurements_samples))) {
     stop(glue::glue(
       "{triple_omic$design$sample_pk} classes differ between the samples
@@ -583,7 +579,6 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
 #'   "feature_id", "sample_id"
 #' )
 #' triple_to_tidy(triple_omic)
-#'
 #' @export
 triple_to_tidy <- function(triple_omic) {
   check_triple_omic(triple_omic)
@@ -622,7 +617,6 @@ triple_to_tidy <- function(triple_omic) {
 #'
 #' @examples
 #' tidy_to_triple(brauer_2008_tidy)
-#'
 #' @export
 tidy_to_triple <- function(tidy_omic) {
   check_tidy_omic(tidy_omic)
@@ -682,16 +676,13 @@ tidy_to_triple <- function(tidy_omic) {
 #'   feature_pk = "name",
 #'   feature_vars = c("BP", "MF", "systematic_name")
 #' )
-#'
 #' @export
-convert_wide_to_tidy_omic <- function(
-  wide_df,
-  feature_pk,
-  feature_vars = NULL,
-  sample_var = "sample",
-  measurement_var = "abundance",
-  omic_type_tag = "general"
-  ) {
+convert_wide_to_tidy_omic <- function(wide_df,
+                                      feature_pk,
+                                      feature_vars = NULL,
+                                      sample_var = "sample",
+                                      measurement_var = "abundance",
+                                      omic_type_tag = "general") {
   checkmate::assertDataFrame(wide_df)
   checkmate::assertChoice(feature_pk, colnames(wide_df))
   stopifnot(class(feature_vars) %in% c("character", "NULL"))
@@ -818,7 +809,6 @@ convert_wide_to_tidy_omic <- function(
 #' @examples
 #'
 #' tomic_to(brauer_2008_tidy, "triple_omic")
-#'
 #' @export
 tomic_to <- function(tomic, to_class) {
   checkmate::assertClass(tomic, "tomic")
@@ -857,7 +847,6 @@ tomic_to <- function(tomic, to_class) {
 #'
 #' @examples
 #' check_tomic(brauer_2008_triple)
-#'
 #' @export
 check_tomic <- function(tomic, fast_check = TRUE) {
   checkmate::assertClass(tomic, "tomic")

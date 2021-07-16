@@ -11,7 +11,6 @@
 #' if (interactive()) {
 #'   app_pcs(brauer_2008_tidy)
 #' }
-#'
 #' @export
 app_pcs <- function(tomic) {
   checkmate::assertClass(tomic, "tidy_omic")

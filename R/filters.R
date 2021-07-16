@@ -50,15 +50,12 @@
 #'   filter_table = "features",
 #'   filter_value = rlang::quo(BP == "biological process unknown")
 #' )
-#'
 #' @export
-filter_tomic <- function(
-  tomic,
-  filter_type,
-  filter_table,
-  filter_value,
-  filter_variable = NULL
-  ) {
+filter_tomic <- function(tomic,
+                         filter_type,
+                         filter_table,
+                         filter_value,
+                         filter_variable = NULL) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(filter_type, c("category", "range", "quo"))
   checkmate::assertChoice(
@@ -100,7 +97,6 @@ filter_tomic <- function(
   }
 
   if (filter_type == "category") {
-
     checkmate::assertVector(filter_value)
 
     triple_omic[[filter_table]] <- triple_omic[[filter_table]] %>%

@@ -17,5 +17,4 @@ Get a tabular summary of all variables.
 }
 \examples{
 get_design_tbl(brauer_2008_triple)
-
 }

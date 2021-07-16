@@ -55,5 +55,4 @@ sort_tomic(brauer_2008_triple,
     sort_table = "features",
     value_var = "expression"
   )
-
 }

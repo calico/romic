@@ -1,5 +1,4 @@
 test_that("Read and Write Triple Omics", {
-
   if (dir.exists("/tmp")) {
     export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 
@@ -34,7 +33,7 @@ test_that("Read and Write Triple Omics", {
           BP = stringr::str_replace_na(BP, "")
         ),
       brauer_2008_triple$features
-      )
+    )
 
     expect_equal(
       tomic$samples,
@@ -49,7 +48,6 @@ test_that("Read and Write Triple Omics", {
 })
 
 test_that("Read and Write Tidy Omics", {
-
   if (dir.exists("/tmp")) {
     export_tomic_as_tidy(brauer_2008_tidy, "/tmp", "brauer")
 
@@ -81,9 +79,7 @@ test_that("Read and Write Tidy Omics", {
 })
 
 test_that("Read and Write Wide Data", {
-
   if (dir.exists("/tmp")) {
-
     export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
 
     wide_path <- file.path("/tmp", "brauer_wide.tsv")

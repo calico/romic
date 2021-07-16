@@ -50,5 +50,4 @@ convert_wide_to_tidy_omic(wide_df,
   feature_pk = "name",
   feature_vars = c("BP", "MF", "systematic_name")
 )
-
 }

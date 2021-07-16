@@ -20,5 +20,4 @@ features, measurements, and samples (with principal components added).
 if (interactive()) {
   app_pcs(brauer_2008_tidy)
 }
-
 }

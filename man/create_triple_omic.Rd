@@ -78,5 +78,4 @@ triple_omic <- create_triple_omic(
   measurement_df, feature_df, sample_df,
   "feature_id", "sample_id"
 )
-
 }

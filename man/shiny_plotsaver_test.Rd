@@ -17,5 +17,4 @@ Test the shiny plotsaver module as a stand-alone application.
 if (interactive()) {
   shiny_plotsaver_test()
 }
-
 }

@@ -19,7 +19,11 @@ test_that("hclust creates sane orders - synthetic example", {
   groups <- tibble::tibble(letters = hclust_order(
     dat, "letters", "lc_letters", "value", "rows"
   )$rows) %>%
-    left_join(dat %>% distinct(mu, letters), by = "letters") %>%
+    left_join(
+      dat %>%
+        distinct(mu, letters),
+      by = "letters"
+      ) %>%
     dplyr::mutate(.entry = 1:n()) %>%
     dplyr::group_by(mu) %>%
     dplyr::summarize(val = sum(.entry))

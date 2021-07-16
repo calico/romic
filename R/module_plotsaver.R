@@ -9,7 +9,6 @@
 #' if (interactive()) {
 #'   shiny_plotsaver_test()
 #' }
-#'
 #' @export
 shiny_plotsaver_test <- function() {
   shinyApp(
