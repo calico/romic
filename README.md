@@ -18,7 +18,7 @@ remotes::install_github(
   )
 ```
 
-And, check out romic's [https://calico.github.io/romic/index.html](pkgdown site) for organized documentation.
+And, check out romic's [pkgdown site](https://calico.github.io/romic/index.html) for organized documentation.
 
 # Concept
 
