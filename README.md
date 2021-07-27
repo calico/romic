@@ -1,6 +1,8 @@
 ROMIC standardizes the formatting of genomic data to open up general visualizations approaches which can be used for exploratory data analysis (EDA).
 
 <!-- badges: start -->
+[![CRAN
+status](https://www.r-pkg.org/badges/version/romic)](https://cran.r-project.org/package=romic)
 [![R build status](https://github.com/calico/romic/workflows/R-CMD-check/badge.svg)](https://github.com/calico/romic/actions)
 <!-- badges: end -->
 
