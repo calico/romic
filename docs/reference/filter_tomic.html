@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -170,7 +170,7 @@
   filter_value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"biological process unknown"</span>, <span class='st'>"vacuolar acidification"</span><span class='op'>)</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; $features
-#&gt; <span style='color: #949494;'># A tibble: 110 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 110 × 4</span>
 #&gt;    name    BP                         MF                         systematic_name
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biological process unknown molecular function unknown YOL029C        
@@ -186,7 +186,7 @@
 #&gt; <span style='color: #949494;'># … with 100 more rows</span>
 #&gt; 
 #&gt; $samples
-#&gt; <span style='color: #949494;'># A tibble: 36 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 36 × 3</span>
 #&gt;    sample nutrient    DR
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> G0.05  G         0.05
@@ -202,7 +202,7 @@
 #&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
 #&gt; $measurements
-#&gt; <span style='color: #949494;'># A tibble: 3,960 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 3,960 × 3</span>
 #&gt;    name    sample expression
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C G0.05       -<span style='color: #BB0000;'>0.22</span>
@@ -219,7 +219,7 @@
 #&gt; 
 #&gt; $design
 #&gt; $design$features
-#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 4 × 2</span>
 #&gt;   variable        type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name            feature_primary_key
@@ -228,7 +228,7 @@
 #&gt; <span style='color: #BCBCBC;'>4</span> MF              character          
 #&gt; 
 #&gt; $design$samples
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable type              
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
 #&gt; <span style='color: #BCBCBC;'>1</span> sample   sample_primary_key
@@ -236,7 +236,7 @@
 #&gt; <span style='color: #BCBCBC;'>3</span> DR       numeric           
 #&gt; 
 #&gt; $design$measurements
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable   type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name       feature_primary_key
@@ -260,23 +260,23 @@
   filter_value <span class='op'>=</span> <span class='fl'>0.05</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; $features
-#&gt; <span style='color: #949494;'># A tibble: 500 x 4</span>
-#&gt;    name   BP                            MF                       systematic_name
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
-#&gt; <span style='color: #BCBCBC;'> 1</span> YOL02… biological process unknown    molecular function unkn… YOL029C        
-#&gt; <span style='color: #BCBCBC;'> 2</span> SCW11  cytokinesis, completion of s… glucan 1,3-beta-glucosi… YGL028C        
-#&gt; <span style='color: #BCBCBC;'> 3</span> YHR03… biological process unknown    molecular function unkn… YHR036W        
-#&gt; <span style='color: #BCBCBC;'> 4</span> BGL2   cell wall organization and b… glucan 1,3-beta-glucosi… YGR282C        
-#&gt; <span style='color: #BCBCBC;'> 5</span> ACT1   cell wall organization and b… structural constituent … YFL039C        
-#&gt; <span style='color: #BCBCBC;'> 6</span> FKH1   pseudohyphal growth*          transcription factor ac… YIL131C        
-#&gt; <span style='color: #BCBCBC;'> 7</span> HOC1   cell wall mannoprotein biosy… transferase activity, t… YJR075W        
-#&gt; <span style='color: #BCBCBC;'> 8</span> CSN12  adaptation to pheromone duri… molecular function unkn… YJR084W        
-#&gt; <span style='color: #BCBCBC;'> 9</span> YAL04… biological process unknown    molecular function unkn… YAL046C        
-#&gt; <span style='color: #BCBCBC;'>10</span> SLG1   cell wall organization and b… transmembrane receptor … YOR008C        
+#&gt; <span style='color: #949494;'># A tibble: 500 × 4</span>
+#&gt;    name    BP                            MF                      systematic_name
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
+#&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biological process unknown    molecular function unk… YOL029C        
+#&gt; <span style='color: #BCBCBC;'> 2</span> SCW11   cytokinesis, completion of s… glucan 1,3-beta-glucos… YGL028C        
+#&gt; <span style='color: #BCBCBC;'> 3</span> YHR036W biological process unknown    molecular function unk… YHR036W        
+#&gt; <span style='color: #BCBCBC;'> 4</span> BGL2    cell wall organization and b… glucan 1,3-beta-glucos… YGR282C        
+#&gt; <span style='color: #BCBCBC;'> 5</span> ACT1    cell wall organization and b… structural constituent… YFL039C        
+#&gt; <span style='color: #BCBCBC;'> 6</span> FKH1    pseudohyphal growth*          transcription factor a… YIL131C        
+#&gt; <span style='color: #BCBCBC;'> 7</span> HOC1    cell wall mannoprotein biosy… transferase activity, … YJR075W        
+#&gt; <span style='color: #BCBCBC;'> 8</span> CSN12   adaptation to pheromone duri… molecular function unk… YJR084W        
+#&gt; <span style='color: #BCBCBC;'> 9</span> YAL046C biological process unknown    molecular function unk… YAL046C        
+#&gt; <span style='color: #BCBCBC;'>10</span> SLG1    cell wall organization and b… transmembrane receptor… YOR008C        
 #&gt; <span style='color: #949494;'># … with 490 more rows</span>
 #&gt; 
 #&gt; $samples
-#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 6 × 3</span>
 #&gt;   sample nutrient    DR
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> G0.05  G         0.05
@@ -287,7 +287,7 @@
 #&gt; <span style='color: #BCBCBC;'>6</span> U0.05  U         0.05
 #&gt; 
 #&gt; $measurements
-#&gt; <span style='color: #949494;'># A tibble: 3,000 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 3,000 × 3</span>
 #&gt;    name    sample expression
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C G0.05       -<span style='color: #BB0000;'>0.22</span>
@@ -304,7 +304,7 @@
 #&gt; 
 #&gt; $design
 #&gt; $design$features
-#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 4 × 2</span>
 #&gt;   variable        type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name            feature_primary_key
@@ -313,7 +313,7 @@
 #&gt; <span style='color: #BCBCBC;'>4</span> MF              character          
 #&gt; 
 #&gt; $design$samples
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable type              
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
 #&gt; <span style='color: #BCBCBC;'>1</span> sample   sample_primary_key
@@ -321,7 +321,7 @@
 #&gt; <span style='color: #BCBCBC;'>3</span> DR       numeric           
 #&gt; 
 #&gt; $design$measurements
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable   type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name       feature_primary_key
@@ -345,24 +345,24 @@
   filter_value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.2</span><span class='op'>)</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; $data
-#&gt; <span style='color: #949494;'># A tibble: 12,000 x 8</span>
-#&gt;    name   BP         MF         systematic_name sample nutrient    DR expression
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> YOL02… biologica… molecular… YOL029C         G0.05  G         0.05      -<span style='color: #BB0000;'>0.22</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span> YOL02… biologica… molecular… YOL029C         G0.1   G         0.1       -<span style='color: #BB0000;'>0.18</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span> YOL02… biologica… molecular… YOL029C         G0.15  G         0.15       0.27
-#&gt; <span style='color: #BCBCBC;'> 4</span> YOL02… biologica… molecular… YOL029C         G0.2   G         0.2        0.18
-#&gt; <span style='color: #BCBCBC;'> 5</span> YOL02… biologica… molecular… YOL029C         N0.05  N         0.05       0.26
-#&gt; <span style='color: #BCBCBC;'> 6</span> YOL02… biologica… molecular… YOL029C         N0.1   N         0.1        0.15
-#&gt; <span style='color: #BCBCBC;'> 7</span> YOL02… biologica… molecular… YOL029C         N0.15  N         0.15       0.04
-#&gt; <span style='color: #BCBCBC;'> 8</span> YOL02… biologica… molecular… YOL029C         N0.2   N         0.2       -<span style='color: #BB0000;'>0.07</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span> YOL02… biologica… molecular… YOL029C         P0.05  P         0.05      -<span style='color: #BB0000;'>0.55</span>
-#&gt; <span style='color: #BCBCBC;'>10</span> YOL02… biologica… molecular… YOL029C         P0.1   P         0.1       -<span style='color: #BB0000;'>0.67</span>
+#&gt; <span style='color: #949494;'># A tibble: 12,000 × 8</span>
+#&gt;    name    BP         MF        systematic_name sample nutrient    DR expression
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biologica… molecula… YOL029C         G0.05  G         0.05      -<span style='color: #BB0000;'>0.22</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> YOL029C biologica… molecula… YOL029C         G0.1   G         0.1       -<span style='color: #BB0000;'>0.18</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> YOL029C biologica… molecula… YOL029C         G0.15  G         0.15       0.27
+#&gt; <span style='color: #BCBCBC;'> 4</span> YOL029C biologica… molecula… YOL029C         G0.2   G         0.2        0.18
+#&gt; <span style='color: #BCBCBC;'> 5</span> YOL029C biologica… molecula… YOL029C         N0.05  N         0.05       0.26
+#&gt; <span style='color: #BCBCBC;'> 6</span> YOL029C biologica… molecula… YOL029C         N0.1   N         0.1        0.15
+#&gt; <span style='color: #BCBCBC;'> 7</span> YOL029C biologica… molecula… YOL029C         N0.15  N         0.15       0.04
+#&gt; <span style='color: #BCBCBC;'> 8</span> YOL029C biologica… molecula… YOL029C         N0.2   N         0.2       -<span style='color: #BB0000;'>0.07</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> YOL029C biologica… molecula… YOL029C         P0.05  P         0.05      -<span style='color: #BB0000;'>0.55</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> YOL029C biologica… molecula… YOL029C         P0.1   P         0.1       -<span style='color: #BB0000;'>0.67</span>
 #&gt; <span style='color: #949494;'># … with 11,990 more rows</span>
 #&gt; 
 #&gt; $design
 #&gt; $design$features
-#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 4 × 2</span>
 #&gt;   variable        type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name            feature_primary_key
@@ -371,7 +371,7 @@
 #&gt; <span style='color: #BCBCBC;'>4</span> MF              character          
 #&gt; 
 #&gt; $design$samples
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable type              
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
 #&gt; <span style='color: #BCBCBC;'>1</span> sample   sample_primary_key
@@ -379,7 +379,7 @@
 #&gt; <span style='color: #BCBCBC;'>3</span> DR       numeric           
 #&gt; 
 #&gt; $design$measurements
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable   type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name       feature_primary_key
@@ -402,7 +402,7 @@
   filter_value <span class='op'>=</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quo</a></span><span class='op'>(</span><span class='va'>BP</span> <span class='op'>==</span> <span class='st'>"biological process unknown"</span><span class='op'>)</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; $features
-#&gt; <span style='color: #949494;'># A tibble: 110 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 110 × 4</span>
 #&gt;    name    BP                         MF                         systematic_name
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biological process unknown molecular function unknown YOL029C        
@@ -418,7 +418,7 @@
 #&gt; <span style='color: #949494;'># … with 100 more rows</span>
 #&gt; 
 #&gt; $samples
-#&gt; <span style='color: #949494;'># A tibble: 36 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 36 × 3</span>
 #&gt;    sample nutrient    DR
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> G0.05  G         0.05
@@ -434,7 +434,7 @@
 #&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
 #&gt; $measurements
-#&gt; <span style='color: #949494;'># A tibble: 3,960 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 3,960 × 3</span>
 #&gt;    name    sample expression
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C G0.05       -<span style='color: #BB0000;'>0.22</span>
@@ -451,7 +451,7 @@
 #&gt; 
 #&gt; $design
 #&gt; $design$features
-#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 4 × 2</span>
 #&gt;   variable        type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name            feature_primary_key
@@ -460,7 +460,7 @@
 #&gt; <span style='color: #BCBCBC;'>4</span> MF              character          
 #&gt; 
 #&gt; $design$samples
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable type              
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
 #&gt; <span style='color: #BCBCBC;'>1</span> sample   sample_primary_key
@@ -468,7 +468,7 @@
 #&gt; <span style='color: #BCBCBC;'>3</span> DR       numeric           
 #&gt; 
 #&gt; $design$measurements
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable   type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name       feature_primary_key
