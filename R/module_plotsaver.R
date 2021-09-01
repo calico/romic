@@ -103,7 +103,7 @@ plotsaverInput <- function(id, ui_format = "tall") {
 #' @inheritParams shiny::moduleServer
 #' @param grob a ggplot2 plot
 #' @param filename filename for saving plot. The extension will be respected
-#'  by \link[ggplot2]{ggave}.
+#'  by \link[ggplot2]{ggsave}.
 #'
 #' @returns None
 #'

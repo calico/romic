@@ -13,7 +13,7 @@ UI function.}
 \item{grob}{a ggplot2 plot}
 
 \item{filename}{filename for saving plot. The extension will be respected
-by \link[ggplot2]{ggave}.}
+by \link[ggplot2]{ggsave}.}
 }
 \value{
 None
