@@ -4,11 +4,17 @@
 \alias{plotsaverInput}
 \title{Plot Saver Input}
 \usage{
-plotsaverInput(id)
+plotsaverInput(id, ui_format = "tall")
 }
 \arguments{
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
+
+\item{ui_format}{Set UI appearance
+\describe{
+  \item{tall}{stack all UI elements}
+  \item{wide}{UI elements are side-by-side}
+}}
 }
 \value{
 a \code{shiny} UI
