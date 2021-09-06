@@ -4,13 +4,16 @@
 \alias{plotsaverServer}
 \title{Plot Saver Server}
 \usage{
-plotsaverServer(id, grob)
+plotsaverServer(id, grob, filename = "grob.png")
 }
 \arguments{
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
 
 \item{grob}{a ggplot2 plot}
+
+\item{filename}{filename for saving plot. The extension will be respected
+by \link[ggplot2]{ggsave}.}
 }
 \value{
 None

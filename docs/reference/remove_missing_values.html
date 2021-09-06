@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -154,23 +154,23 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>remove_missing_values</span><span class='op'>(</span><span class='va'>brauer_2008_triple</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 40 features dropped due to missing values</div><div class='output co'>#&gt; $features
-#&gt; <span style='color: #949494;'># A tibble: 460 x 4</span>
-#&gt;    name   BP                            MF                       systematic_name
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
-#&gt; <span style='color: #BCBCBC;'> 1</span> YOL02… biological process unknown    molecular function unkn… YOL029C        
-#&gt; <span style='color: #BCBCBC;'> 2</span> SCW11  cytokinesis, completion of s… glucan 1,3-beta-glucosi… YGL028C        
-#&gt; <span style='color: #BCBCBC;'> 3</span> YHR03… biological process unknown    molecular function unkn… YHR036W        
-#&gt; <span style='color: #BCBCBC;'> 4</span> BGL2   cell wall organization and b… glucan 1,3-beta-glucosi… YGR282C        
-#&gt; <span style='color: #BCBCBC;'> 5</span> ACT1   cell wall organization and b… structural constituent … YFL039C        
-#&gt; <span style='color: #BCBCBC;'> 6</span> FKH1   pseudohyphal growth*          transcription factor ac… YIL131C        
-#&gt; <span style='color: #BCBCBC;'> 7</span> HOC1   cell wall mannoprotein biosy… transferase activity, t… YJR075W        
-#&gt; <span style='color: #BCBCBC;'> 8</span> CSN12  adaptation to pheromone duri… molecular function unkn… YJR084W        
-#&gt; <span style='color: #BCBCBC;'> 9</span> YAL04… biological process unknown    molecular function unkn… YAL046C        
-#&gt; <span style='color: #BCBCBC;'>10</span> SLG1   cell wall organization and b… transmembrane receptor … YOR008C        
+#&gt; <span style='color: #949494;'># A tibble: 460 × 4</span>
+#&gt;    name    BP                            MF                      systematic_name
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
+#&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biological process unknown    molecular function unk… YOL029C        
+#&gt; <span style='color: #BCBCBC;'> 2</span> SCW11   cytokinesis, completion of s… glucan 1,3-beta-glucos… YGL028C        
+#&gt; <span style='color: #BCBCBC;'> 3</span> YHR036W biological process unknown    molecular function unk… YHR036W        
+#&gt; <span style='color: #BCBCBC;'> 4</span> BGL2    cell wall organization and b… glucan 1,3-beta-glucos… YGR282C        
+#&gt; <span style='color: #BCBCBC;'> 5</span> ACT1    cell wall organization and b… structural constituent… YFL039C        
+#&gt; <span style='color: #BCBCBC;'> 6</span> FKH1    pseudohyphal growth*          transcription factor a… YIL131C        
+#&gt; <span style='color: #BCBCBC;'> 7</span> HOC1    cell wall mannoprotein biosy… transferase activity, … YJR075W        
+#&gt; <span style='color: #BCBCBC;'> 8</span> CSN12   adaptation to pheromone duri… molecular function unk… YJR084W        
+#&gt; <span style='color: #BCBCBC;'> 9</span> YAL046C biological process unknown    molecular function unk… YAL046C        
+#&gt; <span style='color: #BCBCBC;'>10</span> SLG1    cell wall organization and b… transmembrane receptor… YOR008C        
 #&gt; <span style='color: #949494;'># … with 450 more rows</span>
 #&gt; 
 #&gt; $samples
-#&gt; <span style='color: #949494;'># A tibble: 36 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 36 × 3</span>
 #&gt;    sample nutrient    DR
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> G0.05  G         0.05
@@ -186,7 +186,7 @@
 #&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
 #&gt; $measurements
-#&gt; <span style='color: #949494;'># A tibble: 16,560 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 16,560 × 3</span>
 #&gt;    name    sample expression
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C G0.05       -<span style='color: #BB0000;'>0.22</span>
@@ -203,7 +203,7 @@
 #&gt; 
 #&gt; $design
 #&gt; $design$features
-#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 4 × 2</span>
 #&gt;   variable        type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name            feature_primary_key
@@ -212,7 +212,7 @@
 #&gt; <span style='color: #BCBCBC;'>4</span> MF              character          
 #&gt; 
 #&gt; $design$samples
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable type              
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
 #&gt; <span style='color: #BCBCBC;'>1</span> sample   sample_primary_key
@@ -220,7 +220,7 @@
 #&gt; <span style='color: #BCBCBC;'>3</span> DR       numeric           
 #&gt; 
 #&gt; $design$measurements
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable   type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name       feature_primary_key

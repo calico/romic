@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -148,23 +148,23 @@ or triple omic dataset</p></td>
 
 <span class='fu'>update_tomic</span><span class='op'>(</span><span class='va'>brauer_2008_triple</span>, <span class='va'>updated_features</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $features
-#&gt; <span style='color: #949494;'># A tibble: 110 x 5</span>
-#&gt;    name    BP                    MF                   systematic_name chromosome
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biological process u… molecular function … YOL029C                 15
-#&gt; <span style='color: #BCBCBC;'> 2</span> YHR036W biological process u… molecular function … YHR036W                  8
-#&gt; <span style='color: #BCBCBC;'> 3</span> YAL046C biological process u… molecular function … YAL046C                  1
-#&gt; <span style='color: #BCBCBC;'> 4</span> YHR151C biological process u… molecular function … YHR151C                  8
-#&gt; <span style='color: #BCBCBC;'> 5</span> YKL027W biological process u… molecular function … YKL027W                 11
-#&gt; <span style='color: #BCBCBC;'> 6</span> YBR220C biological process u… molecular function … YBR220C                  2
-#&gt; <span style='color: #BCBCBC;'> 7</span> YLR057W biological process u… molecular function … YLR057W                 12
-#&gt; <span style='color: #BCBCBC;'> 8</span> YDR239C biological process u… molecular function … YDR239C                  4
-#&gt; <span style='color: #BCBCBC;'> 9</span> KKQ8    biological process u… protein kinase acti… YKL168C                 11
-#&gt; <span style='color: #BCBCBC;'>10</span> UIP5    biological process u… molecular function … YKR044W                 11
+#&gt; <span style='color: #949494;'># A tibble: 110 × 5</span>
+#&gt;    name    BP                         MF              systematic_name chromosome
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C biological process unknown molecular func… YOL029C                 15
+#&gt; <span style='color: #BCBCBC;'> 2</span> YHR036W biological process unknown molecular func… YHR036W                  8
+#&gt; <span style='color: #BCBCBC;'> 3</span> YAL046C biological process unknown molecular func… YAL046C                  1
+#&gt; <span style='color: #BCBCBC;'> 4</span> YHR151C biological process unknown molecular func… YHR151C                  8
+#&gt; <span style='color: #BCBCBC;'> 5</span> YKL027W biological process unknown molecular func… YKL027W                 11
+#&gt; <span style='color: #BCBCBC;'> 6</span> YBR220C biological process unknown molecular func… YBR220C                  2
+#&gt; <span style='color: #BCBCBC;'> 7</span> YLR057W biological process unknown molecular func… YLR057W                 12
+#&gt; <span style='color: #BCBCBC;'> 8</span> YDR239C biological process unknown molecular func… YDR239C                  4
+#&gt; <span style='color: #BCBCBC;'> 9</span> KKQ8    biological process unknown protein kinase… YKL168C                 11
+#&gt; <span style='color: #BCBCBC;'>10</span> UIP5    biological process unknown molecular func… YKR044W                 11
 #&gt; <span style='color: #949494;'># … with 100 more rows</span>
 #&gt; 
 #&gt; $samples
-#&gt; <span style='color: #949494;'># A tibble: 36 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 36 × 3</span>
 #&gt;    sample nutrient    DR
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> G0.05  G         0.05
@@ -180,7 +180,7 @@ or triple omic dataset</p></td>
 #&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
 #&gt; $measurements
-#&gt; <span style='color: #949494;'># A tibble: 3,960 x 3</span>
+#&gt; <span style='color: #949494;'># A tibble: 3,960 × 3</span>
 #&gt;    name    sample expression
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> YOL029C G0.05       -<span style='color: #BB0000;'>0.22</span>
@@ -197,7 +197,7 @@ or triple omic dataset</p></td>
 #&gt; 
 #&gt; $design
 #&gt; $design$features
-#&gt; <span style='color: #949494;'># A tibble: 5 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 5 × 2</span>
 #&gt;   variable        type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name            feature_primary_key
@@ -207,7 +207,7 @@ or triple omic dataset</p></td>
 #&gt; <span style='color: #BCBCBC;'>5</span> chromosome      integer            
 #&gt; 
 #&gt; $design$samples
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable type              
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
 #&gt; <span style='color: #BCBCBC;'>1</span> sample   sample_primary_key
@@ -215,7 +215,7 @@ or triple omic dataset</p></td>
 #&gt; <span style='color: #BCBCBC;'>3</span> DR       numeric           
 #&gt; 
 #&gt; $design$measurements
-#&gt; <span style='color: #949494;'># A tibble: 3 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 3 × 2</span>
 #&gt;   variable   type               
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              
 #&gt; <span style='color: #BCBCBC;'>1</span> name       feature_primary_key

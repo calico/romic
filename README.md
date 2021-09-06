@@ -8,7 +8,13 @@ status](https://www.r-pkg.org/badges/version/romic)](https://cran.r-project.org/
 
 ## Package Setup
 
-To install *romic* run the following code in R:
+To install *romic* from CRAN, run the following code in R:
+
+```r
+install.packages("romic")
+```
+
+If you'd like to use the most current version of the package, run the following instead:
 
 ```r 
 install.packages("remotes")
