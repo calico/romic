@@ -205,7 +205,7 @@ impute_missing_values <- function(
   ...
   ) {
 
-  if (!("impute" %in% rownames(installed.packages()))) {
+  if (!("impute" %in% rownames(utils::installed.packages()))) {
     stop ("Install \"impute\" using remotes::install_bioc(\"impute\") to use this function")
   }
 
