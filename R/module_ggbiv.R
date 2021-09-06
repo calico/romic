@@ -65,26 +65,20 @@ ggBivOutput <- function(id, return_brushed_points = FALSE) {
       shiny::column(
         4,
         shiny::selectInput(ns("x_var"), "X-axis", choices = NULL),
-        shiny::selectInput(ns("y_var"), "Y-axis", choices = NULL)
-      ),
-      shiny::column(
-        4,
+        shiny::selectInput(ns("y_var"), "Y-axis", choices = NULL),
         shiny::checkboxInput(
           ns("use_color"),
           label = "Color values?",
-          value = TRUE
+          value = FALSE
         ),
         shiny::uiOutput(ns("color_ui"))
-      ),
-      shiny::column(
-        3,
-        plotsaverInput(ns("ggsave"))
       )
     ),
     shiny::plotOutput(
       ns("ggplot"),
       brush = brush_config(return_brushed_points, "xy", ns)
-    )
+    ),
+    plotsaverInput(ns("ggsave"), ui_format = "wide")
   )
 }
 
