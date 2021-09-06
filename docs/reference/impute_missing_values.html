@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hierarchical clustering order — hclust_order • romic</title>
+<title>Impute Missing Values — impute_missing_values • romic</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Hierarchical clustering order — hclust_order" />
-<meta property="og:description" content="Format and hierarchically cluster a data.frame. If hclust could not normally
-  be produced (usually because no samples are in common for a feature) pad
-  the matrix with zeros and still calculate the distance" />
+<meta property="og:title" content="Impute Missing Values — impute_missing_values" />
+<meta property="og:description" content="Impute missing values using K-nearest neighbors imputation" />
 
 
 
@@ -108,80 +106,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Hierarchical clustering order</h1>
+    <h1>Impute Missing Values</h1>
     
-    <div class="hidden name"><code>hclust_order.Rd</code></div>
+    <div class="hidden name"><code>impute_missing_values.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Format and hierarchically cluster a data.frame. If hclust could not normally
-  be produced (usually because no samples are in common for a feature) pad
-  the matrix with zeros and still calculate the distance</p>
+    <p>Impute missing values using K-nearest neighbors imputation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hclust_order</span><span class='op'>(</span>
-  <span class='va'>df</span>,
-  <span class='va'>feature_pk</span>,
-  <span class='va'>sample_pk</span>,
-  <span class='va'>value_var</span>,
-  <span class='va'>cluster_dim</span>,
-  distance_measure <span class='op'>=</span> <span class='st'>"dist"</span>,
-  hclust_method <span class='op'>=</span> <span class='st'>"ward.D2"</span>
+    <pre class="usage"><span class='fu'>impute_missing_values</span><span class='op'>(</span>
+  <span class='va'>tomic</span>,
+  impute_var_name <span class='op'>=</span> <span class='st'>"imputed"</span>,
+  value_var <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>data.frame to cluster</p></td>
+      <th>tomic</th>
+      <td><p>Either a <code>tidy_omic</code> or <code>triple_omic</code> object</p></td>
     </tr>
     <tr>
-      <th>feature_pk</th>
-      <td><p>variable uniquely defining a row</p></td>
-    </tr>
-    <tr>
-      <th>sample_pk</th>
-      <td><p>variable uniquely definining a sample</p></td>
+      <th>impute_var_name</th>
+      <td><p>variable to create for imputed measurements</p></td>
     </tr>
     <tr>
       <th>value_var</th>
       <td><p>An abundance value to use with <code>hclust</code></p></td>
     </tr>
     <tr>
-      <th>cluster_dim</th>
-      <td><p>rows, columns, or both</p></td>
-    </tr>
-    <tr>
-      <th>distance_measure</th>
-      <td><p>variable to use for computing dis-similarity</p><dl>
-  <dt>corr</dt><dd><p>pearson correlation</p></dd>
-  <dt>dist</dt><dd><p>euclidean distance</p></dd>
-
-</dl></td>
-    </tr>
-    <tr>
-      <th>hclust_method</th>
-      <td><p>method from stats::hclust to use for clustering</p></td>
+      <th>...</th>
+      <td><p>additional arguments to pass to impute.knn</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list containing a hierarchically clustered set of rows and/or
-  columns</p>
+    <p>A <code>tomic</code> object with imputed measurements.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>crossing</a></span><span class='op'>(</span>letters <span class='op'>=</span> <span class='va'>LETTERS</span>, numbers <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>noise <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>hclust_order</span><span class='op'>(</span><span class='va'>df</span>, <span class='st'>"letters"</span>, <span class='st'>"numbers"</span>, <span class='st'>"noise"</span>, <span class='st'>"rows"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $rows
-#&gt;  [1] "D" "Y" "M" "O" "K" "A" "G" "I" "Z" "R" "U" "N" "S" "E" "H" "B" "X" "F" "J"
-#&gt; [20] "P" "T" "C" "W" "Q" "L" "V"
-#&gt; </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>impute_missing_values</span><span class='op'>(</span><span class='va'>brauer_2008_triple</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in impute_missing_values(brauer_2008_triple): Install "impute" using remotes::install_bioc("impute") to use this function</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
