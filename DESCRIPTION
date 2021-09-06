@@ -31,6 +31,7 @@ Imports: checkmate,
     tibble,
     tidyr (>= 1.0.0)
 Suggests: knitr,
+    impute,
     lazyeval,
     plotly,
     rmarkdown,
