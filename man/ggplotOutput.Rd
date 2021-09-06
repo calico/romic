@@ -4,11 +4,19 @@
 \alias{ggplotOutput}
 \title{ggplot Output}
 \usage{
-ggplotOutput(id)
+ggplotOutput(
+  id,
+  default_data_type = "samples",
+  default_plot_type = "univariate"
+)
 }
 \arguments{
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
+
+\item{default_data_type}{Default data type selection}
+
+\item{default_plot_type}{Default plot type selection}
 }
 \value{
 A \code{shiny} UI
