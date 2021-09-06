@@ -62,7 +62,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
-          remotes::install_bioc("impute)
+          remotes::install_bioc("impute")
         shell: Rscript {0}
 
       - name: Check
