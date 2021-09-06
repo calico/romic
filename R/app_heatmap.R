@@ -642,13 +642,16 @@ hclust_tidy_omic <- function(tidy_omic,
 #'   mutate(noise = rnorm(n()))
 #' hclust_order(df, "letters", "numbers", "noise", "rows")
 #' @export
-hclust_order <- function(df,
-                         feature_pk,
-                         sample_pk,
-                         value_var,
-                         cluster_dim,
-                         distance_measure = "dist",
-                         hclust_method = "ward.D2") {
+hclust_order <- function(
+  df,
+  feature_pk,
+  sample_pk,
+  value_var,
+  cluster_dim,
+  distance_measure = "dist",
+  hclust_method = "ward.D2"
+  ) {
+
   checkmate::assertDataFrame(df)
   checkmate::assertChoice(feature_pk, colnames(df))
   checkmate::assertChoice(sample_pk, colnames(df))
@@ -718,6 +721,15 @@ hclust_order <- function(df,
 }
 
 apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
+
+  checkmate::assertMatrix(quant_matrix)
+  if (nrow(quant_matrix) == 0) {
+    stop (quant_matrix, "contained zero rows")
+  } else if (nrow(quant_matrix) == 1) {
+    # if there is only one entry then we don't need to cluster it
+    return(list(order = 1))
+  }
+
   if (distance_measure == "dist") {
     distance_matrix <- stats::dist(quant_matrix)
   } else if (distance_measure == "corr") {

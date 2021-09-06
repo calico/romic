@@ -32,6 +32,17 @@ test_that("hclust creates sane orders - synthetic example", {
   expect_equal(sort(groups$val), c(6, 15, 24))
 })
 
+test_that("hclust handled 1 row / column cases", {
+
+  df <- tidyr::crossing(letters = LETTERS, numbers = 1) %>%
+    mutate(noise = rnorm(n()))
+  hclust_orders <- hclust_order(df, "letters", "numbers", "noise", "both")
+
+  expect_length(hclust_orders$row, 26)
+  expect_length(hclust_orders$columns, 1)
+
+})
+
 test_that("hclust creates sane orders - real example", {
   tomic <- romic::brauer_2008_triple %>%
     filter_tomic(
