@@ -13,7 +13,7 @@
 #' }
 #' @export
 app_pcs <- function(tomic) {
-  checkmate::assertClass(tomic, "tidy_omic")
+  checkmate::assertClass(tomic, "tomic")
 
   shinyApp(
     ui = fluidPage(
@@ -42,7 +42,7 @@ app_pcs <- function(tomic) {
           ),
         ),
         mainPanel(
-          ggplotOutput("ggplot"),
+          ggplotOutput("ggplot", default_plot_type = "bivariate"),
           dataTableOutput("selected_df")
         )
       )
@@ -103,10 +103,28 @@ app_pcs <- function(tomic) {
         )
       })
 
-      selected_data <- reactive({
+      # reorder table design so that PCs show up at top
+      reorganized_tidy_omic <- reactive({
         req(featurized_tidy_omic())
+        dat <- featurized_tidy_omic()
+
+        updated_sample_design <- dplyr::bind_rows(
+          dat$design$samples %>%
+            dplyr::filter(stringr::str_detect(variable,"^PC")),
+          dat$design$samples %>%
+            dplyr::filter(!stringr::str_detect(variable,"^PC"))
+        )
+
+        dat$design$samples <- updated_sample_design
+
+        return(dat)
+      })
+
+      # create a plot and return brushed points
+      selected_data <- reactive({
+        req(reorganized_tidy_omic())
         ggplotServer("ggplot",
-          featurized_tidy_omic(),
+                     reorganized_tidy_omic(),
           return_brushed_points = TRUE
         )
       })

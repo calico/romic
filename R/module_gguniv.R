@@ -69,16 +69,13 @@ ggUnivOutput <- function(id, return_brushed_points = FALSE) {
           value = FALSE
         ),
         shiny::uiOutput(ns("color_ui"))
-      ),
-      shiny::column(
-        3,
-        plotsaverInput(ns("ggsave"))
       )
     ),
     shiny::plotOutput(
       ns("ggplot"),
       brush = brush_config(return_brushed_points, "x", ns)
-    )
+    ),
+    plotsaverInput(ns("ggsave"), ui_format = "wide")
   )
 }
 
