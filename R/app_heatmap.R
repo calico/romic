@@ -16,62 +16,64 @@
 app_heatmap <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
 
-  shinyApp(
-    ui = fluidPage(
-      tags$head(tags$style(
-        type = "text/css",
-        "h1, h2, h3, h4, h5, h6 { color: #5BB867;}",
-        "label { font-size: 20px;}",
-        "div { font-size: 15px;}",
-        "body {width: 100% !important; max-width: 100% !important;}"
-      )),
+  shiny::shinyApp(
+    ui = function(requests) {
+      shiny::fluidPage(
+        tags$head(tags$style(
+          type = "text/css",
+          "h1, h2, h3, h4, h5, h6 { color: #5BB867;}",
+          "label { font-size: 20px;}",
+          "div { font-size: 15px;}",
+          "body {width: 100% !important; max-width: 100% !important;}"
+        )),
 
-      # Application title
-      headerPanel("Interactive Heatmap"),
+        # Application title
+        headerPanel("Interactive Heatmap"),
 
-      # Sidebar with a slider input for the number of bins
-      sidebarLayout(
-        sidebarPanel(
-          tags$div(
-            HTML("<h4>Filter</h4>")
-          ),
-          filterInput("filter_features", "features"),
-          filterInput("filter_samples", "samples"),
-          tags$div(
-            HTML("<h4>Organize</h4>")
-          ),
-          wellPanel(
-            selectizeInput("feature_facets", "Separate features by:",
-              choices = NULL, multiple = TRUE
+        # Sidebar with a slider input for the number of bins
+        sidebarLayout(
+          sidebarPanel(
+            tags$div(
+              HTML("<h4>Filter</h4>")
             ),
-            selectizeInput("sample_facets", "Separate samples by:",
-              choices = NULL, multiple = TRUE
-            )
-          ),
-          organizeInput("organize"),
-          tags$div(
-            HTML("<h4>Visualize</h4>")
-          ),
-          wellPanel(
-            selectInput("measurement_var", "Heatmap measurement variable:",
-              choices = NULL
+            filterInput("filter_features", "features"),
+            filterInput("filter_samples", "samples"),
+            tags$div(
+              HTML("<h4>Organize</h4>")
             ),
-            checkboxInput("do_floor_values", "Floor values?", value = FALSE),
-            conditionalPanel(
-              condition = "input.do_floor_values == true",
-              sliderInput("floor_value", "Floor magnitude:",
-                min = 0, max = 5, value = 3, step = 0.2
+            wellPanel(
+              selectizeInput("feature_facets", "Separate features by:",
+                choices = NULL, multiple = TRUE
+              ),
+              selectizeInput("sample_facets", "Separate samples by:",
+                choices = NULL, multiple = TRUE
               )
-            )
+            ),
+            organizeInput("organize"),
+            tags$div(
+              HTML("<h4>Visualize</h4>")
+            ),
+            wellPanel(
+              selectInput("measurement_var", "Heatmap measurement variable:",
+                choices = NULL
+              ),
+              checkboxInput("do_floor_values", "Floor values?", value = FALSE),
+              conditionalPanel(
+                condition = "input.do_floor_values == true",
+                sliderInput("floor_value", "Floor magnitude:",
+                  min = 0, max = 5, value = 3, step = 0.2
+                )
+              )
+            ),
+            tags$div(
+              HTML("<h4>Save</h4>")
+            ),
+            plotsaverInput("ggsave", ui_format = "wide"),
+            bookmarkButton("bookmark")
           ),
-          tags$div(
-            HTML("<h4>Save</h4>")
-          ),
-          plotsaverInput("ggsave")
-        ),
-        mainPanel(plotOutput("heatmap", height = "1000px"))
-      )
-    ),
+          mainPanel(plotOutput("heatmap", height = "1000px"))
+        )
+    )},
     server = function(input, output, session) {
 
       # defining options available to user for sorting and filtering
@@ -248,10 +250,27 @@ app_heatmap <- function(tomic) {
         shiny::req(heatmap_plot_sanitize())
         plotsaverServer("ggsave", heatmap_plot_sanitize())
       })
+
+      # format bookmark
+      setBookmarkExclude(bookmark_exclusions())
     },
-    options = list(height = 1000)
+    options = list(height = 1000),
+    enableBookmarking = "url"
   )
 }
+
+bookmark_exclusions <- function () {
+
+  c(
+    "bookmark",
+    "ggsave-save_height",
+    "ggsave-save_width",
+    "hclust",
+    "organize-update_row_sorts",
+    "organize-update_col_sorts"
+    )
+}
+
 
 #' Plot Heatmap
 #'

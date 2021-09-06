@@ -88,11 +88,13 @@ sortInput <- function(id, sort_table) {
 #' @returns A sorted \code{tomic} object.
 #'
 #' @export
-sortServer <- function(id,
-                       tomic,
-                       sort_table,
-                       valid_sort_vars = NULL,
-                       value_var = NULL) {
+sortServer <- function(
+  id,
+  tomic,
+  sort_table,
+  valid_sort_vars = NULL,
+  value_var = NULL
+  ) {
   checkmate::assertClass(tomic, "tomic")
 
   moduleServer(
@@ -102,10 +104,26 @@ sortServer <- function(id,
 
       # create sorting ui based on selected sort mode
 
+      onRestore(function(state) {
+
+        print(state)
+
+        if (state$input$sort_mode == "category") {
+          output$sort_ui <- shiny::renderUI({
+            shiny::selectizeInput(
+              ns("sample_sorts"),
+              NULL,
+              choices = valid_sort_vars,
+              selected = state$input$sample_sorts,
+              multiple = TRUE
+            )
+          })
+        }
+      })
+
       observe({
         output$sort_ui <- renderUI({
           req(input$sort_mode)
-
           ns <- session$ns
 
           if (input$sort_mode == "hclust") {
