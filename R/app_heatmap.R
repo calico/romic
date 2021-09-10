@@ -267,6 +267,7 @@ app_heatmap <- function(tomic) {
 #' @param change_threshold values with a more extreme absolute change will be
 #'   thresholded to this value.
 #' @param plot_type plotly (for interactivity) or grob (for a static ggplot)
+#' @inheritParams downsample_heatmap
 #'
 #' @returns a ggplot2 grob
 #'
@@ -291,19 +292,21 @@ app_heatmap <- function(tomic) {
 #'   change_threshold = 5,
 #'   cluster_dim = "rows",
 #'   plot_type = "grob",
-#'   distance_measure = "corr",
-#'   hclust_method = "complete"
+#'   distance_measure = "corr"
 #' )
 #' @export
-plot_heatmap <- function(tomic,
-                         feature_var = NULL,
-                         sample_var = NULL,
-                         value_var = NULL,
-                         cluster_dim = "both",
-                         distance_measure = "dist",
-                         hclust_method = "ward.D2",
-                         change_threshold = Inf,
-                         plot_type = "grob") {
+plot_heatmap <- function(
+  tomic,
+  feature_var = NULL,
+  sample_var = NULL,
+  value_var = NULL,
+  cluster_dim = "both",
+  distance_measure = "dist",
+  hclust_method = "ward.D2",
+  change_threshold = Inf,
+  plot_type = "grob",
+  max_display_features = 800
+  ) {
   checkmate::assertClass(tomic, "tomic")
 
   if ("NULL" %in% class(feature_var)) {
@@ -323,6 +326,7 @@ plot_heatmap <- function(tomic,
   checkmate::assertString(hclust_method)
   checkmate::assertNumber(change_threshold, lower = 0)
   checkmate::assertChoice(plot_type, c("plotly", "grob"))
+  checkmate::assertNumber(max_display_features)
 
   tidy_omic <- tomic_to(tomic, "tidy_omic")
 
@@ -359,16 +363,22 @@ plot_heatmap <- function(tomic,
       -1 * change_threshold
     ))
 
-  # figure out font sizes for row labels
+  # downsample to speed to up heatmap rendering
+  augmented_tidy_omic_data <- downsample_heatmap(
+    tidy_data = augmented_tidy_omic_data,
+    value_var = value_var,
+    max_display_features = max_display_features
+  )
 
+  # figure out font sizes for row labels
   feature_pk <- tomic$design$feature_pk
   sample_pk <- tomic$design$sample_pk
 
-  n_features <- clustered_tidy_omic$data %>%
+  n_features <- augmented_tidy_omic_data %>%
     dplyr::distinct(!!rlang::sym(feature_pk)) %>%
     nrow()
 
-  n_samples <- clustered_tidy_omic$data %>%
+  n_samples <- augmented_tidy_omic_data %>%
     dplyr::distinct(!!rlang::sym(sample_pk)) %>%
     nrow()
 
@@ -378,7 +388,7 @@ plot_heatmap <- function(tomic,
       title = element_text(size = 20, color = "black"),
       axis.text.x = element_text(
         size = ifelse(n_samples > 200, 0, pmin(20, 60 * sqrt(1 / n_samples))),
-        angle = 60,
+        angle = 90,
         hjust = 1
       ),
       axis.text.y = element_text(
@@ -398,7 +408,7 @@ plot_heatmap <- function(tomic,
       fill = value_var
     )
   ) +
-    geom_tile() +
+    geom_raster() +
     scale_fill_gradient2(
       expression(log[2] ~ abundance),
       low = "steelblue1",
@@ -431,13 +441,15 @@ plot_heatmap <- function(tomic,
 }
 
 
-hclust_tidy_omic <- function(tidy_omic,
-                             feature_var,
-                             sample_var,
-                             value_var,
-                             cluster_dim,
-                             distance_measure = "dist",
-                             hclust_method = "ward.D2") {
+hclust_tidy_omic <- function(
+  tidy_omic,
+  feature_var,
+  sample_var,
+  value_var,
+  cluster_dim,
+  distance_measure = "dist",
+  hclust_method = "ward.D2"
+  ) {
   check_tidy_omic(tidy_omic)
 
   checkmate::assertChoice(feature_var, tidy_omic$design$features$variable)
@@ -747,4 +759,118 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
   }
 
   stats::hclust(distance_matrix, method = hclust_method)
+}
+
+#' Downsample Heatmap
+#'
+#' Combine rows to speed up rendering of large heatmaps
+#'
+#' @param tidy_data The data datable from a \code{tidy_omic} object containing
+#'   ordered feature and sample primary keys defined by ordered_featureId
+#'   and ordered_sampleId.
+#' @inheritParams plot_heatmap
+#' @param max_display_features aggregate and downsample distinct feature to
+#'   this number to speed to up heatmap rendering.
+#'
+#' @returns tidy_data with rows collapsed if the number of distinct features is
+#'   greater than \code{max_display_features}
+#'
+#'
+#' @examples
+#' library(dplyr)
+#'
+#' brauer_2008_tidy$data %>%
+#'   dplyr::mutate(
+#'   ordered_featureId = factor(name, levels = unique(name)),
+#'   ordered_sampleId = factor(sample, levels = unique(sample))
+#'   ) %>%
+#'   downsample_heatmap(value_var = "expression", 100)
+downsample_heatmap <- function (
+  tidy_data,
+  value_var,
+  max_display_features = 1000
+) {
+
+  checkmate::assertDataFrame(tidy_data)
+  checkmate::assertChoice(value_var, colnames(tidy_data))
+  checkmate::assertNumber(max_display_features)
+
+  if (!("ordered_featureId" %in% colnames(tidy_data))) {
+    stop ("ordered_featureId is a requred variable in tidy_data")
+  }
+  if (!("ordered_sampleId" %in% colnames(tidy_data))) {
+    stop ("ordered_sampleId is a requred variable in tidy_data")
+  }
+
+  checkmate::assertFactor(tidy_data$ordered_featureId)
+  checkmate::assertFactor(tidy_data$ordered_sampleId)
+
+  n_features <- tidy_data %>%
+    dplyr::distinct(ordered_featureId) %>%
+    nrow()
+
+  if (n_features <= max_display_features) {
+    return(tidy_data)
+  }
+
+  # update the target number of n_features so (almost) all final features will
+  # combine the same number of orignal features
+  realized_max_display_features <- ceiling(
+    n_features/ceiling(n_features/max_display_features)
+    )
+  message(glue::glue(
+    "Downsampling {n_features} features to {realized_max_display_features}, targeting {max_display_features}"
+    ))
+
+  collapsed_rows_merges <- tibble::tibble(ordered_featureId_int = 1:n_features) %>%
+    dplyr::mutate(collapsed_row_number = rep(
+      1:max_display_features,
+      each = ceiling(n_features/max_display_features)
+    )[ordered_featureId_int]
+    )
+
+  downsampled_df <- tidy_data %>%
+    dplyr::mutate(ordered_featureId_int = as.integer(ordered_featureId)) %>%
+    dplyr::left_join(collapsed_rows_merges, by = "ordered_featureId_int")
+
+  # average value_var and take the first entry for other variables
+
+  downsampled_matrix_values <- downsampled_df %>%
+    dplyr::group_by(collapsed_row_number, ordered_sampleId) %>%
+    dplyr::summarize(
+      !!rlang::sym(value_var) := mean(!!rlang::sym(value_var)),
+      .groups = "drop"
+    )
+
+  downsampled_attributes <- downsampled_df %>%
+    dplyr::select(-!!rlang::sym(value_var)) %>%
+    dplyr::group_by(collapsed_row_number, ordered_sampleId) %>%
+    dplyr::slice(1) %>%
+    dplyr::ungroup() %>%
+    # drop levels of factors which no longer exist (this will preserve existing orders)
+    dplyr::mutate_if(is.factor, forcats::fct_drop)
+
+  # check that the ordering of ordered_featureId's value are the same
+  # as collapsed_row_number
+  failed_collapses <- downsampled_attributes %>%
+    dplyr::mutate(ordered_featureId_int = as.integer(ordered_featureId)) %>%
+    dplyr::filter(ordered_featureId_int != collapsed_row_number)
+  if (nrow(failed_collapses != 0)) {
+    stop (glue::glue(
+      "{nrow(failed_collapses)} downsampled rows were misordered
+      this is unexpected behavior"
+      ))
+  }
+
+  downsampled_tidy_data <- downsampled_attributes %>%
+    # combine aggregated and downsampled entries
+    dplyr::left_join(
+      downsampled_matrix_values,
+      by = c("collapsed_row_number", "ordered_sampleId")
+      ) %>%
+    # discard collapsed_row_number since this
+    dplyr::select(!!!rlang::syms(colnames(tidy_data)))
+
+  return(downsampled_tidy_data)
+
 }

@@ -13,7 +13,8 @@ plot_heatmap(
   distance_measure = "dist",
   hclust_method = "ward.D2",
   change_threshold = Inf,
-  plot_type = "grob"
+  plot_type = "grob",
+  max_display_features = 800
 )
 }
 \arguments{
@@ -40,6 +41,9 @@ label.}
 thresholded to this value.}
 
 \item{plot_type}{plotly (for interactivity) or grob (for a static ggplot)}
+
+\item{max_display_features}{aggregate and downsample distinct feature to
+this number to speed to up heatmap rendering.}
 }
 \value{
 a ggplot2 grob
@@ -69,7 +73,6 @@ plot_heatmap(
   change_threshold = 5,
   cluster_dim = "rows",
   plot_type = "grob",
-  distance_measure = "corr",
-  hclust_method = "complete"
+  distance_measure = "corr"
 )
 }
