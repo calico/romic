@@ -14,6 +14,7 @@
 #'
 #' @examples
 #' add_pca_loadings(brauer_2008_triple, npcs = 5)
+#'
 #' @export
 add_pca_loadings <- function(
   tomic,
@@ -22,6 +23,7 @@ add_pca_loadings <- function(
   npcs = NULL,
   missing_val_method = "drop_samples"
   ) {
+
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertLogical(center_rows, len = 1)
   stopifnot(length(npcs) <= 1, class(npcs) %in% c("NULL", "numeric", "integer"))
@@ -57,6 +59,7 @@ add_pca_loadings <- function(
 
   # find the npcs leading PC loadings
   pc_loadings <- svd(omic_matrix)$v[, 1:npcs, drop = FALSE]
+  # calculate percent variance explained by PC
   colnames(pc_loadings) <- paste0("PC", 1:npcs)
 
   pc_loadings <- pc_loadings %>%
@@ -73,7 +76,7 @@ add_pca_loadings <- function(
   triple_omic$design$samples <- triple_omic$design$samples %>%
     dplyr::filter(!stringr::str_detect(variable, "^PC")) %>%
     dplyr::bind_rows(tibble::tibble(
-      variable = paste0("PC", 1:npcs),
+      variable = colnames(pc_loadings),
       type = "numeric"
     ))
 

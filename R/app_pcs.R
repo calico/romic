@@ -123,8 +123,9 @@ app_pcs <- function(tomic) {
       # create a plot and return brushed points
       selected_data <- reactive({
         req(reorganized_tidy_omic())
-        ggplotServer("ggplot",
-                     reorganized_tidy_omic(),
+        ggplotServer(
+          "ggplot",
+          reorganized_tidy_omic(),
           return_brushed_points = TRUE
         )
       })

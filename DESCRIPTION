@@ -1,7 +1,7 @@
 Package: romic
 Type: Package
 Title: R for High-Dimensional Omic Data
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
     person(
       given = "Sean",
@@ -20,6 +20,7 @@ Description: Represents high-dimensional data as tables of features, samples and
 Depends: R (>= 3.2.3)
 Imports: checkmate,
     dplyr,
+    forcats,
     ggplot2,
     glue,
     purrr,
