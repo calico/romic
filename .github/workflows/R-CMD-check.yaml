@@ -1,7 +1,7 @@
 on:
   push:
-  #  paths:
-  #    - 'R/*.R'
+    paths:
+      - 'R/*.R'
   schedule:
     - cron:  '0 0 1 * *'
 
