@@ -58,16 +58,9 @@ add_pca_loadings <- function(
   }
 
   # find the npcs leading PC loadings
-  omic_svd <- svd(omic_matrix)
-  pc_loadings <- omic_svd$v[, 1:npcs, drop = FALSE]
+  pc_loadings <- svd(omic_matrix)$v[, 1:npcs, drop = FALSE]
   # calculate percent variance explained by PC
-  percent_varex <- (omic_svd$d^2 / sum(omic_svd$d^2)) %>%
-    {.[1:npcs]} %>%
-    round(3) %>%
-    scales::percent(accuracy = 0.1)
-  colnames(pc_loadings) <- purrr::map2_chr(1:npcs, percent_varex, function(x,y) {
-      glue::glue("PC{x} ({y} variance explained)")
-    })
+  colnames(pc_loadings) <- paste0("PC", 1:npcs)
 
   pc_loadings <- pc_loadings %>%
     as.data.frame() %>%
