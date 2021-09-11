@@ -23,13 +23,3 @@ tidy_data with rows collapsed if the number of distinct features is
 \description{
 Combine rows to speed up rendering of large heatmaps
 }
-\examples{
-library(dplyr)
-
-brauer_2008_tidy$data \%>\%
-  dplyr::mutate(
-  ordered_featureId = factor(name, levels = unique(name)),
-  ordered_sampleId = factor(sample, levels = unique(sample))
-  ) \%>\%
-  downsample_heatmap(value_var = "expression", 100)
-}

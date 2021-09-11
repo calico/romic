@@ -20,6 +20,7 @@ Description: Represents high-dimensional data as tables of features, samples and
 Depends: R (>= 3.2.3)
 Imports: checkmate,
     dplyr,
+    forcats,
     ggplot2,
     glue,
     purrr,

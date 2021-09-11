@@ -775,16 +775,6 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 #' @returns tidy_data with rows collapsed if the number of distinct features is
 #'   greater than \code{max_display_features}
 #'
-#'
-#' @examples
-#' library(dplyr)
-#'
-#' brauer_2008_tidy$data %>%
-#'   dplyr::mutate(
-#'   ordered_featureId = factor(name, levels = unique(name)),
-#'   ordered_sampleId = factor(sample, levels = unique(sample))
-#'   ) %>%
-#'   downsample_heatmap(value_var = "expression", 100)
 downsample_heatmap <- function (
   tidy_data,
   value_var,
