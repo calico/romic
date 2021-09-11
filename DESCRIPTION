@@ -18,6 +18,7 @@ Authors@R: c(
 Maintainer: Sean Hackett <sean@calicolabs.com>
 Description: Represents high-dimensional data as tables of features, samples and measurements, and a design list for tracking the meaning of individual variables. Using this format, filtering, normalization, and other transformations of a dataset can be carried out in a flexible manner. 'romic' takes advantage of these transformations to create interactive 'shiny' apps for exploratory data analysis such as an interactive heatmap. 
 Depends: R (>= 3.2.3)
+biocViews:
 Imports: checkmate,
     dplyr,
     forcats,
