@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Export T*Omic as Triple — export_tomic_as_triple • romic</title>
+<title>Downsample Heatmap — downsample_heatmap • romic</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Export T*Omic as Triple — export_tomic_as_triple" />
-<meta property="og:description" content="Export features, samples and measurements tables" />
+<meta property="og:title" content="Downsample Heatmap — downsample_heatmap" />
+<meta property="og:description" content="Combine rows to speed up rendering of large heatmaps" />
 
 
 
@@ -106,49 +106,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Export T*Omic as Triple</h1>
+    <h1>Downsample Heatmap</h1>
     
-    <div class="hidden name"><code>export_tomic_as_triple.Rd</code></div>
+    <div class="hidden name"><code>downsample_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Export features, samples and measurements tables</p>
+    <p>Combine rows to speed up rendering of large heatmaps</p>
     </div>
 
-    <pre class="usage"><span class='fu'>export_tomic_as_triple</span><span class='op'>(</span><span class='va'>tomic</span>, <span class='va'>dir_path</span>, <span class='va'>name_preamble</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>downsample_heatmap</span><span class='op'>(</span><span class='va'>tidy_data</span>, <span class='va'>value_var</span>, max_display_features <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tomic</th>
-      <td><p>Either a <code>tidy_omic</code> or <code>triple_omic</code> object</p></td>
+      <th>tidy_data</th>
+      <td><p>The data datable from a <code>tidy_omic</code> object containing
+ordered feature and sample primary keys defined by ordered_featureId
+and ordered_sampleId.</p></td>
     </tr>
     <tr>
-      <th>dir_path</th>
-      <td><p>path to save outputs</p></td>
+      <th>value_var</th>
+      <td><p>which variable in "measurements" to use for quantification.</p></td>
     </tr>
     <tr>
-      <th>name_preamble</th>
-      <td><p>start of output file name</p></td>
+      <th>max_display_features</th>
+      <td><p>aggregate and downsample distinct feature to
+this number to speed to up heatmap rendering.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Export three tables:</p><ul>
-<li><p>features: one row per features measured (i.e., a metabolite)</p></li>
-<li><p>sample: one row per sample</p></li>
-<li><p>measurements: one row per measurement (i.e., one metabolite in
-      one sample)</p></li>
-</ul>
+    <p>tidy_data with rows collapsed if the number of distinct features is
+  greater than <code>max_display_features</code></p>
 
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>export_tomic_as_triple</span><span class='op'>(</span><span class='va'>brauer_2008_triple</span>, <span class='st'>"/tmp"</span>, <span class='st'>"brauer"</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
