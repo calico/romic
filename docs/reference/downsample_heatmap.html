@@ -115,7 +115,7 @@
     <p>Combine rows to speed up rendering of large heatmaps</p>
     </div>
 
-    <pre class="usage"><span class='fu'>downsample_heatmap</span><span class='op'>(</span><span class='va'>tidy_data</span>, <span class='va'>value_var</span>, max_display_features <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>downsample_heatmap</span><span class='op'>(</span><span class='va'>tidy_data</span>, <span class='va'>value_var</span>, <span class='va'>design</span>, max_display_features <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,6 +129,10 @@ and ordered_sampleId.</p></td>
     <tr>
       <th>value_var</th>
       <td><p>which variable in "measurements" to use for quantification.</p></td>
+    </tr>
+    <tr>
+      <th>design</th>
+      <td><p>a list summarizing the design of the tidy dataset</p></td>
     </tr>
     <tr>
       <th>max_display_features</th>
