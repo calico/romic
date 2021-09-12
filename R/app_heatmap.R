@@ -332,7 +332,7 @@ plot_heatmap <- function(
 
   # convert groupId and sampleId to factors so they are ordered appropriately
 
-  if (tomic_sort_status(tidy_omic) == "fully sorted") {
+  if (tomic_sort_status(tidy_omic)[1] == "fully sorted") {
     # pre-sorted data
     clustered_tidy_omic <- tidy_omic
     # add fields that would be expected had organization occurred
@@ -367,6 +367,7 @@ plot_heatmap <- function(
   augmented_tidy_omic_data <- downsample_heatmap(
     tidy_data = augmented_tidy_omic_data,
     value_var = value_var,
+    design = tomic$design,
     max_display_features = max_display_features
   )
 
@@ -769,6 +770,7 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 #'   ordered feature and sample primary keys defined by ordered_featureId
 #'   and ordered_sampleId.
 #' @inheritParams plot_heatmap
+#' @param design a list summarizing the design of the tidy dataset
 #' @param max_display_features aggregate and downsample distinct feature to
 #'   this number to speed to up heatmap rendering.
 #'
@@ -778,6 +780,7 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 downsample_heatmap <- function (
   tidy_data,
   value_var,
+  design,
   max_display_features = 1000
 ) {
 
@@ -832,13 +835,31 @@ downsample_heatmap <- function (
       .groups = "drop"
     )
 
+  # if there are missing values then different features will be
+  # selected for different samples
+
+  reduced_feature_attrs <- downsampled_df %>%
+    dplyr::distinct(!!!rlang::syms(
+      c("collapsed_row_number", "ordered_featureId", design$features$variable)
+      )) %>%
+    dplyr::mutate_if(is.factor, as.character) %>%
+    dplyr::group_by(collapsed_row_number) %>%
+    dplyr::summarize_all(collapse_feature_vars) %>%
+    dplyr::arrange(collapsed_row_number) %>%
+    # order featureId by collapsed_row_number
+    dplyr::mutate(ordered_featureId = factor(ordered_featureId, levels = ordered_featureId))
+
+  other_attrs <- setdiff(
+    colnames(downsampled_df),
+    c(value_var, design$features$variable, "ordered_featureId", "ordered_featureId_int"))
+
   downsampled_attributes <- downsampled_df %>%
-    dplyr::select(-!!rlang::sym(value_var)) %>%
+    dplyr::select(!!!rlang::syms(other_attrs)) %>%
     dplyr::group_by(collapsed_row_number, ordered_sampleId) %>%
     dplyr::slice(1) %>%
     dplyr::ungroup() %>%
-    # drop levels of factors which no longer exist (this will preserve existing orders)
-    dplyr::mutate_if(is.factor, forcats::fct_drop)
+    # add back collapsed feature attrs
+    dplyr::left_join(reduced_feature_attrs, by = "collapsed_row_number")
 
   # check that the ordering of ordered_featureId's value are the same
   # as collapsed_row_number
@@ -863,4 +884,13 @@ downsample_heatmap <- function (
 
   return(downsampled_tidy_data)
 
+}
+
+collapse_feature_vars <- function (x) {
+
+  if (class(x) %in% c("character")) {
+    paste(unique(x), collapse = ' & ')
+  } else {
+    x[1]
+  }
 }
