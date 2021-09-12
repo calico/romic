@@ -4,7 +4,7 @@
 \alias{downsample_heatmap}
 \title{Downsample Heatmap}
 \usage{
-downsample_heatmap(tidy_data, value_var, max_display_features = 1000)
+downsample_heatmap(tidy_data, value_var, design, max_display_features = 1000)
 }
 \arguments{
 \item{tidy_data}{The data datable from a \code{tidy_omic} object containing
@@ -12,6 +12,8 @@ ordered feature and sample primary keys defined by ordered_featureId
 and ordered_sampleId.}
 
 \item{value_var}{which variable in "measurements" to use for quantification.}
+
+\item{design}{a list summarizing the design of the tidy dataset}
 
 \item{max_display_features}{aggregate and downsample distinct feature to
 this number to speed to up heatmap rendering.}
