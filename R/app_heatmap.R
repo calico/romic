@@ -211,7 +211,12 @@ app_heatmap <- function(tomic) {
           value_var = input$measurement_var,
           cluster_dim = "both",
           change_threshold = thresholded_val(),
-          plot_type = "grob"
+          plot_type = "grob",
+          # suppress feature aggregatin when feature facets are present
+          max_display_features = ifelse(
+            is.null(input$feature_facets),
+            800,
+            Inf)
         ),
         silent = TRUE
         )
