@@ -65,12 +65,19 @@ add_pca_loadings <- function(
   pc_loadings <- pc_loadings %>%
     as.data.frame() %>%
     dplyr::as_tibble() %>%
-    dplyr::mutate(!!rlang::sym(sample_pk) := colnames(omic_matrix))
+    dplyr::mutate(
+      !!rlang::sym(sample_pk) := colnames(omic_matrix),
+      # convert the PK to the same class as the original primary key
+      !!rlang::sym(sample_pk) := coerce_to_classes(
+        !!rlang::sym(sample_pk),
+        triple_omic$samples[[sample_pk]]
+        )
+      )
 
   triple_omic$samples <- triple_omic$samples %>%
     # drop existing PCs
     dplyr::select_at(vars(!dplyr::starts_with("PC"))) %>%
-    # add new PCs
+    # create a copy of the primary key to join on
     dplyr::left_join(pc_loadings, by = sample_pk)
 
   triple_omic$design$samples <- triple_omic$design$samples %>%

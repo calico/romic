@@ -14,8 +14,7 @@ check_tidy_omic(tidy_omic, fast_check = TRUE)
 generally only needed when a \code{tomic} object is first created.}
 }
 \value{
-Error and warning messages are printed and the input tidy_omic
-object is returned
+0 invisibly
 }
 \description{
 Check a tidy omic dataset for consistency between the data and design and

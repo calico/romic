@@ -14,8 +14,7 @@ check_triple_omic(triple_omic, fast_check = TRUE)
 generally only needed when a \code{tomic} object is first created.}
 }
 \value{
-Error and warning messages are printed and the input tidy_omic
-  object is returned
+0 invisibly
 }
 \description{
 Check a triple omic dataset for consistency between the data and design and
