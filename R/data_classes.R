@@ -141,8 +141,7 @@ create_tidy_omic <- function(df,
 #' @param fast_check if TRUE then skip some checks which are slow and that are
 #' generally only needed when a \code{tomic} object is first created.
 #'
-#' @return Error and warning messages are printed and the input tidy_omic
-#' object is returned
+#' @return 0 invisibly
 check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
   checkmate::assertClass(tidy_omic, "tidy_omic")
   checkmate::assertLogical(fast_check, len = 1)
@@ -436,8 +435,7 @@ create_triple_omic <- function(measurement_df,
 #'   \code{\link{create_triple_omic}}
 #' @inheritParams check_tidy_omic
 #'
-#' @return Error and warning messages are printed and the input tidy_omic
-#'   object is returned
+#' @return 0 invisibly
 check_triple_omic <- function(triple_omic, fast_check = TRUE) {
   checkmate::assertClass(triple_omic, "triple_omic")
   checkmate::assertLogical(fast_check, len = 1)
@@ -541,6 +539,8 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
       ))
     }
   }
+
+  return(invisible(0))
 }
 
 #' Triple Omic to Tidy Omic
