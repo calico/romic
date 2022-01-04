@@ -46,6 +46,7 @@ reference:
 - contents:
   - starts_with("plot")
   - format_names_for_plotting
+  - downsample_heatmap
 - title: "Example Data"
   desc: "Datasets bundled with romic"
 - contents:
