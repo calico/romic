@@ -29,6 +29,7 @@ reference:
   - center_tomic
   - add_pca_loadings
   - starts_with("sort")
+  - impute_missing_values
 - title: "Shiny Apps"
 - subtitle: "Full Apps"
 - contents:
