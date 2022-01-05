@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/romic.html">Get started</a>
 </li>
@@ -65,38 +61,40 @@
 
 <p>ROMIC standardizes the formatting of genomic data to open up general visualizations approaches which can be used for exploratory data analysis (EDA).</p>
 <!-- badges: start -->
-<p><a href="https://cran.r-project.org/package=romic"><img src="https://www.r-pkg.org/badges/version/romic" alt="CRAN status"></a> <a href="https://github.com/calico/romic/actions"><img src="https://github.com/calico/romic/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <!-- badges: end --></p>
-<div id="package-setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#package-setup" class="anchor"></a>Package Setup</h2>
+
+<div class="section level2">
+<h2 id="package-setup">Package Setup<a class="anchor" aria-label="anchor" href="#package-setup"></a>
+</h2>
 <p>To install <em>romic</em> from CRAN, run the following code in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"romic"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"romic"</span><span class="op">)</span></code></pre></div>
 <p>If you’d like to use the most current version of the package, run the following instead:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span>
   <span class="st">"calico/romic"</span>,
   dependencies <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span></code></pre></div>
-<p>And, check out romic’s <a href="https://calico.github.io/romic/index.html">pkgdown site</a> for organized documentation.</p>
+<p>And, check out romic’s <a href="https://calico.github.io/romic/index.html" class="external-link">pkgdown site</a> for organized documentation.</p>
 </div>
-<div id="concept" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#concept" class="anchor"></a>Concept</h1></div>
-<p><img src="https://github.com/calico/romic/blob/main/assets/romic_art/romic.png" alt="Romic Logo"></p>
+<div class="section level1">
+<div class="page-header"><h1 id="concept">Concept<a class="anchor" aria-label="anchor" href="#concept"></a>
+</h1></div>
+<div class="figure">
+<img src="https://github.com/calico/romic/blob/main/assets/romic_art/romic.png" alt=""><p class="caption">Romic Logo</p>
+</div>
 <p>Romic structures high-dimensional ’omic datasets using a flexible format that can easily be modified using tidyverse-like verbs and visualized using ggplot. These operations can be dynamically applied using romic’s shiny applications and modules to support exploratory data analysis and summarize results.</p>
-<div id="data-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-model" class="anchor"></a>Data Model</h2>
+<div class="section level2">
+<h2 id="data-model">Data Model<a class="anchor" aria-label="anchor" href="#data-model"></a>
+</h2>
 <p>`Omic datasets are constructed by measuring a common set of features (transcripts, metabolites, ) across a set of samples. With such data, we could represent the same data using several different format:</p>
 <ul>
 <li>Wide <span class="emoji" data-emoji="warning">⚠️</span>:
 <ul>
 <li>A matrix of I features x J samples including extra columns for feature-level attributes and extra rows for sample-level attributes.</li>
 <li>While ’omic data is often shared in this format, it is problematic for three reasons.
-<ol>
+<ol style="list-style-type: decimal">
 <li>Each column of a dataframe has the same classes, and all values of a matrix have a common class. If sample-level variables are provided (such as the experimental design) then they would need to be tied to column attributes which are difficult to work with, although this is easier with specialized data structures such as H5AD.</li>
 <li>Matrix data is difficult to deal with. We would have to track which columns are measurements and which are feature attributes, and if we wanted to say select a subset of features and color them by a sample attribute, it would be colossal pain.</li>
 <li>If we have two or more observation-level attributes, such as raw, normalized and log-transformed measurements then the information cannot nicely be formatted as a matrix.</li>
@@ -109,7 +107,7 @@
 <li>A table with one row for each measurement (I x J)</li>
 <li>Each measurement is associated with the attributes of its corresponding features and samples. This is helpful for measurement-level operations such as plotting informed by the experimental design.</li>
 <li>A couple of downsides of this representation are that:
-<ol>
+<ol style="list-style-type: decimal">
 <li>Feature- and sample-level attributes are highly duplicated so the representation is not particularly compact.</li>
 <li>Because feature- and sample attributes are duplicated, its difficult apply feature- or sample-level manipulation. For example, adding a gene’s GO category would involve separately adding it for each measurement of that gene. This invariably adds extra complexity and time to the code and there is a risk that an inconsistent output is produced (such as a gene being associated with different GO categories depending on which measurement it is).</li>
 </ol>
@@ -130,7 +128,9 @@
 </ul>
 </li>
 </ul>
-<p><img src="https://github.com/calico/romic/blob/main/assets/romic_summary.png" alt="Romic Functions"></p>
+<div class="figure">
+<img src="https://github.com/calico/romic/blob/main/assets/romic_summary.png" alt=""><p class="caption">Romic Functions</p>
+</div>
 <p>Romic harnesses the tidy and the triple omic representations through the <strong>tidy_omic</strong> and <strong>triple_omic</strong> S3 classes. These formats each have their own pros and cons, and one is generally better than the other depending on the task. Taking advantage of this fact, tidy and triple omic objects can readily be interconverted by tracking a dataset’s <strong>design</strong>.</p>
 <p>The design reflects the schema of a triple_omic object, and as a result, how it can be naturally rearranged to- and from- a tidy_omic. It is stored as simple list:</p>
 <ul>
@@ -142,15 +142,15 @@
 </ul>
 <p>Since tidy_omic and triple_omic representation can readily be inter-converted, many functions can use a tidy_omic or triple_omic input, converting between the formats as needed and returning the same type of object as the input if desired. This T* Omic abstraction is referred to through the <strong>tomic</strong> S3 class.</p>
 </div>
-<div id="modifying-tomics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#modifying-tomics" class="anchor"></a>Modifying Tomics</h2>
+<div class="section level2">
+<h2 id="modifying-tomics">Modifying Tomics<a class="anchor" aria-label="anchor" href="#modifying-tomics"></a>
+</h2>
 <p>Tidy and triple omic objects’ core data are tables that can be directly manipulated and updated using conventional means (as long as the design is kept up to date). But, romic also includes methods which simplify working with this format and applying some common manipulations of high-dimensional data. Tidy and triple omics’ core data are “tall data”, so romic takes advantage of the tidyverse suite of packages for working with tall tabular data. Two common operations for manipulating tidy data are filtering and mutating results.</p>
 <p><strong>filter_tomic</strong> filters any table in a triple_omic to a range of values, values of interest, or based on a quosure (<strong>filter_tomic</strong>). Mutates are more varied, and include centering measurements (<strong>center_tomic</strong>), ordering features or samples as factors (<strong>sort_tomic</strong>) and adding lower-dimensional sample embedding (<strong>add_pca_loadings</strong>)</p>
 </div>
-<div id="visualizations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualizations" class="anchor"></a>Visualizations</h2>
+<div class="section level2">
+<h2 id="visualizations">Visualizations<a class="anchor" aria-label="anchor" href="#visualizations"></a>
+</h2>
 <p>Romic provides several methods which can provide both a high-level summary of a dataset as well as interrogate specific features.</p>
 <ul>
 <li>
@@ -168,9 +168,9 @@
 </ul>
 <p>The univariate and bivariate plots are simple, but they can do a lot when combined with tomics flexible data manipulation and shiny interactivity.</p>
 </div>
-<div id="interactive-analysis-with-shiny" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interactive-analysis-with-shiny" class="anchor"></a>Interactive Analysis with Shiny</h2>
+<div class="section level2">
+<h2 id="interactive-analysis-with-shiny">Interactive Analysis with Shiny<a class="anchor" aria-label="anchor" href="#interactive-analysis-with-shiny"></a>
+</h2>
 <p>Taking advantage of Romic’s flexible representation and manipulation of high-dimensional datasets, romic bundles a number of R Shiny Modules which can be composed into powerful Shiny Apps.</p>
 <p>The main two apps are:</p>
 <ul>
@@ -186,24 +186,41 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=romic">https://​cloud.r-project.org/​package=romic</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=romic" class="external-link">View on CRAN</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Sean Hackett <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9553-4341" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing romic</a></li>
+</ul>
+</div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Sean Hackett <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9553-4341" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Calico Life Sciences LLC <br><small class="roles"> Copyright holder, funder </small>  </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=romic" class="external-link"><img src="https://www.r-pkg.org/badges/version/romic" alt="CRAN status"></a></li>
+<li><a href="https://github.com/calico/romic/actions" class="external-link"><img src="https://github.com/calico/romic/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 
@@ -212,11 +229,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
+  <p></p>
+<p>Developed by Sean Hackett, Calico Life Sciences LLC.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -224,6 +243,8 @@
 
   
 
+
+  
 
   </body>
 </html>
