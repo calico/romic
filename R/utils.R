@@ -26,7 +26,9 @@ format_names_for_plotting <- function(chars, width = 40, truncate_at = 80) {
 coerce_to_classes <- function(obj, reference_obj) {
   reference_obj_class <- class(reference_obj)
 
-  if (reference_obj_class %in% c("factor", "ordered")) {
+  if (any(reference_obj_class %in% "glue")) {
+    out = glue::as_glue(obj)
+  } else if (reference_obj_class %in% c("factor", "ordered")) {
     out <-
       do.call(
         reference_obj_class,
@@ -45,6 +47,13 @@ coerce_to_classes <- function(obj, reference_obj) {
     out <- as.logical(obj)
   } else {
     stop(glue::glue("converting to {reference_obj_class} not implemented"))
+  }
+
+  if (all(!is.na(reference_obj_class)) && any(is.na(out))) {
+    stop(glue::glue(
+    "{sum(is.na(out))} values were converted to NAs
+    when zero NAs are expected based on the reference object"
+    ))
   }
 
   return(out)
