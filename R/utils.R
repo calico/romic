@@ -28,7 +28,7 @@ coerce_to_classes <- function(obj, reference_obj) {
 
   if (any(reference_obj_class %in% "glue")) {
     out = glue::as_glue(obj)
-  } else if (reference_obj_class %in% c("factor", "ordered")) {
+  } else if (any(reference_obj_class %in% c("factor", "ordered"))) {
     out <-
       do.call(
         reference_obj_class,

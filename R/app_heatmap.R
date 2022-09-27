@@ -503,7 +503,7 @@ hclust_tidy_omic <- function(
     # order by factor or alpha-numerically
 
     if (
-      class(distinct_features[[feature_var]]) %in% c("factor", "ordered")
+      any(class(distinct_features[[feature_var]]) %in% c("factor", "ordered"))
     ) {
       # retain previous ordering
 
@@ -548,7 +548,7 @@ hclust_tidy_omic <- function(
 
     # order by factor or alpha-numerically
 
-    if (class(distinct_samples[[sample_var]]) %in% c("factor", "ordered")) {
+    if (any(class(distinct_samples[[sample_var]]) %in% c("factor", "ordered"))) {
       # retain previous ordering
 
       ordered_distinct_samples <- distinct_samples %>%
