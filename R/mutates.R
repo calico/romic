@@ -476,15 +476,15 @@ tomic_sort_status <- function(tomic) {
   checkmate::assertClass(tomic, "tomic")
 
   if ("tidy_omic" %in% class(tomic)) {
-    is_sorted_features <- class(tomic$data[[tomic$design$feature_pk]]) %in%
-      c("factor", "ordered")
-    is_sorted_samples <- class(tomic$data[[tomic$design$sample_pk]]) %in%
-      c("factor", "ordered")
+    is_sorted_features <- any(class(tomic$data[[tomic$design$feature_pk]]) %in%
+      c("factor", "ordered"))
+    is_sorted_samples <- any(class(tomic$data[[tomic$design$sample_pk]]) %in%
+      c("factor", "ordered"))
   } else if ("tidy_omic" %in% class(tomic)) {
-    is_sorted_features <- class(tomic$features[[tomic$design$feature_pk]]) %in%
-      c("factor", "ordered")
-    is_sorted_samples <- class(tomic$samples[[tomic$design$sample_pk]]) %in%
-      c("factor", "ordered")
+    is_sorted_features <- any(class(tomic$features[[tomic$design$feature_pk]]) %in%
+      c("factor", "ordered"))
+    is_sorted_samples <- any(class(tomic$samples[[tomic$design$sample_pk]]) %in%
+      c("factor", "ordered"))
   } else {
     stop("undefined behavior")
   }
