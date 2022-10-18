@@ -328,9 +328,6 @@ find_triple_omic_missing_values <- function (triple_omic, value_var) {
     triple_omic$features[triple_omic$design$feature_pk],
     triple_omic$samples[triple_omic$design$sample_pk]
   )
-
-  all_col_names <- colnames(triple_omic$measurements)
-  quant_col_val <- which(all_col_names == value_var)
   
   #drop missing values
   observed_measurements <- triple_omic$measurements %>%
