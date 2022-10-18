@@ -329,11 +329,14 @@ find_triple_omic_missing_values <- function (triple_omic, value_var) {
     triple_omic$samples[triple_omic$design$sample_pk]
   )
 
+  all_col_names <- colnames(triple_omic$measurements)
+  quant_col_val <- which(all_col_names == value_var)
+  
+  #drop missing values
   observed_measurements <- triple_omic$measurements %>%
-    # drop missing values
-    dplyr::filter_at(dplyr::all_of(value_var), function(x) {
-      !is.na(x)
-    })
+    dplyr::mutate(quant_col := !! sym(value_var)) %>%
+    dplyr::filter(!is.na(quant_col)) %>%
+    dplyr::select(-quant_col)
 
   missing_values <- all_expected_obs %>%
     dplyr::anti_join(
