@@ -586,10 +586,18 @@ triple_to_tidy <- function(triple_omic) {
   feature_pk <- triple_omic$design$feature_pk
   sample_pk <- triple_omic$design$sample_pk
 
+  samples_measurements <- triple_omic$samples %>%
+    dplyr::inner_join(
+      triple_omic$measurements,
+      by = sample_pk,
+      multiple = "all"
+    )
+
   tidy_output <- triple_omic$features %>%
-    dplyr::inner_join((triple_omic$samples %>%
-      dplyr::inner_join(triple_omic$measurements, by = sample_pk)),
-    by = feature_pk
+    dplyr::inner_join(
+      samples_measurements,
+      by = feature_pk,
+      multiple = "all"
     )
 
   output <- list()
