@@ -586,10 +586,18 @@ triple_to_tidy <- function(triple_omic) {
   feature_pk <- triple_omic$design$feature_pk
   sample_pk <- triple_omic$design$sample_pk
 
+  samples_measurements <- triple_omic$samples %>%
+    dplyr::inner_join(
+      triple_omic$measurements,
+      by = sample_pk,
+      multiple = "all"
+    )
+
   tidy_output <- triple_omic$features %>%
-    dplyr::inner_join((triple_omic$samples %>%
-      dplyr::inner_join(triple_omic$measurements, by = sample_pk)),
-    by = feature_pk
+    dplyr::inner_join(
+      samples_measurements,
+      by = feature_pk,
+      multiple = "all"
     )
 
   output <- list()
@@ -628,14 +636,26 @@ tidy_to_triple <- function(tidy_omic) {
     tidy_omic$design$samples$type == "sample_primary_key"
   ]
 
+  # `distinct()` used to return variables in the order existing in the
+  # data. Since dplyr 1.1.0, itnow returns variables in the order they
+  # were supplied. To prevent a behaviour change, we now supply the
+  # variables in data order by subsetting the original variables first.
+  vars <- names(tidy_omic$data)
+  features_vars <- intersect(vars, tidy_omic$design$features$variable)
+  samples_vars <- intersect(vars, tidy_omic$design$samples$variable)
+
+  # This has always returned the variables in supplied order because
+  # that's how `select()` orders the output
+  measurements_vars <- tidy_omic$design$measurements$variable
+
   feature_df <- tidy_omic$data %>%
-    dplyr::distinct(!!!rlang::syms(tidy_omic$design$features$variable))
+    dplyr::distinct(dplyr::across(dplyr::all_of(features_vars)))
 
   sample_df <- tidy_omic$data %>%
-    dplyr::distinct(!!!rlang::syms(tidy_omic$design$samples$variable))
+    dplyr::distinct(dplyr::across(dplyr::all_of(samples_vars)))
 
   measurement_df <- tidy_omic$data %>%
-    dplyr::select(!!!rlang::syms(tidy_omic$design$measurements$variable))
+    dplyr::select(dplyr::all_of(measurements_vars))
 
   output <- list(
     features = feature_df,

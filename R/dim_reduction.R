@@ -331,9 +331,7 @@ find_triple_omic_missing_values <- function (triple_omic, value_var) {
 
   observed_measurements <- triple_omic$measurements %>%
     # drop missing values
-    dplyr::filter_at(dplyr::all_of(value_var), function(x) {
-      !is.na(x)
-    })
+    dplyr::filter_at(value_var, function(x) !is.na(x))
 
   missing_values <- all_expected_obs %>%
     dplyr::anti_join(
