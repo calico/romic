@@ -75,7 +75,7 @@ Since tidy_omic and triple_omic representation can readily be inter-converted, m
 
 Tidy and triple omic objects' core data are tables that can be directly manipulated and updated using conventional means (as long as the design is kept up to date). But, romic also includes methods which simplify working with this format and applying some common manipulations of high-dimensional data. Tidy and triple omics' core data are "tall data", so romic takes advantage of the tidyverse suite of packages for working with tall tabular data. Two common operations for manipulating tidy data are filtering and mutating results.
 
-**filter_tomic** filters any table in a triple_omic to a range of values, values of interest, or based on a quosure (**filter_tomic**). Mutates are more varied, and include centering measurements (**center_tomic**), ordering features or samples as factors (**sort_tomic**) and adding lower-dimensional sample embedding (**add_pca_loadings**)
+**filter_tomic** filters any table in a triple_omic to a range of values, values of interest, or based on a quosure (**filter_tomic**). Mutates are more varied, and include centering measurements (**center_tomic**), ordering features or samples as factors (**sort_tomic**) and adding lower-dimensional sample embedding (**add_pcs**)
 
 ## Visualizations
 

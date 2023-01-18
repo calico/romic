@@ -21,7 +21,7 @@ Test the shiny ggBivariate module as a stand-alone application.
 
 if (interactive()) {
   shiny_ggbiv_test(
-    add_pca_loadings(brauer_2008_triple, npcs = 5),
+    add_pcs(brauer_2008_triple, npcs = 5),
     plot_table = "samples"
   )
   shiny_ggbiv_test(

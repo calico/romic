@@ -16,7 +16,7 @@ test_that("Factor primary keys are preserved when converting from a tidy to a tr
   triple_from_tidy_check_status <- romic::check_tomic(triple_from_tidy, fast_check = FALSE)
   expect_equal(triple_from_tidy_check_status, 0)
 
-  tidy_with_pcs <- add_pca_loadings(tidy)
+  tidy_with_pcs <- add_pcs(tidy)
   expect_true(sum(stringr::str_detect(colnames(tidy_with_pcs$data), "^PC")) > 1)
 })
 
@@ -34,6 +34,6 @@ test_that("Numeric primary keys are preserved when converting from a tidy to a t
   triple_from_tidy_check_status <- check_tomic(triple_from_tidy, fast_check = FALSE)
   expect_equal(triple_from_tidy_check_status, 0)
 
-  tidy_with_pcs <- add_pca_loadings(tidy)
+  tidy_with_pcs <- add_pcs(tidy)
   expect_true(sum(stringr::str_detect(colnames(tidy_with_pcs$data), "^PC")) > 1)
 })

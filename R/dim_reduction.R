@@ -13,10 +13,10 @@
 #' @returns A \code{tomic} object with principal components added to samples.
 #'
 #' @examples
-#' add_pca_loadings(brauer_2008_triple, npcs = 5)
+#' add_pcs(brauer_2008_triple, npcs = 5)
 #'
 #' @export
-add_pca_loadings <- function(
+add_pcs <- function(
   tomic,
   value_var = NULL,
   center_rows = TRUE,
@@ -57,12 +57,23 @@ add_pca_loadings <- function(
     omic_matrix <- omic_matrix - rowMeans(omic_matrix)
   }
 
-  # find the npcs leading PC loadings
-  pc_loadings <- svd(omic_matrix)$v[, 1:npcs, drop = FALSE]
-  # calculate percent variance explained by PC
-  colnames(pc_loadings) <- paste0("PC", 1:npcs)
+  mat_svd <- svd(omic_matrix)
 
-  pc_loadings <- pc_loadings %>%
+  # add eigenvalues and fraction of variance explained as unstructured data
+  varex_df = tibble::tibble(
+    pc_number = seq(ncol(omic_matrix)),
+    eigenvalue = mat_svd$d) %>%
+    dplyr::mutate(
+      fraction_varex = eigenvalue^2 / (sum(eigenvalue^2)),
+      pc_label = glue::glue("PC{pc_number} ({scales::percent_format(2)(fraction_varex)})")
+    )
+
+  # find the npcs leading principal components
+  pcs <- mat_svd$v[, 1:npcs, drop = FALSE]
+  # calculate percent variance explained by PC
+  colnames(pcs) <- varex_df$pc_label[1:npcs]
+
+  pcs <- pcs %>%
     as.data.frame() %>%
     dplyr::as_tibble() %>%
     dplyr::mutate(
@@ -78,14 +89,16 @@ add_pca_loadings <- function(
     # drop existing PCs
     dplyr::select_at(vars(!dplyr::starts_with("PC"))) %>%
     # create a copy of the primary key to join on
-    dplyr::left_join(pc_loadings, by = sample_pk)
+    dplyr::left_join(pcs, by = sample_pk)
 
   triple_omic$design$samples <- triple_omic$design$samples %>%
     dplyr::filter(!stringr::str_detect(variable, "^PC")) %>%
     dplyr::bind_rows(tibble::tibble(
-      variable = colnames(pc_loadings),
+      variable = colnames(pcs),
       type = "numeric"
     ))
+
+  triple_omic$unstructured$scree_df <- varex_df
 
   return(tomic_to(triple_omic, class(tomic)[1]))
 }

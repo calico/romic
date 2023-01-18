@@ -96,7 +96,7 @@ app_pcs <- function(tomic) {
       # add PCs
       featurized_tidy_omic <- reactive({
         req(tidy_filtered_samples()(), input$measurement_var)
-        add_pca_loadings(
+        add_pcs(
           tidy_filtered_samples()(),
           value_var = input$measurement_var,
           npcs = 5

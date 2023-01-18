@@ -27,7 +27,7 @@ reference:
   - update_tomic
   - update_tidy_omic
   - center_tomic
-  - add_pca_loadings
+  - add_pcs
   - starts_with("sort")
   - impute_missing_values
 - title: "Shiny Apps"

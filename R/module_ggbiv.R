@@ -11,7 +11,7 @@
 #'
 #' if (interactive()) {
 #'   shiny_ggbiv_test(
-#'     add_pca_loadings(brauer_2008_triple, npcs = 5),
+#'     add_pcs(brauer_2008_triple, npcs = 5),
 #'     plot_table = "samples"
 #'   )
 #'   shiny_ggbiv_test(
@@ -244,7 +244,7 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' library(dplyr)
 #'
 #' brauer_augmented <- brauer_2008_tidy %>%
-#'   add_pca_loadings(npcs = 5) %>%
+#'   add_pcs(npcs = 5) %>%
 #'   tomic_to("triple_omic")
 #'
 #' tomic_table <- brauer_augmented$samples
@@ -253,11 +253,14 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
 #' @export
 plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
+
   checkmate::assertClass(tomic_table, "data.frame")
-  checkmate::assertChoice(x_var, colnames(tomic_table))
-  checkmate::assertChoice(y_var, colnames(tomic_table))
+  # allow for partial string matching
+  x_var <- var_partial_match(x_var, tomic_table)
+  y_var <- var_partial_match(y_var, tomic_table)
+
   if (class(color_var) != "NULL") {
-    checkmate::assertChoice(color_var, colnames(tomic_table))
+    color_var <- var_partial_match(color_var, tomic_table)
 
     if (!(class(tomic_table[[color_var]]) %in% c("numeric", "integer"))) {
       distinct_color_levels <- unique(tomic_table[[color_var]])
@@ -275,7 +278,7 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
   # determine plot type from variable classes
 
   if (class(tomic_table[[x_var]]) %in% c("numeric", "integer")) {
-    grob <- ggplot(tomic_table, aes_string(x = x_var, y = y_var)) +
+    grob <- ggplot(tomic_table, aes(x = !!rlang::sym(x_var), y = !!rlang::sym(y_var))) +
       theme_bw()
 
     if (is.null(color_var)) {
@@ -283,10 +286,10 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
         geom_point(size = 4)
     } else {
       grob <- grob +
-        geom_point(aes_string(color = color_var), size = 4)
+        geom_point(aes(color = !!rlang::sym(color_var)), size = 4)
     }
   } else {
-    grob <- ggplot(tomic_table, aes_string(x = x_var, y = y_var)) +
+    grob <- ggplot(tomic_table, aes(x = !!rlang::sym(x_var), y = !!rlang::sym(y_var))) +
       theme_bw()
 
     if (is.null(color_var)) {
@@ -294,13 +297,16 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
         geom_boxplot()
     } else {
       grob <- grob +
-        geom_boxplot(aes_string(fill = color_var)) +
+        geom_boxplot(aes(fill = !!rlang::sym(color_var))) +
         theme(axis.text = element_text(angle = 90, hjust = 1))
     }
   }
 
   return(grob)
 }
+
+
+
 
 invalid_grob <- function(message) {
   ggplot(data.frame(x = 0, y = 0), aes(x = x, y = y)) +
