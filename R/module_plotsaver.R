@@ -68,31 +68,32 @@ plotsaverInput <- function(id, ui_format = "tall") {
       shiny::downloadButton(ns("downloadPlot"), "Save Plot")
     )
   } else if (ui_format == "wide") {
-
     shiny::fluidRow(
-      shiny::column(2,
-                    shiny::textInput(
-                      ns("save_width"),
-                      "width (inches)",
-                      value = 8,
-                      width = "100px"
-                    )
-                    ),
-      shiny::column(2,
-                    shiny::textInput(
-                      ns("save_height"),
-                      "height (inches)",
-                      value = 8,
-                      width = "100px"
-                    )
+      shiny::column(
+        2,
+        shiny::textInput(
+          ns("save_width"),
+          "width (inches)",
+          value = 8,
+          width = "100px"
+        )
       ),
-      shiny::column(2,
-                    shiny::downloadButton(ns("downloadPlot"), "Save Plot")
-                    )
+      shiny::column(
+        2,
+        shiny::textInput(
+          ns("save_height"),
+          "height (inches)",
+          value = 8,
+          width = "100px"
+        )
+      ),
+      shiny::column(
+        2,
+        shiny::downloadButton(ns("downloadPlot"), "Save Plot")
+      )
     )
-
   } else {
-    stop ("undefined format")
+    stop("undefined format")
   }
 }
 
@@ -109,7 +110,6 @@ plotsaverInput <- function(id, ui_format = "tall") {
 #'
 #' @export
 plotsaverServer <- function(id, grob, filename = "grob.png") {
-
   checkmate::assertString(filename)
   moduleServer(
     id,

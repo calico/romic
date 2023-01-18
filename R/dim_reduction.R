@@ -17,13 +17,11 @@
 #'
 #' @export
 add_pcs <- function(
-  tomic,
-  value_var = NULL,
-  center_rows = TRUE,
-  npcs = NULL,
-  missing_val_method = "drop_samples"
-  ) {
-
+    tomic,
+    value_var = NULL,
+    center_rows = TRUE,
+    npcs = NULL,
+    missing_val_method = "drop_samples") {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertLogical(center_rows, len = 1)
   stopifnot(length(npcs) <= 1, class(npcs) %in% c("NULL", "numeric", "integer"))
@@ -60,9 +58,10 @@ add_pcs <- function(
   mat_svd <- svd(omic_matrix)
 
   # add eigenvalues and fraction of variance explained as unstructured data
-  varex_df = tibble::tibble(
-    pc_number = seq(ncol(omic_matrix)),
-    eigenvalue = mat_svd$d) %>%
+  varex_df <- tibble::tibble(
+    pc_number = seq_len(ncol(omic_matrix)),
+    eigenvalue = mat_svd$d
+  ) %>%
     dplyr::mutate(
       fraction_varex = eigenvalue^2 / (sum(eigenvalue^2)),
       pc_label = glue::glue("PC{pc_number} ({scales::percent_format(2)(fraction_varex)})")
@@ -82,8 +81,8 @@ add_pcs <- function(
       !!rlang::sym(sample_pk) := coerce_to_classes(
         !!rlang::sym(sample_pk),
         triple_omic$samples[[sample_pk]]
-        )
       )
+    )
 
   triple_omic$samples <- triple_omic$samples %>%
     # drop existing PCs
@@ -126,10 +125,9 @@ add_pcs <- function(
 #'
 #' @export
 remove_missing_values <- function(
-  tomic,
-  value_var = NULL,
-  missing_val_method = "drop_samples"
-  ) {
+    tomic,
+    value_var = NULL,
+    missing_val_method = "drop_samples") {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(
     missing_val_method,
@@ -149,7 +147,7 @@ remove_missing_values <- function(
   found_missing_values <- find_triple_omic_missing_values(
     triple_omic,
     value_var
-    )
+  )
   observed_measurements <- found_missing_values$observed_measurements
   missing_values <- found_missing_values$missing_values
 
@@ -222,14 +220,12 @@ remove_missing_values <- function(
 #'
 #' @export
 impute_missing_values <- function(
-  tomic,
-  impute_var_name = "imputed",
-  value_var = NULL,
-  ...
-  ) {
-
+    tomic,
+    impute_var_name = "imputed",
+    value_var = NULL,
+    ...) {
   if (!("impute" %in% rownames(utils::installed.packages()))) {
-    stop ("Install \"impute\" using remotes::install_bioc(\"impute\") to use this function")
+    stop("Install \"impute\" using remotes::install_bioc(\"impute\") to use this function")
   }
 
   checkmate::assertClass(tomic, "tomic")
@@ -242,12 +238,14 @@ impute_missing_values <- function(
 
   checkmate::assertString(impute_var_name)
   existing_measurements <- design$measurements %>%
-    {.$variable[!(.$type %in% c("feature_primary_key", "sample_primary_key"))]}
+    {
+      .$variable[!(.$type %in% c("feature_primary_key", "sample_primary_key"))]
+    }
   if (impute_var_name %in% existing_measurements) {
     warning(glue::glue(
       "impute_var_name of \"{impute_var_name}\" already exists in measurements;
       -  the existing variable will be overwritten"
-      ))
+    ))
   }
 
   # logging
@@ -279,7 +277,8 @@ impute_missing_values <- function(
     tidyr::gather(
       !!rlang::sym(sample_pk),
       !!rlang::sym(impute_var_name),
-      -rlang::sym(feature_pk)) %>%
+      -rlang::sym(feature_pk)
+    ) %>%
     dplyr::as_tibble()
 
   updated_measurements <- triple_omic$measurements
@@ -336,7 +335,7 @@ value_var_handler <- function(value_var = NULL, design) {
   return(value_var)
 }
 
-find_triple_omic_missing_values <- function (triple_omic, value_var) {
+find_triple_omic_missing_values <- function(triple_omic, value_var) {
   all_expected_obs <- tidyr::expand_grid(
     triple_omic$features[triple_omic$design$feature_pk],
     triple_omic$samples[triple_omic$design$sample_pk]
@@ -352,12 +351,13 @@ find_triple_omic_missing_values <- function (triple_omic, value_var) {
       by = c(
         triple_omic$design$feature_pk,
         triple_omic$design$sample_pk
-        ))
+      )
+    )
 
   output <- list(
     observed_measurements = observed_measurements,
     missing_values = missing_values
   )
 
-  return (output)
+  return(output)
 }

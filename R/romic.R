@@ -24,6 +24,7 @@ utils::globalVariables(c(
   "collapsed_row_number",
   "n_entries",
   "entry_number",
+  "eigenvalue",
   "x",
   "x_var",
   "y",

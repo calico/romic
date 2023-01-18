@@ -40,12 +40,12 @@ update_tomic <- function(tomic, tomic_table) {
         variable == new_design$feature_pk,
         "feature_primary_key",
         type
-        ),
+      ),
       type = ifelse(
         variable == new_design$sample_pk,
         "sample_primary_key",
         type
-        )
+      )
     )
 
   triple_omic$design <- new_design
@@ -301,9 +301,10 @@ sort_triple_hclust <- function(triple_omic, sort_table, value_var) {
     tidy_omic$design$sample_pk,
     value_var,
     cluster_dim = cluster_dim
-  ) %>% {
-    .[[cluster_dim]]
-  }
+  ) %>%
+    {
+      .[[cluster_dim]]
+    }
 
   if (class(tidy_omic$data[[pk]]) != "factor") {
     # match classes if needed to facilitate joins
@@ -313,9 +314,10 @@ sort_triple_hclust <- function(triple_omic, sort_table, value_var) {
   # use the ordered clusters to sort the appropriate sort_table
 
   sorted_table <- (triple_omic[[sort_table]] %>%
-    dplyr::left_join(tibble::tibble(!!rlang::sym(pk) := cluster_orders) %>%
-      dplyr::mutate(order = 1:dplyr::n()),
-    by = pk
+    dplyr::left_join(
+      tibble::tibble(!!rlang::sym(pk) := cluster_orders) %>%
+        dplyr::mutate(order = seq_len(dplyr::n())),
+      by = pk
     ) %>%
     dplyr::arrange(order))
 
@@ -347,12 +349,6 @@ sort_triple_arrange <- function(triple_omic, sort_table, sort_variables) {
       the variable present are: {paste(available_sort_vars, collapse = ', ')}"
     ))
   }
-
-  pk <- ifelse(
-    sort_table == "features",
-    triple_omic$design$feature_pk,
-    triple_omic$design$sample_pk
-  )
 
   sorted_table <- triple_omic[[sort_table]] %>%
     dplyr::arrange(!!!rlang::syms(sort_variables))
@@ -446,9 +442,10 @@ sort_tomic <- function(tomic,
   # update measurements
 
   triple_omic$measurements <- triple_omic$measurements %>%
-    dplyr::left_join(sorted_attributes_fct %>%
-      dplyr::select(!!rlang::sym(pk), orderedId),
-    by = pk
+    dplyr::left_join(
+      sorted_attributes_fct %>%
+        dplyr::select(!!rlang::sym(pk), orderedId),
+      by = pk
     ) %>%
     dplyr::select(-pk) %>%
     dplyr::rename(!!rlang::sym(pk) := orderedId) %>%

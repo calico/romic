@@ -73,11 +73,8 @@ app_heatmap <- function(tomic) {
       )
     ),
     server = function(input, output, session) {
-
       # defining options available to user for sorting and filtering
       design <- tomic$design
-      feature_pk <- tomic$feature_pk
-      sample_pk <- tomic$sample_pk
 
       # create tomic from tidy_omic or triple_omic
 
@@ -204,21 +201,23 @@ app_heatmap <- function(tomic) {
 
         shiny::req(tidy_organized()())
 
-        try(plot_heatmap(
-          tidy_organized()(),
-          feature_var = NULL,
-          sample_var = NULL,
-          value_var = input$measurement_var,
-          cluster_dim = "both",
-          change_threshold = thresholded_val(),
-          plot_type = "grob",
-          # suppress feature aggregatin when feature facets are present
-          max_display_features = ifelse(
-            is.null(input$feature_facets),
-            800,
-            Inf)
-        ),
-        silent = TRUE
+        try(
+          plot_heatmap(
+            tidy_organized()(),
+            feature_var = NULL,
+            sample_var = NULL,
+            value_var = input$measurement_var,
+            cluster_dim = "both",
+            change_threshold = thresholded_val(),
+            plot_type = "grob",
+            # suppress feature aggregatin when feature facets are present
+            max_display_features = ifelse(
+              is.null(input$feature_facets),
+              800,
+              Inf
+            )
+          ),
+          silent = TRUE
         )
       })
 
@@ -229,7 +228,6 @@ app_heatmap <- function(tomic) {
             geom_text(label = "No data available", size = 15) +
             theme(text = element_blank(), line = element_blank())
         } else {
-
           # return either a faceted or unfaced plot
           if (!(is.null(input$feature_facets) & is.null(input$sample_facets))) {
             heatmap_plot() +
@@ -237,7 +235,7 @@ app_heatmap <- function(tomic) {
                 stats::as.formula(facet_expression()),
                 space = "free",
                 scales = "free"
-                )
+              )
           } else {
             heatmap_plot()
           }
@@ -301,17 +299,16 @@ app_heatmap <- function(tomic) {
 #' )
 #' @export
 plot_heatmap <- function(
-  tomic,
-  feature_var = NULL,
-  sample_var = NULL,
-  value_var = NULL,
-  cluster_dim = "both",
-  distance_measure = "dist",
-  hclust_method = "ward.D2",
-  change_threshold = Inf,
-  plot_type = "grob",
-  max_display_features = 800
-  ) {
+    tomic,
+    feature_var = NULL,
+    sample_var = NULL,
+    value_var = NULL,
+    cluster_dim = "both",
+    distance_measure = "dist",
+    hclust_method = "ward.D2",
+    change_threshold = Inf,
+    plot_type = "grob",
+    max_display_features = 800) {
   checkmate::assertClass(tomic, "tomic")
 
   if ("NULL" %in% class(feature_var)) {
@@ -448,14 +445,13 @@ plot_heatmap <- function(
 
 
 hclust_tidy_omic <- function(
-  tidy_omic,
-  feature_var,
-  sample_var,
-  value_var,
-  cluster_dim,
-  distance_measure = "dist",
-  hclust_method = "ward.D2"
-  ) {
+    tidy_omic,
+    feature_var,
+    sample_var,
+    value_var,
+    cluster_dim,
+    distance_measure = "dist",
+    hclust_method = "ward.D2") {
   check_tidy_omic(tidy_omic)
 
   checkmate::assertChoice(feature_var, tidy_omic$design$features$variable)
@@ -499,7 +495,6 @@ hclust_tidy_omic <- function(
     )
 
   if (cluster_dim == "columns") {
-
     # order by factor or alpha-numerically
 
     if (
@@ -520,7 +515,6 @@ hclust_tidy_omic <- function(
         levels = !!rlang::sym(tidy_omic$design$feature_pk)
       ))
   } else {
-
     # order with hclust
 
     ordered_distinct_features <- distinct_features %>%
@@ -528,7 +522,7 @@ hclust_tidy_omic <- function(
         tibble::tibble(
           !!rlang::sym(tidy_omic$design$feature_pk) := cluster_orders$rows
         ) %>%
-          dplyr::mutate(order = 1:dplyr::n()),
+          dplyr::mutate(order = seq_len(dplyr::n())),
         by = tidy_omic$design$feature_pk
       ) %>%
       dplyr::arrange(order) %>%
@@ -545,7 +539,6 @@ hclust_tidy_omic <- function(
     )
 
   if (cluster_dim == "rows") {
-
     # order by factor or alpha-numerically
 
     if (any(class(distinct_samples[[sample_var]]) %in% c("factor", "ordered"))) {
@@ -564,7 +557,6 @@ hclust_tidy_omic <- function(
         levels = !!rlang::sym(tidy_omic$design$sample_pk)
       ))
   } else {
-
     # order with hclust
 
     ordered_distinct_samples <- distinct_samples %>%
@@ -572,7 +564,7 @@ hclust_tidy_omic <- function(
         tibble::tibble(
           !!rlang::sym(tidy_omic$design$sample_pk) := cluster_orders$columns
         ) %>%
-          dplyr::mutate(order = 1:dplyr::n()),
+          dplyr::mutate(order = seq_len(dplyr::n())),
         by = tidy_omic$design$sample_pk
       ) %>%
       dplyr::arrange(order) %>%
@@ -597,13 +589,14 @@ hclust_tidy_omic <- function(
 
   updated_tidy_data <- tidy_omic$data %>%
     # order all rows and columns
-    dplyr::left_join(ordered_distinct_features %>%
-      dplyr::select(
-        !!rlang::sym(tidy_omic$design$feature_pk),
-        ordered_featureId,
-        feature_label
-      ),
-    by = tidy_omic$design$feature_pk
+    dplyr::left_join(
+      ordered_distinct_features %>%
+        dplyr::select(
+          !!rlang::sym(tidy_omic$design$feature_pk),
+          ordered_featureId,
+          feature_label
+        ),
+      by = tidy_omic$design$feature_pk
     ) %>%
     dplyr::left_join(
       ordered_distinct_samples %>%
@@ -661,15 +654,13 @@ hclust_tidy_omic <- function(
 #' hclust_order(df, "letters", "numbers", "noise", "rows")
 #' @export
 hclust_order <- function(
-  df,
-  feature_pk,
-  sample_pk,
-  value_var,
-  cluster_dim,
-  distance_measure = "dist",
-  hclust_method = "ward.D2"
-  ) {
-
+    df,
+    feature_pk,
+    sample_pk,
+    value_var,
+    cluster_dim,
+    distance_measure = "dist",
+    hclust_method = "ward.D2") {
   checkmate::assertDataFrame(df)
   checkmate::assertChoice(feature_pk, colnames(df))
   checkmate::assertChoice(sample_pk, colnames(df))
@@ -739,10 +730,9 @@ hclust_order <- function(
 }
 
 apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
-
   checkmate::assertMatrix(quant_matrix)
   if (nrow(quant_matrix) == 0) {
-    stop (quant_matrix, "contained zero rows")
+    stop(quant_matrix, "contained zero rows")
   } else if (nrow(quant_matrix) == 1) {
     # if there is only one entry then we don't need to cluster it
     return(list(order = 1))
@@ -782,22 +772,20 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 #' @returns tidy_data with rows collapsed if the number of distinct features is
 #'   greater than \code{max_display_features}
 #'
-downsample_heatmap <- function (
-  tidy_data,
-  value_var,
-  design,
-  max_display_features = 1000
-) {
-
+downsample_heatmap <- function(
+    tidy_data,
+    value_var,
+    design,
+    max_display_features = 1000) {
   checkmate::assertDataFrame(tidy_data)
   checkmate::assertChoice(value_var, colnames(tidy_data))
   checkmate::assertNumber(max_display_features)
 
   if (!("ordered_featureId" %in% colnames(tidy_data))) {
-    stop ("ordered_featureId is a requred variable in tidy_data")
+    stop("ordered_featureId is a requred variable in tidy_data")
   }
   if (!("ordered_sampleId" %in% colnames(tidy_data))) {
-    stop ("ordered_sampleId is a requred variable in tidy_data")
+    stop("ordered_sampleId is a requred variable in tidy_data")
   }
 
   checkmate::assertFactor(tidy_data$ordered_featureId)
@@ -814,18 +802,17 @@ downsample_heatmap <- function (
   # update the target number of n_features so (almost) all final features will
   # combine the same number of orignal features
   realized_max_display_features <- ceiling(
-    n_features/ceiling(n_features/max_display_features)
-    )
+    n_features / ceiling(n_features / max_display_features)
+  )
   message(glue::glue(
     "Downsampling {n_features} features to {realized_max_display_features}, targeting {max_display_features}"
-    ))
+  ))
 
   collapsed_rows_merges <- tibble::tibble(ordered_featureId_int = 1:n_features) %>%
     dplyr::mutate(collapsed_row_number = rep(
       1:max_display_features,
-      each = ceiling(n_features/max_display_features)
-    )[ordered_featureId_int]
-    )
+      each = ceiling(n_features / max_display_features)
+    )[ordered_featureId_int])
 
   downsampled_df <- tidy_data %>%
     dplyr::mutate(ordered_featureId_int = as.integer(ordered_featureId)) %>%
@@ -846,7 +833,7 @@ downsample_heatmap <- function (
   reduced_feature_attrs <- downsampled_df %>%
     dplyr::distinct(!!!rlang::syms(
       c("collapsed_row_number", "ordered_featureId", design$features$variable)
-      )) %>%
+    )) %>%
     dplyr::mutate_if(is.factor, as.character) %>%
     dplyr::group_by(collapsed_row_number) %>%
     dplyr::summarize_all(collapse_feature_vars) %>%
@@ -856,7 +843,8 @@ downsample_heatmap <- function (
 
   other_attrs <- setdiff(
     colnames(downsampled_df),
-    c(value_var, design$features$variable, "ordered_featureId", "ordered_featureId_int"))
+    c(value_var, design$features$variable, "ordered_featureId", "ordered_featureId_int")
+  )
 
   downsampled_attributes <- downsampled_df %>%
     dplyr::select(!!!rlang::syms(other_attrs)) %>%
@@ -872,10 +860,10 @@ downsample_heatmap <- function (
     dplyr::mutate(ordered_featureId_int = as.integer(ordered_featureId)) %>%
     dplyr::filter(ordered_featureId_int != collapsed_row_number)
   if (nrow(failed_collapses != 0)) {
-    stop (glue::glue(
+    stop(glue::glue(
       "{nrow(failed_collapses)} downsampled rows were misordered
       this is unexpected behavior"
-      ))
+    ))
   }
 
   downsampled_tidy_data <- downsampled_attributes %>%
@@ -883,18 +871,16 @@ downsample_heatmap <- function (
     dplyr::left_join(
       downsampled_matrix_values,
       by = c("collapsed_row_number", "ordered_sampleId")
-      ) %>%
+    ) %>%
     # discard collapsed_row_number since this
     dplyr::select(!!!rlang::syms(colnames(tidy_data)))
 
   return(downsampled_tidy_data)
-
 }
 
-collapse_feature_vars <- function (x) {
-
+collapse_feature_vars <- function(x) {
   if (class(x) %in% c("character")) {
-    paste(unique(x), collapse = ' & ')
+    paste(unique(x), collapse = " & ")
   } else {
     x[1]
   }

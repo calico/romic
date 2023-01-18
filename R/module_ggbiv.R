@@ -253,7 +253,6 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
 #' @export
 plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
-
   checkmate::assertClass(tomic_table, "data.frame")
   # allow for partial string matching
   x_var <- var_partial_match(x_var, tomic_table)
