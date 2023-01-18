@@ -18,7 +18,7 @@ Test the shiny ggplot module as a stand-alone application.
 \examples{
 
 if (interactive()) {
-  shiny_ggplot_test(add_pca_loadings(brauer_2008_triple, npcs = 5))
+  shiny_ggplot_test(add_pcs(brauer_2008_triple, npcs = 5))
   shiny_ggplot_test(brauer_2008_triple)
 }
 }

@@ -24,7 +24,7 @@ Create a histogram from a tomic dataset.
 library(dplyr)
 
 brauer_augmented <- brauer_2008_tidy \%>\%
-  add_pca_loadings(npcs = 5) \%>\%
+  add_pcs(npcs = 5) \%>\%
   tomic_to("triple_omic")
 
 plot_univariate(brauer_augmented$samples, "PC1", "nutrient")

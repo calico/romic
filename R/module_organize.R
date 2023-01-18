@@ -99,12 +99,11 @@ organizeInput <- function(id) {
 #'
 #' @export
 organizeServer <- function(
-  id,
-  tidy_omic,
-  feature_vars,
-  sample_vars,
-  value_var
-  ) {
+    id,
+    tidy_omic,
+    feature_vars,
+    sample_vars,
+    value_var) {
   checkmate::assertClass(tidy_omic, "tomic")
 
   moduleServer(

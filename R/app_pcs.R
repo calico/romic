@@ -48,11 +48,8 @@ app_pcs <- function(tomic) {
       )
     ),
     server = function(input, output, session) {
-
       # defining options available to user for sorting and filtering
       design <- tomic$design
-      feature_pk <- tomic$feature_pk
-      sample_pk <- tomic$sample_pk
 
       # create tomic from tidy_omic or triple_omic
 
@@ -96,7 +93,7 @@ app_pcs <- function(tomic) {
       # add PCs
       featurized_tidy_omic <- reactive({
         req(tidy_filtered_samples()(), input$measurement_var)
-        add_pca_loadings(
+        add_pcs(
           tidy_filtered_samples()(),
           value_var = input$measurement_var,
           npcs = 5
@@ -110,9 +107,9 @@ app_pcs <- function(tomic) {
 
         updated_sample_design <- dplyr::bind_rows(
           dat$design$samples %>%
-            dplyr::filter(stringr::str_detect(variable,"^PC")),
+            dplyr::filter(stringr::str_detect(variable, "^PC")),
           dat$design$samples %>%
-            dplyr::filter(!stringr::str_detect(variable,"^PC"))
+            dplyr::filter(!stringr::str_detect(variable, "^PC"))
         )
 
         dat$design$samples <- updated_sample_design

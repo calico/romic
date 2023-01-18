@@ -173,7 +173,6 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
   }
 
   if (!fast_check) {
-
     # check that each measurement is uniquely defined by its feature
     # and sample keys
 
@@ -337,7 +336,6 @@ create_triple_omic <- function(measurement_df,
                                feature_pk,
                                sample_pk,
                                omic_type_tag = "general") {
-
   # testing
 
   checkmate::assertClass(measurement_df, "data.frame")
@@ -466,7 +464,7 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
 
   features_features <- triple_omic$features[[triple_omic$design$feature_pk]]
   measurements_features <- triple_omic$measurements[[
-  triple_omic$design$feature_pk
+    triple_omic$design$feature_pk
   ]]
   if (!all(class(features_features) == class(measurements_features))) {
     stop(glue::glue(
@@ -481,7 +479,7 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
   samples_samples <- triple_omic$samples[[triple_omic$design$sample_pk]]
   measurements_samples <- triple_omic$measurements[[
     triple_omic$design$sample_pk
-    ]]
+  ]]
   if (!all(class(samples_samples) == class(measurements_samples))) {
     stop(glue::glue(
       "{triple_omic$design$sample_pk} classes differ between the samples
@@ -495,7 +493,6 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
   # thorough checking
 
   if (!fast_check) {
-
     # classes match
     # one row per feature in features
 
@@ -629,13 +626,6 @@ triple_to_tidy <- function(triple_omic) {
 tidy_to_triple <- function(tidy_omic) {
   check_tidy_omic(tidy_omic)
 
-  feature_pk <- tidy_omic$design$features$variable[
-    tidy_omic$design$features$type == "feature_primary_key"
-  ]
-  sample_pk <- tidy_omic$design$samples$variable[
-    tidy_omic$design$samples$type == "sample_primary_key"
-  ]
-
   # `distinct()` used to return variables in the order existing in the
   # data. Since dplyr 1.1.0, itnow returns variables in the order they
   # were supplied. To prevent a behaviour change, we now supply the
@@ -735,7 +725,7 @@ convert_wide_to_tidy_omic <- function(wide_df,
   # test whether unique_feature_variable is really unique
   grouped_by_unique_var <- wide_df %>%
     dplyr::group_by(!!rlang::sym(feature_pk)) %>%
-    dplyr::mutate(entry_number = 1:dplyr::n())
+    dplyr::mutate(entry_number = seq_len(dplyr::n()))
 
   if (sum(grouped_by_unique_var$entry_number != 1) == 0) {
     grouped_by_unique_var <- grouped_by_unique_var %>%

@@ -26,7 +26,7 @@ Create a scatter or boxplot from a tomic dataset.
 library(dplyr)
 
 brauer_augmented <- brauer_2008_tidy \%>\%
-  add_pca_loadings(npcs = 5) \%>\%
+  add_pcs(npcs = 5) \%>\%
   tomic_to("triple_omic")
 
 tomic_table <- brauer_augmented$samples

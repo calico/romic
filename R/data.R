@@ -44,7 +44,6 @@
 #'
 #' @returns None; used for side-effects.
 prepare_example_datasets <- function(seed = 1234) {
-
   # microarray dataset
 
   brauer_2008 <- readr::read_delim(

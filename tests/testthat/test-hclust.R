@@ -23,8 +23,8 @@ test_that("hclust creates sane orders - synthetic example", {
       dat %>%
         distinct(mu, letters),
       by = "letters"
-      ) %>%
-    dplyr::mutate(.entry = 1:n()) %>%
+    ) %>%
+    dplyr::mutate(.entry = seq_len(n())) %>%
     dplyr::group_by(mu) %>%
     dplyr::summarize(val = sum(.entry))
 
@@ -33,14 +33,12 @@ test_that("hclust creates sane orders - synthetic example", {
 })
 
 test_that("hclust handled 1 row / column cases", {
-
   df <- tidyr::crossing(letters = LETTERS, numbers = 1) %>%
     mutate(noise = rnorm(n()))
   hclust_orders <- hclust_order(df, "letters", "numbers", "noise", "both")
 
   expect_length(hclust_orders$row, 26)
   expect_length(hclust_orders$columns, 1)
-
 })
 
 test_that("hclust creates sane orders - real example", {

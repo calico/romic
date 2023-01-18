@@ -11,7 +11,7 @@
 #'
 #' if (interactive()) {
 #'   shiny_gguniv_test(
-#'     add_pca_loadings(brauer_2008_triple, npcs = 5),
+#'     add_pcs(brauer_2008_triple, npcs = 5),
 #'     plot_table = "samples"
 #'   )
 #'   shiny_gguniv_test(brauer_2008_triple, plot_table = "measurements")
@@ -216,7 +216,7 @@ ggUnivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' library(dplyr)
 #'
 #' brauer_augmented <- brauer_2008_tidy %>%
-#'   add_pca_loadings(npcs = 5) %>%
+#'   add_pcs(npcs = 5) %>%
 #'   tomic_to("triple_omic")
 #'
 #' plot_univariate(brauer_augmented$samples, "PC1", "nutrient")
@@ -224,9 +224,10 @@ ggUnivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' @export
 plot_univariate <- function(tomic_table, x_var, color_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")
-  checkmate::assertChoice(x_var, colnames(tomic_table))
+
+  x_var <- var_partial_match(x_var, tomic_table)
   if (class(color_var) != "NULL") {
-    checkmate::assertChoice(color_var, colnames(tomic_table))
+    color_var <- var_partial_match(color_var, tomic_table)
 
     if (!(class(tomic_table[[color_var]]) %in% c("numeric", "integer"))) {
       distinct_color_levels <- unique(tomic_table[[color_var]])
@@ -247,7 +248,7 @@ plot_univariate <- function(tomic_table, x_var, color_var = NULL) {
     stop("Univariate plot only accepts a numeric/integer x-axis variable")
   }
 
-  grob <- ggplot(tomic_table, aes_string(x = x_var)) +
+  grob <- ggplot(tomic_table, aes(x = !!rlang::sym(x_var))) +
     theme_bw()
 
   if (is.null(color_var)) {
@@ -255,7 +256,7 @@ plot_univariate <- function(tomic_table, x_var, color_var = NULL) {
       geom_histogram(bins = 50)
   } else {
     grob <- grob +
-      geom_histogram(aes_string(fill = color_var), bins = 50)
+      geom_histogram(aes(fill = !!rlang::sym(color_var)), bins = 50)
   }
 
   return(grob)

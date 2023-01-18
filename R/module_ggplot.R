@@ -9,7 +9,7 @@
 #' @examples
 #'
 #' if (interactive()) {
-#'   shiny_ggplot_test(add_pca_loadings(brauer_2008_triple, npcs = 5))
+#'   shiny_ggplot_test(add_pcs(brauer_2008_triple, npcs = 5))
 #'   shiny_ggplot_test(brauer_2008_triple)
 #' }
 #' @export
@@ -50,10 +50,9 @@ shiny_ggplot_test <- function(tomic) {
 #'
 #' @export
 ggplotOutput <- function(
-  id,
-  default_data_type = "samples",
-  default_plot_type = "univariate"
-  ) {
+    id,
+    default_data_type = "samples",
+    default_plot_type = "univariate") {
   ns <- shiny::NS(id)
 
   shiny::tagList(

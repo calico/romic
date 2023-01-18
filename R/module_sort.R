@@ -99,7 +99,6 @@ sortServer <- function(id,
     id,
     ## Below is the module function
     function(input, output, session) {
-
       # create sorting ui based on selected sort mode
 
       observe({

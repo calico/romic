@@ -21,7 +21,7 @@ Test the shiny ggUnivariate module as a stand-alone application.
 
 if (interactive()) {
   shiny_gguniv_test(
-    add_pca_loadings(brauer_2008_triple, npcs = 5),
+    add_pcs(brauer_2008_triple, npcs = 5),
     plot_table = "samples"
   )
   shiny_gguniv_test(brauer_2008_triple, plot_table = "measurements")

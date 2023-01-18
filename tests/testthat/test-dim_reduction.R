@@ -1,5 +1,4 @@
 test_that("Removing missing values works", {
-
   # drop_features
   invisible(capture.output(n_features <- nrow(remove_missing_values(
     brauer_2008_triple,
