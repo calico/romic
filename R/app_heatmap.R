@@ -386,22 +386,30 @@ plot_heatmap <- function(
     nrow()
 
   heatmap_theme <- theme_minimal() +
-    theme(
-      text = element_text(size = 16, color = "black"),
-      title = element_text(size = 20, color = "black"),
-      axis.text.x = element_text(
-        size = ifelse(n_samples > 200, 0, pmin(20, 60 * sqrt(1 / n_samples))),
-        angle = 90,
-        hjust = 1
-      ),
-      axis.text.y = element_text(
-        size = ifelse(n_features > 200, 0, pmin(20, 60 * sqrt(1 / n_features)))
-      ),
-      axis.title.y = element_blank(),
-      strip.text = element_text(size = 18),
-      legend.position = "top",
-      strip.background = element_rect(fill = "gray80")
+     theme(
+       text = element_text(size = 16, color = "black"),
+       title = element_text(size = 20, color = "black"),
+       axis.title.y = element_blank(),
+       strip.text = element_text(size = 18),
+       legend.position = "top",
+       strip.background = element_rect(fill = "gray80")
     )
+
+  if (n_features > 200) {
+    heatmap_theme <- heatmap_theme + theme(axis.text.y = element_blank())
+  } else {
+    heatmap_theme <- heatmap_theme + theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / n_features))))
+  }
+
+  if (n_samples > 200) {
+    heatmap_theme <- heatmap_theme + theme(axis.text.x = element_blank())
+  } else {
+    heatmap_theme <- heatmap_theme + theme(axis.text.x = element_text(
+      size = pmin(20, 60 * sqrt(1 / n_samples)),
+      angle = 90,
+      hjust = 1
+    ))
+  }
 
   heatmap_plot <- ggplot(
     augmented_tidy_omic_data,
