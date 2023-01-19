@@ -66,6 +66,7 @@ reference:
   - hclust_order
   - infer_tomic_table_type
   - try_brushedPoints
+  - var_partial_match
 template:
   params:
     bootswatch: flatly
