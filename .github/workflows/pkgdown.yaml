@@ -7,8 +7,10 @@ on:
       - 'vignettes'
       - '_pkgdown.yml'
 
-
 name: pkgdown
+
+permissions:
+  contents: write
 
 jobs:
   pkgdown:
