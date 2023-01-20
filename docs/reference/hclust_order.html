@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -51,29 +51,39 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">hclust_order</span><span class="op">(</span>
-  <span class="va">df</span>,
-  <span class="va">feature_pk</span>,
-  <span class="va">sample_pk</span>,
-  <span class="va">value_var</span>,
-  <span class="va">cluster_dim</span>,
-  distance_measure <span class="op">=</span> <span class="st">"dist"</span>,
-  hclust_method <span class="op">=</span> <span class="st">"ward.D2"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hclust_order</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">feature_pk</span>,</span>
+<span>  <span class="va">sample_pk</span>,</span>
+<span>  <span class="va">value_var</span>,</span>
+<span>  <span class="va">cluster_dim</span>,</span>
+<span>  distance_measure <span class="op">=</span> <span class="st">"dist"</span>,</span>
+<span>  hclust_method <span class="op">=</span> <span class="st">"ward.D2"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>data.frame to cluster</p></dd>
+
+
 <dt>feature_pk</dt>
 <dd><p>variable uniquely defining a row</p></dd>
+
+
 <dt>sample_pk</dt>
 <dd><p>variable uniquely definining a sample</p></dd>
+
+
 <dt>value_var</dt>
 <dd><p>An abundance value to use with <code>hclust</code></p></dd>
+
+
 <dt>cluster_dim</dt>
 <dd><p>rows, columns, or both</p></dd>
+
+
 <dt>distance_measure</dt>
 <dd><p>variable to use for computing dis-similarity</p><dl><dt>corr</dt>
 <dd><p>pearson correlation</p></dd>
@@ -83,26 +93,31 @@
 
 
 </dl></dd>
+
+
 <dt>hclust_method</dt>
 <dd><p>method from stats::hclust to use for clustering</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a list containing a hierarchically clustered set of rows and/or
+    
+
+<p>a list containing a hierarchically clustered set of rows and/or
   columns</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">crossing</a></span><span class="op">(</span>letters <span class="op">=</span> <span class="va">LETTERS</span>, numbers <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>noise <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">hclust_order</span><span class="op">(</span><span class="va">df</span>, <span class="st">"letters"</span>, <span class="st">"numbers"</span>, <span class="st">"noise"</span>, <span class="st">"rows"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">crossing</a></span><span class="op">(</span>letters <span class="op">=</span> <span class="va">LETTERS</span>, numbers <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>noise <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">hclust_order</span><span class="op">(</span><span class="va">df</span>, <span class="st">"letters"</span>, <span class="st">"numbers"</span>, <span class="st">"noise"</span>, <span class="st">"rows"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $rows</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "X" "B" "M" "Q" "L" "A" "J" "G" "N" "D" "W" "O" "K" "T" "E" "Z" "F" "V" "I"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "U" "C" "R" "H" "P" "S" "Y"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "B" "V" "Y" "P" "W" "G" "R" "L" "Q" "E" "N" "C" "H" "I" "S" "M" "D" "U" "Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "J" "T" "X" "A" "K" "F" "O"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
@@ -118,7 +133,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

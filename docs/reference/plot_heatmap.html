@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -49,33 +49,43 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_heatmap</span><span class="op">(</span>
-  <span class="va">tomic</span>,
-  feature_var <span class="op">=</span> <span class="cn">NULL</span>,
-  sample_var <span class="op">=</span> <span class="cn">NULL</span>,
-  value_var <span class="op">=</span> <span class="cn">NULL</span>,
-  cluster_dim <span class="op">=</span> <span class="st">"both"</span>,
-  distance_measure <span class="op">=</span> <span class="st">"dist"</span>,
-  hclust_method <span class="op">=</span> <span class="st">"ward.D2"</span>,
-  change_threshold <span class="op">=</span> <span class="cn">Inf</span>,
-  plot_type <span class="op">=</span> <span class="st">"grob"</span>,
-  max_display_features <span class="op">=</span> <span class="fl">800</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_heatmap</span><span class="op">(</span></span>
+<span>  <span class="va">tomic</span>,</span>
+<span>  feature_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sample_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  value_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cluster_dim <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  distance_measure <span class="op">=</span> <span class="st">"dist"</span>,</span>
+<span>  hclust_method <span class="op">=</span> <span class="st">"ward.D2"</span>,</span>
+<span>  change_threshold <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  plot_type <span class="op">=</span> <span class="st">"grob"</span>,</span>
+<span>  max_display_features <span class="op">=</span> <span class="fl">800</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tomic</dt>
 <dd><p>Either a <code>tidy_omic</code> or <code>triple_omic</code> object</p></dd>
+
+
 <dt>feature_var</dt>
 <dd><p>variable from "features" to use as a unique feature
 label.</p></dd>
+
+
 <dt>sample_var</dt>
 <dd><p>variable from "samples" to use as a unique sample label.</p></dd>
+
+
 <dt>value_var</dt>
 <dd><p>which variable in "measurements" to use for quantification.</p></dd>
+
+
 <dt>cluster_dim</dt>
 <dd><p>rows, columns, or both</p></dd>
+
+
 <dt>distance_measure</dt>
 <dd><p>variable to use for computing dis-similarity</p><dl><dt>corr</dt>
 <dd><p>pearson correlation</p></dd>
@@ -85,46 +95,57 @@ label.</p></dd>
 
 
 </dl></dd>
+
+
 <dt>hclust_method</dt>
 <dd><p>method from stats::hclust to use for clustering</p></dd>
+
+
 <dt>change_threshold</dt>
 <dd><p>values with a more extreme absolute change will be
 thresholded to this value.</p></dd>
+
+
 <dt>plot_type</dt>
 <dd><p>plotly (for interactivity) or grob (for a static ggplot)</p></dd>
+
+
 <dt>max_display_features</dt>
 <dd><p>aggregate and downsample distinct feature to
 this number to speed to up heatmap rendering.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a ggplot2 grob</p>
+    
+
+<p>a ggplot2 grob</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">tomic</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="filter_tomic.html">filter_tomic</a></span><span class="op">(</span></span>
-<span class="r-in">    filter_type <span class="op">=</span> <span class="st">"category"</span>,</span>
-<span class="r-in">    filter_table <span class="op">=</span> <span class="st">"features"</span>,</span>
-<span class="r-in">    filter_variable <span class="op">=</span> <span class="st">"BP"</span>,</span>
-<span class="r-in">    filter_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="st">"protein biosynthesis"</span>,</span>
-<span class="r-in">      <span class="st">"rRNA processing"</span>, <span class="st">"response to stress"</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plot_heatmap</span><span class="op">(</span></span>
-<span class="r-in">  tomic <span class="op">=</span> <span class="va">tomic</span>,</span>
-<span class="r-in">  value_var <span class="op">=</span> <span class="st">"expression"</span>,</span>
-<span class="r-in">  change_threshold <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">  cluster_dim <span class="op">=</span> <span class="st">"rows"</span>,</span>
-<span class="r-in">  plot_type <span class="op">=</span> <span class="st">"grob"</span>,</span>
-<span class="r-in">  distance_measure <span class="op">=</span> <span class="st">"corr"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tomic</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="filter_tomic.html">filter_tomic</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    filter_type <span class="op">=</span> <span class="st">"category"</span>,</span></span>
+<span class="r-in"><span>    filter_table <span class="op">=</span> <span class="st">"features"</span>,</span></span>
+<span class="r-in"><span>    filter_variable <span class="op">=</span> <span class="st">"BP"</span>,</span></span>
+<span class="r-in"><span>    filter_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"protein biosynthesis"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"rRNA processing"</span>, <span class="st">"response to stress"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_heatmap</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  tomic <span class="op">=</span> <span class="va">tomic</span>,</span></span>
+<span class="r-in"><span>  value_var <span class="op">=</span> <span class="st">"expression"</span>,</span></span>
+<span class="r-in"><span>  change_threshold <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  cluster_dim <span class="op">=</span> <span class="st">"rows"</span>,</span></span>
+<span class="r-in"><span>  plot_type <span class="op">=</span> <span class="st">"grob"</span>,</span></span>
+<span class="r-in"><span>  distance_measure <span class="op">=</span> <span class="st">"corr"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_heatmap-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -140,7 +161,7 @@ this number to speed to up heatmap rendering.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -69,9 +69,9 @@
 
     
     
-<div class="section level1">
-<h1 id="core-data-structures">Core data structures<a class="anchor" aria-label="anchor" href="#core-data-structures"></a>
-</h1>
+<div class="section level2">
+<h2 id="core-data-structures">Core data structures<a class="anchor" aria-label="anchor" href="#core-data-structures"></a>
+</h2>
 <p>R ’Omic revolves around data structures for representing high-dimensional data. The data model can most easily be seen from the triple_omic object which represents features, samples, and measurements with a compact relational schema.</p>
 <ul>
 <li>features - one row per feature (e.g., gene, transcript, metabolite)</li>
@@ -80,101 +80,101 @@
 </ul>
 <p>The relationships among variables in these tables are tracked using a design table which identifies the feature, and sample primary keys which uniquely define a feature or sample. This table also tracks the variables associated with features, samples, and measurements so these tables can be joined and re-arranged. This feature is taken advantage of to aggregate the features, samples, and measurements into a single tidy_omic table.</p>
 </div>
-<div class="section level1">
-<h1 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+</h2>
 <p>To demonstrate romic’s functionality, this vignette will focus on analysis of the <a href="https://pubmed.ncbi.nlm.nih.gov/17959824/" class="external-link">Brauer et al. 2008</a> yeast gene expression experiment. In this experiment, the impact of a yeasts’ nutrient environment and growth rate on gene expression was explored using 2-color microarrays. There are 36 samples, organized in a full-factorial design (all x all levels), which differ in terms of which nutrient limits growth and how fast the culture is growing.</p>
 <ul>
 <li>Limiting nutrient: growth is limited with reduced levels of <strong>N</strong>itrogen, <strong>P</strong>hosphorous, <strong>L</strong>eucine, <strong>U</strong>racil, <strong>G</strong>lucose or <strong>S</strong>ulfur.</li>
 <li>Dilution rate: 0.05-0.3 hrs<sup>-1</sup>, is the rate that the culture is diluted and fresh media is supplied. This sets up a chemostationary condition where growth rate is entrained to the dilution rate.</li>
 </ul>
 </div>
-<div class="section level1">
-<h1 id="dataset-creation">Dataset Creation<a class="anchor" aria-label="anchor" href="#dataset-creation"></a>
-</h1>
+<div class="section level2">
+<h2 id="dataset-creation">Dataset Creation<a class="anchor" aria-label="anchor" href="#dataset-creation"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">romic</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">romic</span><span class="op">)</span></span></code></pre></div>
 <p>A tidy_omic dataset can be loaded by passing a data table and specifying which variables are unique to features, samples and measurements</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_tidy_omic.html">create_tidy_omic</a></span><span class="op">(</span>
-  df <span class="op">=</span> <span class="va">brauer_2008</span>,
-  feature_pk <span class="op">=</span> <span class="st">"name"</span>,
-  feature_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"systematic_name"</span>, <span class="st">"BP"</span>, <span class="st">"MF"</span><span class="op">)</span>,
-  sample_pk <span class="op">=</span> <span class="st">"sample"</span>,
-  sample_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nutrient"</span>, <span class="st">"DR"</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tidy_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_tidy_omic.html">create_tidy_omic</a></span><span class="op">(</span></span>
+<span>  df <span class="op">=</span> <span class="va">brauer_2008</span>,</span>
+<span>  feature_pk <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>  feature_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"systematic_name"</span>, <span class="st">"BP"</span>, <span class="st">"MF"</span><span class="op">)</span>,</span>
+<span>  sample_pk <span class="op">=</span> <span class="st">"sample"</span>,</span>
+<span>  sample_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nutrient"</span>, <span class="st">"DR"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>A triple_omic dataset can be loaded by providing a features, samples, and measurements tables and specifying which variarbles are the features’ and measurements’ primary keys.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">triple_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_triple_omic.html">create_triple_omic</a></span><span class="op">(</span>
-  measurement_df <span class="op">=</span> <span class="va">brauer_2008</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">sample</span>, <span class="va">expression</span><span class="op">)</span>,
-  feature_df <span class="op">=</span> <span class="va">brauer_2008</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span><span class="op">:</span><span class="va">systematic_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>,
-  sample_df <span class="op">=</span> <span class="va">brauer_2008</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sample</span><span class="op">:</span><span class="va">DR</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>,
-  feature_pk <span class="op">=</span> <span class="st">"name"</span>,
-  sample_pk <span class="op">=</span> <span class="st">"sample"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">triple_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_triple_omic.html">create_triple_omic</a></span><span class="op">(</span></span>
+<span>  measurement_df <span class="op">=</span> <span class="va">brauer_2008</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">sample</span>, <span class="va">expression</span><span class="op">)</span>,</span>
+<span>  feature_df <span class="op">=</span> <span class="va">brauer_2008</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span><span class="op">:</span><span class="va">systematic_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  sample_df <span class="op">=</span> <span class="va">brauer_2008</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sample</span><span class="op">:</span><span class="va">DR</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  feature_pk <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>  sample_pk <span class="op">=</span> <span class="st">"sample"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Generally, we wouldn’t maintain both a triple and tidy omic version of a dataset but rather convert back and forth between these representation based on the needs of the analysis. To convert between these classes we can use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># convert back and forth between tidy and triple representations</span>
-<span class="va">triple_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tidy_to_triple.html">tidy_to_triple</a></span><span class="op">(</span><span class="va">tidy_brauer</span><span class="op">)</span>
-<span class="va">tidy_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/triple_to_tidy.html">triple_to_tidy</a></span><span class="op">(</span><span class="va">triple_brauer</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># convert back and forth between tidy and triple representations</span></span>
+<span><span class="va">triple_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tidy_to_triple.html">tidy_to_triple</a></span><span class="op">(</span><span class="va">tidy_brauer</span><span class="op">)</span></span>
+<span><span class="va">tidy_brauer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/triple_to_tidy.html">triple_to_tidy</a></span><span class="op">(</span><span class="va">triple_brauer</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="data-manipulation">Data Manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"></a>
-</h1>
+<div class="section level2">
+<h2 id="data-manipulation">Data Manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"></a>
+</h2>
 <p>Most functions actually don’t care whether you provide a tidy or triple representation of your dataset. These functions take a T*Omic object (i.e., tidy or triple omic), and apply an operation and return whichever class was provided. We can see this by filtering a triple_omic.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">filtered_brauer</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_tomic.html">filter_tomic</a></span><span class="op">(</span>
-    filter_type <span class="op">=</span> <span class="st">"category"</span>,
-    filter_table <span class="op">=</span> <span class="st">"features"</span>,
-    filter_variable <span class="op">=</span> <span class="st">"BP"</span>,
-    filter_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"protein biosynthesis"</span>, <span class="st">"rRNA processing"</span>, <span class="st">"response to stress"</span><span class="op">)</span>
-    <span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_tomic.html">filter_tomic</a></span><span class="op">(</span>
-    filter_type <span class="op">=</span> <span class="st">"range"</span>,
-    filter_table <span class="op">=</span> <span class="st">"samples"</span>,
-    filter_variable <span class="op">=</span> <span class="st">"DR"</span>,
-    filter_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">filtered_brauer</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_tomic.html">filter_tomic</a></span><span class="op">(</span></span>
+<span>    filter_type <span class="op">=</span> <span class="st">"category"</span>,</span>
+<span>    filter_table <span class="op">=</span> <span class="st">"features"</span>,</span>
+<span>    filter_variable <span class="op">=</span> <span class="st">"BP"</span>,</span>
+<span>    filter_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"protein biosynthesis"</span>, <span class="st">"rRNA processing"</span>, <span class="st">"response to stress"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_tomic.html">filter_tomic</a></span><span class="op">(</span></span>
+<span>    filter_type <span class="op">=</span> <span class="st">"range"</span>,</span>
+<span>    filter_table <span class="op">=</span> <span class="st">"samples"</span>,</span>
+<span>    filter_variable <span class="op">=</span> <span class="st">"DR"</span>,</span>
+<span>    filter_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>We could also modify a table directly and then update it in the tomic object. For this workflow, update_tomic is used so the design can keep up with any fields that have changed.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">updated_features</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span><span class="op">$</span><span class="va">features</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">BP</span> <span class="op">==</span> <span class="st">"biological process unknown"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>chromosome <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_int</a></span><span class="op">(</span><span class="va">systematic_name</span>, <span class="kw">function</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">LETTERS</span> <span class="op">==</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_match.html" class="external-link">str_match</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"Y([A-Z])"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-    <span class="op">}</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">updated_tomic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/update_tomic.html">update_tomic</a></span><span class="op">(</span>
-  <span class="va">brauer_2008_triple</span>,
-  <span class="va">updated_features</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">updated_features</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span><span class="op">$</span><span class="va">features</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">BP</span> <span class="op">==</span> <span class="st">"biological process unknown"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>chromosome <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_int</a></span><span class="op">(</span><span class="va">systematic_name</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">LETTERS</span> <span class="op">==</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_match.html" class="external-link">str_match</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"Y([A-Z])"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">updated_tomic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/update_tomic.html">update_tomic</a></span><span class="op">(</span></span>
+<span>  <span class="va">brauer_2008_triple</span>,</span>
+<span>  <span class="va">updated_features</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="visualisation">Visualisation<a class="anchor" aria-label="anchor" href="#visualisation"></a>
-</h1>
+<div class="section level2">
+<h2 id="visualisation">Visualisation<a class="anchor" aria-label="anchor" href="#visualisation"></a>
+</h2>
 <p>Romic includes a few versatile ggplot2-based plotting functions which can show a complete set of measurements, as a heatmap, or univariate/bivariate slices of features, samples or measurements.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span>
-  <span class="va">filtered_brauer</span>,
-  value_var <span class="op">=</span> <span class="st">"expression"</span>,
-  change_threshold <span class="op">=</span> <span class="fl">5</span>,
-  cluster_dim <span class="op">=</span> <span class="st">"rows"</span>,
-  plot_type <span class="op">=</span> <span class="st">"grob"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span></span>
+<span>  <span class="va">filtered_brauer</span>,</span>
+<span>  value_var <span class="op">=</span> <span class="st">"expression"</span>,</span>
+<span>  change_threshold <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  cluster_dim <span class="op">=</span> <span class="st">"rows"</span>,</span>
+<span>  plot_type <span class="op">=</span> <span class="st">"grob"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="romic_files/figure-html/static_heatmap-1.png" width="576"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">centered_tidy</span> <span class="op">&lt;-</span> <span class="va">tidy_brauer</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/center_tomic.html">center_tomic</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/plot_univariate.html">plot_univariate</a></span><span class="op">(</span>
-  <span class="va">centered_tidy</span><span class="op">$</span><span class="va">data</span>,
-  x_var <span class="op">=</span> <span class="st">"expression"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">centered_tidy</span> <span class="op">&lt;-</span> <span class="va">tidy_brauer</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/center_tomic.html">center_tomic</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plot_univariate.html">plot_univariate</a></span><span class="op">(</span></span>
+<span>  <span class="va">centered_tidy</span><span class="op">$</span><span class="va">data</span>,</span>
+<span>  x_var <span class="op">=</span> <span class="st">"expression"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="romic_files/figure-html/univariate_plot-1.png" width="576"></p>
-<div class="section level2">
-<h2 id="interactive-visualisation">Interactive Visualisation<a class="anchor" aria-label="anchor" href="#interactive-visualisation"></a>
-</h2>
+<div class="section level3">
+<h3 id="interactive-visualisation">Interactive Visualisation<a class="anchor" aria-label="anchor" href="#interactive-visualisation"></a>
+</h3>
 <p>Romic maintains a valid data model when various operations are performed, and includes visualization which flexibly allow a range of views into a dataset. These attributes are leveraged through interactive data visualization shiny apps.</p>
 <p>Check them out with ?app_heatmap and ?app_flow</p>
 </div>
@@ -198,7 +198,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

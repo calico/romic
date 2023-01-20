@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -47,48 +47,57 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">impute_missing_values</span><span class="op">(</span>
-  <span class="va">tomic</span>,
-  impute_var_name <span class="op">=</span> <span class="st">"imputed"</span>,
-  value_var <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">impute_missing_values</span><span class="op">(</span></span>
+<span>  <span class="va">tomic</span>,</span>
+<span>  impute_var_name <span class="op">=</span> <span class="st">"imputed"</span>,</span>
+<span>  value_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tomic</dt>
 <dd><p>Either a <code>tidy_omic</code> or <code>triple_omic</code> object</p></dd>
+
+
 <dt>impute_var_name</dt>
 <dd><p>variable to create for imputed measurements</p></dd>
+
+
 <dt>value_var</dt>
 <dd><p>An abundance value to use with <code>hclust</code></p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments to pass to <a href="https://rdrr.io/pkg/impute/man/impute.knn.html" class="external-link">impute.knn</a></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>tomic</code> object with imputed measurements.</p>
+    
+
+<p>A <code>tomic</code> object with imputed measurements.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">impute_missing_values</span><span class="op">(</span><span class="va">brauer_2008_triple</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">impute_missing_values</span><span class="op">(</span><span class="va">brauer_2008_triple</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $features</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 500 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                            MF                      systematic_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process unknown    molecular function unk… YOL029C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SCW11   cytokinesis, completion of s… glucan 1,3-beta-glucos… YGL028C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YHR036W biological process unknown    molecular function unk… YHR036W        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> BGL2    cell wall organization and b… glucan 1,3-beta-glucos… YGR282C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT1    cell wall organization and b… structural constituent… YFL039C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FKH1    pseudohyphal growth*          transcription factor a… YIL131C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> HOC1    cell wall mannoprotein biosy… transferase activity, … YJR075W        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> CSN12   adaptation to pheromone duri… molecular function unk… YJR084W        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YAL046C biological process unknown    molecular function unk… YAL046C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SLG1    cell wall organization and b… transmembrane receptor… YOR008C        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 490 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                                                      MF    syste…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process unknown                              mole… YOL029C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SCW11   cytokinesis, completion of separation                   gluc… YGL028C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YHR036W biological process unknown                              mole… YHR036W</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> BGL2    cell wall organization and biogenesis                   gluc… YGR282C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT1    cell wall organization and biogenesis*                  stru… YFL039C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FKH1    pseudohyphal growth*                                    tran… YIL131C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> HOC1    cell wall mannoprotein biosynthesis*                    tran… YJR075W</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> CSN12   adaptation to pheromone during conjugation with cellul… mole… YJR084W</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YAL046C biological process unknown                              mole… YAL046C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SLG1    cell wall organization and biogenesis*                  tran… YOR008C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 490 more rows, and abbreviated variable name ¹​systematic_name</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $samples</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 36 × 3</span></span>
@@ -158,7 +167,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "triple_omic" "tomic"       "general"    </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -173,7 +182,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

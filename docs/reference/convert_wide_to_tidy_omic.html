@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -49,14 +49,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">convert_wide_to_tidy_omic</span><span class="op">(</span>
-  <span class="va">wide_df</span>,
-  <span class="va">feature_pk</span>,
-  feature_vars <span class="op">=</span> <span class="cn">NULL</span>,
-  sample_var <span class="op">=</span> <span class="st">"sample"</span>,
-  measurement_var <span class="op">=</span> <span class="st">"abundance"</span>,
-  omic_type_tag <span class="op">=</span> <span class="st">"general"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_wide_to_tidy_omic</span><span class="op">(</span></span>
+<span>  <span class="va">wide_df</span>,</span>
+<span>  <span class="va">feature_pk</span>,</span>
+<span>  feature_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sample_var <span class="op">=</span> <span class="st">"sample"</span>,</span>
+<span>  measurement_var <span class="op">=</span> <span class="st">"abundance"</span>,</span>
+<span>  omic_type_tag <span class="op">=</span> <span class="st">"general"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -64,28 +64,41 @@
     <dl><dt>wide_df</dt>
 <dd><p>a data.frame (or tibble) containing 1+ columns of feature
 attributes and many columns of samples</p></dd>
+
+
 <dt>feature_pk</dt>
 <dd><p>A unique identifier for features</p></dd>
+
+
 <dt>feature_vars</dt>
 <dd><p>a character vector of additional feature-level
 variables (or NULL if there are no additional variables)</p></dd>
+
+
 <dt>sample_var</dt>
 <dd><p>variable name to use for samples</p></dd>
+
+
 <dt>measurement_var</dt>
 <dd><p>variable name to use for measurements</p></dd>
+
+
 <dt>omic_type_tag</dt>
 <dd><p>an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>tidy_omic</code> object as produced by <code>create_tidy_omic</code>.</p>
+    
+
+<p>A <code>tidy_omic</code> object as produced by <code>create_tidy_omic</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
@@ -94,32 +107,33 @@ lipidomics, proteomics, genomics, general</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wide_measurements</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span><span class="op">[[</span><span class="st">"measurements"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span><span class="va">sample</span>, <span class="va">expression</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wide_df</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span><span class="op">[[</span><span class="st">"features"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">wide_measurements</span>, by <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">convert_wide_to_tidy_omic</span><span class="op">(</span><span class="va">wide_df</span>,</span>
-<span class="r-in">  feature_pk <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span class="r-in">  feature_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BP"</span>, <span class="st">"MF"</span>, <span class="st">"systematic_name"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wide_measurements</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span><span class="op">[[</span><span class="st">"measurements"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span><span class="va">sample</span>, <span class="va">expression</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wide_df</span> <span class="op">&lt;-</span> <span class="va">brauer_2008_triple</span><span class="op">[[</span><span class="st">"features"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">wide_measurements</span>, by <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">convert_wide_to_tidy_omic</span><span class="op">(</span><span class="va">wide_df</span>,</span></span>
+<span class="r-in"><span>  feature_pk <span class="op">=</span> <span class="st">"name"</span>,</span></span>
+<span class="r-in"><span>  feature_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BP"</span>, <span class="st">"MF"</span>, <span class="st">"systematic_name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18,000 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                  MF               systematic_name sample abundance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process… molecular funct… YOL029C         G0.05      -<span style="color: #BB0000;">0.22</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SCW11   cytokinesis, compl… glucan 1,3-beta… YGL028C         G0.05      -<span style="color: #BB0000;">0.67</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YHR036W biological process… molecular funct… YHR036W         G0.05      -<span style="color: #BB0000;">0.91</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> BGL2    cell wall organiza… glucan 1,3-beta… YGR282C         G0.05      -<span style="color: #BB0000;">0.08</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT1    cell wall organiza… structural cons… YFL039C         G0.05      -<span style="color: #BB0000;">0.04</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FKH1    pseudohyphal growt… transcription f… YIL131C         G0.05      -<span style="color: #BB0000;">0.57</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> HOC1    cell wall mannopro… transferase act… YJR075W         G0.05      -<span style="color: #BB0000;">0.42</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> CSN12   adaptation to pher… molecular funct… YJR084W         G0.05      -<span style="color: #BB0000;">0.49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YAL046C biological process… molecular funct… YAL046C         G0.05       0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SLG1    cell wall organiza… transmembrane r… YOR008C         G0.05      -<span style="color: #BB0000;">0.06</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 17,990 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                                       MF    syste…¹ sample abund…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process unknown               mole… YOL029C G0.05    -<span style="color: #BB0000;">0.22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SCW11   cytokinesis, completion of separation    gluc… YGL028C G0.05    -<span style="color: #BB0000;">0.67</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YHR036W biological process unknown               mole… YHR036W G0.05    -<span style="color: #BB0000;">0.91</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> BGL2    cell wall organization and biogenesis    gluc… YGR282C G0.05    -<span style="color: #BB0000;">0.08</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT1    cell wall organization and biogenesis*   stru… YFL039C G0.05    -<span style="color: #BB0000;">0.04</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FKH1    pseudohyphal growth*                     tran… YIL131C G0.05    -<span style="color: #BB0000;">0.57</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> HOC1    cell wall mannoprotein biosynthesis*     tran… YJR075W G0.05    -<span style="color: #BB0000;">0.42</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> CSN12   adaptation to pheromone during conjugat… mole… YJR084W G0.05    -<span style="color: #BB0000;">0.49</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YAL046C biological process unknown               mole… YAL046C G0.05     0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SLG1    cell wall organization and biogenesis*   tran… YOR008C G0.05    -<span style="color: #BB0000;">0.06</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 17,990 more rows, and abbreviated variable names ¹​systematic_name,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​abundance</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $design$features</span>
@@ -168,7 +182,7 @@ lipidomics, proteomics, genomics, general</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

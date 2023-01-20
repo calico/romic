@@ -25,6 +25,9 @@
     <loc>/reference/add_pca_loadings.html</loc>
   </url>
   <url>
+    <loc>/reference/add_pcs.html</loc>
+  </url>
+  <url>
     <loc>/reference/app_flow.html</loc>
   </url>
   <url>
@@ -239,5 +242,8 @@
   </url>
   <url>
     <loc>/reference/update_tomic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/var_partial_match.html</loc>
   </url>
 </urlset>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -47,19 +47,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sort_tomic</span><span class="op">(</span>
-  <span class="va">tomic</span>,
-  <span class="va">sort_type</span>,
-  <span class="va">sort_table</span>,
-  sort_variables <span class="op">=</span> <span class="cn">NULL</span>,
-  value_var <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sort_tomic</span><span class="op">(</span></span>
+<span>  <span class="va">tomic</span>,</span>
+<span>  <span class="va">sort_type</span>,</span>
+<span>  <span class="va">sort_table</span>,</span>
+<span>  sort_variables <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  value_var <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tomic</dt>
 <dd><p>Either a <code>tidy_omic</code> or <code>triple_omic</code> object</p></dd>
+
+
 <dt>sort_type</dt>
 <dd><dl><dt>hclust</dt>
 <dd><p>Arrange samples by hierarchical clustering of a provided
@@ -71,17 +73,26 @@
 
 
 </dl></dd>
+
+
 <dt>sort_table</dt>
 <dd><p>samples or features</p></dd>
+
+
 <dt>sort_variables</dt>
 <dd><p>A set of attributes in sort_table to sort with in
 <code>arrange</code>.</p></dd>
+
+
 <dt>value_var</dt>
 <dd><p>An abundance value to use with <code>hclust</code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>tomic</code> object where feature or sample primary keys have
+    
+
+<p>A <code>tomic</code> object where feature or sample primary keys have
   been turned into a factor reflecting how they are sorted.</p>
     </div>
     <div id="details">
@@ -94,18 +105,18 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">sort_tomic</span><span class="op">(</span><span class="va">brauer_2008_triple</span>,</span>
-<span class="r-in">  sort_type <span class="op">=</span> <span class="st">"arrange"</span>, sort_table <span class="op">=</span> <span class="st">"samples"</span>,</span>
-<span class="r-in">  sort_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nutrient"</span>, <span class="st">"DR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">sort_tomic</span><span class="op">(</span></span>
-<span class="r-in">    sort_type <span class="op">=</span> <span class="st">"hclust"</span>,</span>
-<span class="r-in">    sort_table <span class="op">=</span> <span class="st">"features"</span>,</span>
-<span class="r-in">    value_var <span class="op">=</span> <span class="st">"expression"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">sort_tomic</span><span class="op">(</span><span class="va">brauer_2008_triple</span>,</span></span>
+<span class="r-in"><span>  sort_type <span class="op">=</span> <span class="st">"arrange"</span>, sort_table <span class="op">=</span> <span class="st">"samples"</span>,</span></span>
+<span class="r-in"><span>  sort_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nutrient"</span>, <span class="st">"DR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">sort_tomic</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sort_type <span class="op">=</span> <span class="st">"hclust"</span>,</span></span>
+<span class="r-in"><span>    sort_table <span class="op">=</span> <span class="st">"features"</span>,</span></span>
+<span class="r-in"><span>    value_var <span class="op">=</span> <span class="st">"expression"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $features</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 500 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    name    systematic_name BP                             MF                    </span>
@@ -203,7 +214,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

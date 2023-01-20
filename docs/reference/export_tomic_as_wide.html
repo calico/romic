@@ -19,7 +19,7 @@ filename"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -51,40 +51,51 @@ filename</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">export_tomic_as_wide</span><span class="op">(</span>
-  <span class="va">tomic</span>,
-  <span class="va">dir_path</span>,
-  <span class="va">name_preamble</span>,
-  value_var <span class="op">=</span> <span class="cn">NULL</span>,
-  transpose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">export_tomic_as_wide</span><span class="op">(</span></span>
+<span>  <span class="va">tomic</span>,</span>
+<span>  <span class="va">dir_path</span>,</span>
+<span>  <span class="va">name_preamble</span>,</span>
+<span>  value_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  transpose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tomic</dt>
 <dd><p>Either a <code>tidy_omic</code> or <code>triple_omic</code> object</p></dd>
+
+
 <dt>dir_path</dt>
 <dd><p>path to save outputs</p></dd>
+
+
 <dt>name_preamble</dt>
 <dd><p>start of output file name</p></dd>
+
+
 <dt>value_var</dt>
 <dd><p>measurement variable to use for the matrix</p></dd>
+
+
 <dt>transpose</dt>
 <dd><p>if TRUE then samples will be stored as rows</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Export one table which contains metabolites as rows and samples
+    
+
+<p>Export one table which contains metabolites as rows and samples
   as columns.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">export_tomic_as_wide</span><span class="op">(</span><span class="va">brauer_2008_triple</span>, <span class="st">"/tmp"</span>, <span class="st">"brauer"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">export_tomic_as_wide</span><span class="op">(</span><span class="va">brauer_2008_triple</span>, <span class="st">"/tmp"</span>, <span class="st">"brauer"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -99,7 +110,7 @@ filename</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

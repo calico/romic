@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">romic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -47,30 +47,38 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">format_names_for_plotting</span><span class="op">(</span><span class="va">chars</span>, width <span class="op">=</span> <span class="fl">40</span>, truncate_at <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_names_for_plotting</span><span class="op">(</span><span class="va">chars</span>, width <span class="op">=</span> <span class="fl">40</span>, truncate_at <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>chars</dt>
 <dd><p>a character vector (or a variable that can be converted to one)</p></dd>
+
+
 <dt>width</dt>
-<dd><p>positive integer giving target line width in characters. A
-width less than or equal to 1 will put each word on its own line.</p></dd>
+<dd><p>Positive integer giving target line width (in number of
+characters). A width less than or equal to 1 will put each word on its
+own line.</p></dd>
+
+
 <dt>truncate_at</dt>
 <dd><p>max character length</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a reformatted character vector of the same length as the input.</p>
+    
+
+<p>a reformatted character vector of the same length as the input.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">chars</span> <span class="op">&lt;-</span> <span class="st">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer</span>
-<span class="r-in">  ac arcu semper erat porttitor egestas. Etiam sagittis, sapien at mattis."</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">format_names_for_plotting</span><span class="op">(</span><span class="va">chars</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">chars</span> <span class="op">&lt;-</span> <span class="st">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer</span></span></span>
+<span class="r-in"><span><span class="st">  ac arcu semper erat porttitor egestas. Etiam sagittis, sapien at mattis."</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">format_names_for_plotting</span><span class="op">(</span><span class="va">chars</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Lorem ipsum dolor sit amet, consectetur\n  adipiscing elit. Integer ac arcu se..."</span>
 </code></pre></div>
     </div>
@@ -86,7 +94,7 @@ width less than or equal to 1 will put each word on its own line.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
