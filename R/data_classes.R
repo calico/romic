@@ -67,14 +67,14 @@ create_tidy_omic <- function(df,
   checkmate::assertString(omic_type_tag)
   checkmate::assertChoice(feature_pk, colnames(df))
   stopifnot(class(feature_vars) %in% c("character", "NULL"))
-  if (class(feature_vars) != "NULL") {
+  if (!inherits(feature_vars, "NULL")) {
     stopifnot(all(feature_vars %in% colnames(df)))
     stopifnot(!(feature_pk %in% feature_vars))
   }
 
   checkmate::assertChoice(sample_pk, colnames(df))
   stopifnot(class(sample_vars) %in% c("character", "NULL"))
-  if (class(sample_vars) != "NULL") {
+  if (!inherits(sample_vars, "NULL")) {
     stopifnot(all(sample_vars %in% colnames(df)))
     stopifnot(!(sample_pk %in% sample_vars))
   }
@@ -696,7 +696,7 @@ convert_wide_to_tidy_omic <- function(wide_df,
   checkmate::assertDataFrame(wide_df)
   checkmate::assertChoice(feature_pk, colnames(wide_df))
   stopifnot(class(feature_vars) %in% c("character", "NULL"))
-  if (class(feature_vars) != "NULL") {
+  if (!inherits(feature_vars, "NULL")) {
     stopifnot(all(feature_vars %in% colnames(wide_df)))
     stopifnot(!(feature_pk %in% feature_vars))
   }

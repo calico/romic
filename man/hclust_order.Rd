@@ -19,7 +19,7 @@ hclust_order(
 
 \item{feature_pk}{variable uniquely defining a row}
 
-\item{sample_pk}{variable uniquely definining a sample}
+\item{sample_pk}{variable uniquely defining a sample}
 
 \item{value_var}{An abundance value to use with \code{hclust}}
 

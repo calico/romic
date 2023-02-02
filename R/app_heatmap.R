@@ -640,7 +640,7 @@ hclust_tidy_omic <- function(
 #'
 #' @param df data.frame to cluster
 #' @param feature_pk variable uniquely defining a row
-#' @param sample_pk variable uniquely definining a sample
+#' @param sample_pk variable uniquely defining a sample
 #' @inheritParams sort_tomic
 #' @param cluster_dim rows, columns, or both
 #' @param distance_measure variable to use for computing dis-similarity
@@ -696,7 +696,7 @@ hclust_order <- function(
 
     # if distance cannot be computed (because of missing values) pad with
     # zeros and recalculate
-    if (class(cluster_rows) == "try-error") {
+    if (inherits(cluster_rows, "try-error")) {
       pad_matrix <- matrix(0, ncol = 2, nrow = nrow(quant_matrix))
       colnames(pad_matrix) <- c("pad1", "pad2")
       quant_matrix_pad <- cbind(quant_matrix, pad_matrix)
@@ -719,7 +719,7 @@ hclust_order <- function(
 
     # if distance cannot be computed (because of missing values) pad with zeros
     # and recalculate
-    if (class(cluster_cols) == "try-error") {
+    if (inherits(cluster_cols, "try-error")) {
       pad_matrix <- matrix(0, ncol = 2, nrow = ncol(quant_matrix))
       colnames(pad_matrix) <- c("pad1", "pad2")
       quant_matrix_pad <- cbind(t(quant_matrix), pad_matrix)
@@ -769,7 +769,7 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 #'
 #' Combine rows to speed up rendering of large heatmaps
 #'
-#' @param tidy_data The data datable from a \code{tidy_omic} object containing
+#' @param tidy_data The data frame from a \code{tidy_omic} object containing
 #'   ordered feature and sample primary keys defined by ordered_featureId
 #'   and ordered_sampleId.
 #' @inheritParams plot_heatmap

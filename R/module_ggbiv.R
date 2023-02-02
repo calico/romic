@@ -238,7 +238,8 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' @param y_var y-axis variable
 #' @param color_var coloring variable (NULL to suppress coloring)
 #' @param shape_var shape variable (NULL to suppress shape)
-#' @param alpha_var alpha variable (NULL to suppress alpha)
+#' @param alpha_var alpha variable or numeric for constant alpha (NULL to suppress alpha)
+#' @param size_var size variable or integer/numeric for constant size (NULL to suppress size)
 #'
 #' @return a ggplot2 grob
 #'
@@ -250,11 +251,11 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #'   tomic_to("triple_omic")
 #'
 #' tomic_table <- brauer_augmented$samples
-#' plot_bivariate(tomic_table, "PC1", "PC2", "nutrient", "nutrient")
+#' plot_bivariate(tomic_table, "PC1", "PC2", "nutrient", "nutrient", 0.5, 10)
 #' plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 #' plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
 #' @export
-plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_var = NULL, alpha_var = NULL) {
+plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_var = NULL, alpha_var = NULL, size_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")
   # allow for partial string matching
   x_var <- var_partial_match(x_var, tomic_table)
@@ -265,7 +266,17 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
     y = rlang::sym(y_var)
   )
 
-  if (class(color_var) != "NULL") {
+  if (class(tomic_table[[x_var]]) %in% c("numeric", "integer")) {
+    plot_type <- "scatter"
+  } else {
+    plot_type <- "boxplot"
+  }
+
+  # setup list for fixed aesthetics, e.g., size or alpha
+  geom_dots <- list()
+
+  # color
+  if (!inherits(color_var, "NULL")) {
     color_var <- var_partial_match(color_var, tomic_table)
 
     if (!(class(tomic_table[[color_var]]) %in% c("numeric", "integer"))) {
@@ -280,17 +291,40 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
       }
     }
 
-    aes_args$color = rlang::sym(color_var)
+    if (plot_type == "scatter") {
+      aes_args$color = rlang::sym(color_var)
+    } else {
+      aes_args$fill = rlang::sym(color_var)
+    }
   }
 
-  if (class(shape_var) != "NULL") {
+  # shape
+  if (!inherits(shape_var, "NULL")) {
     shape_var <- var_partial_match(color_var, tomic_table)
     aes_args$shape <- rlang::sym(shape_var)
   }
 
-  if (class(alpha_var) != "NULL") {
-    alpha_var <- var_partial_match(alpha_var, tomic_table)
-    aes_args$alpha <- rlang::sym(alpha_var)
+  # alpha
+  if (!inherits(alpha_var, "NULL")) {
+    if (inherits(alpha_var, "numeric")) {
+      checkmate::assertNumber(alpha_var, lower = 0, upper = 1)
+      geom_dots$alpha <- alpha_var
+    } else {
+      alpha_var <- var_partial_match(alpha_var, tomic_table)
+      aes_args$alpha <- rlang::sym(alpha_var)
+    }
+  }
+
+  # size
+  # by default ignore size as a number for specifying constant size
+  if (!inherits(size_var, "NULL")) {
+    if (class(size_var) %in% c("numeric", "integer")) {
+      geom_dots$size <- size_var
+    } else {
+      # see if size matches one of the df's vars
+      size_var <- var_partial_match(size_var, tomic_table)
+      aes_args$size <- rlang::sym(size_var)
+    }
   }
 
   # map requiredd and optional inputs to aesthetics
@@ -298,15 +332,23 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
 
   # determine plot type from variable classes
 
-  if (class(tomic_table[[x_var]]) %in% c("numeric", "integer")) {
+  if (plot_type == "scatter") {
+
+    # setup plot call with fixed aesthetics
+    plot_call <- do.call(ggplot2::geom_point, geom_dots)
     grob <- ggplot(tomic_table, running_aes) +
-      geom_point(size = 4) +
+      plot_call +
       theme_bw()
-  } else {
-    grob <- ggplot(tomic_table, aes(x = !!rlang::sym(x_var), y = !!rlang::sym(y_var))) +
-      geom_boxplot(aes(fill = !!rlang::sym(color_var))) +
+
+  } else if (plot_type == "boxplot") {
+
+    plot_call <- do.call(ggplot2::geom_boxplot, geom_dots)
+    grob <- ggplot(tomic_table, running_aes) +
+      plot_call +
       theme_bw() +
       theme(axis.text = element_text(angle = 90, hjust = 1))
+  } else {
+    stop ("undefined plot_type")
   }
 
   return(grob)

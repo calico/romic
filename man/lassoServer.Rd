@@ -16,7 +16,7 @@ UI function.}
 or triple omic dataset}
 }
 \value{
-A \code{tomic} object ammended based on the lasso selection.
+A \code{tomic} object amended based on the lasso selection.
 }
 \description{
 Take a subset of entries from a tomic table (generally selected using the

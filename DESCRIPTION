@@ -1,7 +1,7 @@
 Package: romic
 Type: Package
 Title: R for High-Dimensional Omic Data
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(
       given = "Sean",
@@ -21,7 +21,6 @@ Depends: R (>= 3.2.3)
 biocViews:
 Imports: checkmate,
     dplyr,
-    forcats,
     ggplot2,
     glue,
     purrr,

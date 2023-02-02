@@ -226,7 +226,7 @@ plot_univariate <- function(tomic_table, x_var, color_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")
 
   x_var <- var_partial_match(x_var, tomic_table)
-  if (class(color_var) != "NULL") {
+  if (!inherits(color_var, "NULL")) {
     color_var <- var_partial_match(color_var, tomic_table)
 
     if (!(class(tomic_table[[color_var]]) %in% c("numeric", "integer"))) {

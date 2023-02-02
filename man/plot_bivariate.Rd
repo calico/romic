@@ -10,7 +10,8 @@ plot_bivariate(
   y_var,
   color_var = NULL,
   shape_var = NULL,
-  alpha_var = NULL
+  alpha_var = NULL,
+  size_var = NULL
 )
 }
 \arguments{
@@ -25,7 +26,9 @@ or triple omic dataset}
 
 \item{shape_var}{shape variable (NULL to suppress shape)}
 
-\item{alpha_var}{alpha variable (NULL to suppress alpha)}
+\item{alpha_var}{alpha variable or numeric for constant alpha (NULL to suppress alpha)}
+
+\item{size_var}{size variable or integer/numeric for constant size (NULL to suppress size)}
 }
 \value{
 a ggplot2 grob
@@ -41,7 +44,7 @@ brauer_augmented <- brauer_2008_tidy \%>\%
   tomic_to("triple_omic")
 
 tomic_table <- brauer_augmented$samples
-plot_bivariate(tomic_table, "PC1", "PC2", "nutrient", "nutrient")
+plot_bivariate(tomic_table, "PC1", "PC2", "nutrient", "nutrient", 0.5, 10)
 plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
 }
