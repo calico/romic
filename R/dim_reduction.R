@@ -22,6 +22,7 @@ add_pcs <- function(
     center_rows = TRUE,
     npcs = NULL,
     missing_val_method = "drop_samples") {
+
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertLogical(center_rows, len = 1)
   stopifnot(length(npcs) <= 1, class(npcs) %in% c("NULL", "numeric", "integer"))
@@ -44,9 +45,9 @@ add_pcs <- function(
     reshape2::acast(formula = cast_formula, value.var = value_var)
 
   if (is.null(npcs)) {
-    npcs <- ncol(omic_matrix)
+    npcs <- min(dim(omic_matrix))
   }
-  stopifnot(npcs <= ncol(omic_matrix))
+  stopifnot(npcs <= ncol(omic_matrix), npcs <= nrow(omic_matrix))
   npcs <- round(npcs)
 
   # center
@@ -59,7 +60,7 @@ add_pcs <- function(
 
   # add eigenvalues and fraction of variance explained as unstructured data
   varex_df <- tibble::tibble(
-    pc_number = seq_len(ncol(omic_matrix)),
+    pc_number = seq_len(length(mat_svd$d)),
     eigenvalue = mat_svd$d
   ) %>%
     dplyr::mutate(
