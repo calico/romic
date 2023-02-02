@@ -306,7 +306,7 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
 
   # alpha
   if (!inherits(alpha_var, "NULL")) {
-    if (class(alpha_var) == "numeric") {
+    if (inherits(alpha_var, "numeric")) {
       checkmate::assertNumber(alpha_var, lower = 0, upper = 1)
       geom_dots$alpha <- alpha_var
     } else {
@@ -317,7 +317,7 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
 
   # size
   # by default ignore size as a number for specifying constant size
-  if (class(size_var) != "NULL") {
+  if (!inherits(size_var, "NULL")) {
     if (class(size_var) %in% c("numeric", "integer")) {
       geom_dots$size <- size_var
     } else {
