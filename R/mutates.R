@@ -306,7 +306,7 @@ sort_triple_hclust <- function(triple_omic, sort_table, value_var) {
       .[[cluster_dim]]
     }
 
-  if (class(tidy_omic$data[[pk]]) != "factor") {
+  if (!inherits(tidy_omic$data[[pk]], "factor")) {
     # match classes if needed to facilitate joins
     class(cluster_orders) <- class(tidy_omic$data[[pk]])
   }

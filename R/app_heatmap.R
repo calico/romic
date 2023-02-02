@@ -696,7 +696,7 @@ hclust_order <- function(
 
     # if distance cannot be computed (because of missing values) pad with
     # zeros and recalculate
-    if (class(cluster_rows) == "try-error") {
+    if (inherits(cluster_rows, "try-error")) {
       pad_matrix <- matrix(0, ncol = 2, nrow = nrow(quant_matrix))
       colnames(pad_matrix) <- c("pad1", "pad2")
       quant_matrix_pad <- cbind(quant_matrix, pad_matrix)
@@ -719,7 +719,7 @@ hclust_order <- function(
 
     # if distance cannot be computed (because of missing values) pad with zeros
     # and recalculate
-    if (class(cluster_cols) == "try-error") {
+    if (inherits(cluster_cols, "try-error")) {
       pad_matrix <- matrix(0, ncol = 2, nrow = ncol(quant_matrix))
       colnames(pad_matrix) <- c("pad1", "pad2")
       quant_matrix_pad <- cbind(t(quant_matrix), pad_matrix)

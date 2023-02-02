@@ -276,7 +276,7 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
   geom_dots <- list()
 
   # color
-  if (class(color_var) != "NULL") {
+  if (!inherits(color_var, "NULL")) {
     color_var <- var_partial_match(color_var, tomic_table)
 
     if (!(class(tomic_table[[color_var]]) %in% c("numeric", "integer"))) {
@@ -299,13 +299,13 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
   }
 
   # shape
-  if (class(shape_var) != "NULL") {
+  if (!inherits(shape_var, "NULL")) {
     shape_var <- var_partial_match(color_var, tomic_table)
     aes_args$shape <- rlang::sym(shape_var)
   }
 
   # alpha
-  if (class(alpha_var) != "NULL") {
+  if (!inherits(alpha_var, "NULL")) {
     if (class(alpha_var) == "numeric") {
       checkmate::assertNumber(alpha_var, lower = 0, upper = 1)
       geom_dots$alpha <- alpha_var
