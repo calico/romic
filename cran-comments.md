@@ -8,6 +8,11 @@
 ## R CMD check results
 R CMD check --as-cran romic_1.1.1.tar.gz 
 
+Checks in all test environments with:
+
+Status: OK
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 ## Downstream dependencies
 None
