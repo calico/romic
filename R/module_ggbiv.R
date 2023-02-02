@@ -300,7 +300,7 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_va
 
   # shape
   if (!inherits(shape_var, "NULL")) {
-    shape_var <- var_partial_match(color_var, tomic_table)
+    shape_var <- var_partial_match(shape_var, tomic_table)
     aes_args$shape <- rlang::sym(shape_var)
   }
 
