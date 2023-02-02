@@ -4,7 +4,14 @@
 \alias{plot_bivariate}
 \title{Bivariate Plot}
 \usage{
-plot_bivariate(tomic_table, x_var, y_var, color_var = NULL)
+plot_bivariate(
+  tomic_table,
+  x_var,
+  y_var,
+  color_var = NULL,
+  shape_var = NULL,
+  alpha_var = NULL
+)
 }
 \arguments{
 \item{tomic_table}{A table taken from a tidy (i.e., augmented measurements)
@@ -15,6 +22,10 @@ or triple omic dataset}
 \item{y_var}{y-axis variable}
 
 \item{color_var}{coloring variable (NULL to suppress coloring)}
+
+\item{shape_var}{shape variable (NULL to suppress shape)}
+
+\item{alpha_var}{alpha variable (NULL to suppress alpha)}
 }
 \value{
 a ggplot2 grob
@@ -30,7 +41,7 @@ brauer_augmented <- brauer_2008_tidy \%>\%
   tomic_to("triple_omic")
 
 tomic_table <- brauer_augmented$samples
-plot_bivariate(tomic_table, "PC1", "PC2", "nutrient")
+plot_bivariate(tomic_table, "PC1", "PC2", "nutrient", "nutrient")
 plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
 }

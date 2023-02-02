@@ -237,6 +237,8 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #' @param x_var x-axis variable
 #' @param y_var y-axis variable
 #' @param color_var coloring variable (NULL to suppress coloring)
+#' @param shape_var shape variable (NULL to suppress shape)
+#' @param alpha_var alpha variable (NULL to suppress alpha)
 #'
 #' @return a ggplot2 grob
 #'
@@ -248,15 +250,20 @@ ggBivServer <- function(id, tomic, plot_table, return_brushed_points = FALSE) {
 #'   tomic_to("triple_omic")
 #'
 #' tomic_table <- brauer_augmented$samples
-#' plot_bivariate(tomic_table, "PC1", "PC2", "nutrient")
+#' plot_bivariate(tomic_table, "PC1", "PC2", "nutrient", "nutrient")
 #' plot_bivariate(tomic_table, "PC1", "PC2", NULL)
 #' plot_bivariate(tomic_table, "nutrient", "PC2", "nutrient")
 #' @export
-plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
+plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL, shape_var = NULL, alpha_var = NULL) {
   checkmate::assertClass(tomic_table, "data.frame")
   # allow for partial string matching
   x_var <- var_partial_match(x_var, tomic_table)
   y_var <- var_partial_match(y_var, tomic_table)
+
+  aes_args <- list(
+    x = rlang::sym(x_var),
+    y = rlang::sym(y_var)
+  )
 
   if (class(color_var) != "NULL") {
     color_var <- var_partial_match(color_var, tomic_table)
@@ -272,33 +279,34 @@ plot_bivariate <- function(tomic_table, x_var, y_var, color_var = NULL) {
         return(overflow_plot)
       }
     }
+
+    aes_args$color = rlang::sym(color_var)
   }
+
+  if (class(shape_var) != "NULL") {
+    shape_var <- var_partial_match(color_var, tomic_table)
+    aes_args$shape <- rlang::sym(shape_var)
+  }
+
+  if (class(alpha_var) != "NULL") {
+    alpha_var <- var_partial_match(alpha_var, tomic_table)
+    aes_args$alpha <- rlang::sym(alpha_var)
+  }
+
+  # map requiredd and optional inputs to aesthetics
+  running_aes <- do.call(ggplot2::aes, aes_args)
 
   # determine plot type from variable classes
 
   if (class(tomic_table[[x_var]]) %in% c("numeric", "integer")) {
-    grob <- ggplot(tomic_table, aes(x = !!rlang::sym(x_var), y = !!rlang::sym(y_var))) +
+    grob <- ggplot(tomic_table, running_aes) +
+      geom_point(size = 4) +
       theme_bw()
-
-    if (is.null(color_var)) {
-      grob <- grob +
-        geom_point(size = 4)
-    } else {
-      grob <- grob +
-        geom_point(aes(color = !!rlang::sym(color_var)), size = 4)
-    }
   } else {
     grob <- ggplot(tomic_table, aes(x = !!rlang::sym(x_var), y = !!rlang::sym(y_var))) +
-      theme_bw()
-
-    if (is.null(color_var)) {
-      grob <- grob +
-        geom_boxplot()
-    } else {
-      grob <- grob +
-        geom_boxplot(aes(fill = !!rlang::sym(color_var))) +
-        theme(axis.text = element_text(angle = 90, hjust = 1))
-    }
+      geom_boxplot(aes(fill = !!rlang::sym(color_var))) +
+      theme_bw() +
+      theme(axis.text = element_text(angle = 90, hjust = 1))
   }
 
   return(grob)
