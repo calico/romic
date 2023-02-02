@@ -872,3 +872,44 @@ check_tomic <- function(tomic, fast_check = TRUE) {
 
   return(invisible(0))
 }
+
+#' Get Tomic Table
+#'
+#' Extract one of the specific tables from a tomic object
+#'
+#' @inheritParams tomic_to
+#' @param table_type The type of table to extract from the \code{tomic} object.
+#' \describe{
+#'   \item{tidy}{one row per measurements with feature and sample attributes added. Equivalent to the $data field of a tidy omic object}
+#'   \item{measurements}{one row per measurements defined a feature and sample foreign key. Equivalent to the $measurements field of a triple omic object}
+#'   \item{features}{one row per feature defined by a feature primary key. Equivalent to the $features field of a triple omic object}
+#'   \item{samples}{one row per sample defined by a sample primary key. Equivalent to the $samples field of a triple omic object}
+#' }
+#'
+#' @returns a tibble matching the \code{table_type} of the \code{tomic} object
+#'
+#' @export
+#'
+#' @examples
+#' get_tomic_table(brauer_2008_triple, "samples")
+#' get_tomic_table(brauer_2008_tidy, "features")
+get_tomic_table <- function(tomic, table_type) {
+
+  checkmate::assertClass(tomic, "tomic")
+  valid_table_types <- c("tidy", "measurements", "features", "samples")
+  checkmate::assertChoice(table_type, valid_table_types)
+
+  if (table_type == "tidy") {
+    # convert to tidy-omic if needed
+    tidy_omic <- tomic_to(tomic, "tidy_omic")
+    return(tidy_omic$data)
+
+  } else if (table_type %in% c("measurements", "features", "samples")) {
+
+    triple_omic <- tomic_to(tomic, "triple_omic")
+    return(triple_omic[[table_type]])
+
+  } else {
+    stop ("Invalid table_type")
+  }
+}

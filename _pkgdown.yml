@@ -8,6 +8,7 @@ reference:
   - check_triple_omic
 - subtitle: "Converters"
 - contents:
+  - get_tomic_table
   - tomic_to
   - check_tomic
   - tidy_to_triple
