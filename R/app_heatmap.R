@@ -640,7 +640,7 @@ hclust_tidy_omic <- function(
 #'
 #' @param df data.frame to cluster
 #' @param feature_pk variable uniquely defining a row
-#' @param sample_pk variable uniquely definining a sample
+#' @param sample_pk variable uniquely defining a sample
 #' @inheritParams sort_tomic
 #' @param cluster_dim rows, columns, or both
 #' @param distance_measure variable to use for computing dis-similarity
@@ -769,7 +769,7 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 #'
 #' Combine rows to speed up rendering of large heatmaps
 #'
-#' @param tidy_data The data datable from a \code{tidy_omic} object containing
+#' @param tidy_data The data frame from a \code{tidy_omic} object containing
 #'   ordered feature and sample primary keys defined by ordered_featureId
 #'   and ordered_sampleId.
 #' @inheritParams plot_heatmap

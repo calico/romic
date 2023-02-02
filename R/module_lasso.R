@@ -156,7 +156,7 @@ lassoInput <- function(id) {
 #' @inheritParams tomic_to
 #' @inheritParams plot_bivariate
 #'
-#' @returns A \code{tomic} object ammended based on the lasso selection.
+#' @returns A \code{tomic} object amended based on the lasso selection.
 #'
 #' @export
 lassoServer <- function(id, tomic, tomic_table) {
