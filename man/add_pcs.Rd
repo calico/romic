@@ -9,7 +9,8 @@ add_pcs(
   value_var = NULL,
   center_rows = TRUE,
   npcs = NULL,
-  missing_val_method = "drop_samples"
+  missing_val_method = "drop_samples",
+  label_percent_varex = TRUE
 )
 }
 \arguments{
@@ -29,6 +30,9 @@ add_pcs(
     then drop features}
   \item{impute}{Impute missing values}
 }}
+
+\item{label_percent_varex}{If true then PCs will be labelled by the percent
+of variability they explain.}
 }
 \value{
 A \code{tomic} object with principal components added to samples.

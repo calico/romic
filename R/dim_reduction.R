@@ -9,6 +9,8 @@
 #' @param npcs number of principal component loadings to add to samples
 #'   (default is number of samples)
 #' @inheritParams remove_missing_values
+#' @param label_percent_varex If true then PCs will be labelled by the percent
+#'   of variability they explain.
 #'
 #' @returns A \code{tomic} object with principal components added to samples.
 #'
@@ -21,11 +23,14 @@ add_pcs <- function(
     value_var = NULL,
     center_rows = TRUE,
     npcs = NULL,
-    missing_val_method = "drop_samples") {
+    missing_val_method = "drop_samples",
+    label_percent_varex = TRUE
+    ) {
 
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertLogical(center_rows, len = 1)
   stopifnot(length(npcs) <= 1, class(npcs) %in% c("NULL", "numeric", "integer"))
+  checkmate::assertLogical(label_percent_varex, len = 1)
 
   design <- tomic$design
   feature_pk <- design$feature_pk
@@ -64,9 +69,16 @@ add_pcs <- function(
     eigenvalue = mat_svd$d
   ) %>%
     dplyr::mutate(
-      fraction_varex = eigenvalue^2 / (sum(eigenvalue^2)),
-      pc_label = glue::glue("PC{pc_number} ({scales::percent_format(2)(fraction_varex)})")
+      fraction_varex = eigenvalue^2 / (sum(eigenvalue^2))
     )
+
+  if (label_percent_varex) {
+    varex_df <- varex_df %>%
+      dplyr::mutate(pc_label = glue::glue("PC{pc_number} ({scales::percent_format(2)(fraction_varex)})"))
+  } else {
+    varex_df <- varex_df %>%
+      dplyr::mutate(pc_label = glue::glue("PC{pc_number}"))
+  }
 
   # find the npcs leading principal components
   pcs <- mat_svd$v[, 1:npcs, drop = FALSE]
