@@ -10,6 +10,7 @@
 #'   variables (or NULL if there are no additional variables)
 #' @param sample_vars a character vector of additional sample-level variables
 #'   (or NULL if there are no additional variables)
+#' @param verbose extra reporting messages
 #'
 #' @returns An S3 \code{tidy_omic}/\code{tomic} object built on a \code{list}:
 #'  \describe{
@@ -57,12 +58,16 @@
 #'   sample_vars = "sample_group"
 #' )
 #' @export
-create_tidy_omic <- function(df,
-                             feature_pk,
-                             feature_vars = NULL,
-                             sample_pk,
-                             sample_vars = NULL,
-                             omic_type_tag = "general") {
+create_tidy_omic <- function(
+    df,
+    feature_pk,
+    feature_vars = NULL,
+    sample_pk,
+    sample_vars = NULL,
+    omic_type_tag = "general",
+    verbose = TRUE
+    ) {
+
   checkmate::assertDataFrame(df)
   checkmate::assertString(omic_type_tag)
   checkmate::assertChoice(feature_pk, colnames(df))
@@ -124,6 +129,19 @@ create_tidy_omic <- function(df,
   output$design$feature_pk <- feature_pk
   output$design$sample_pk <- sample_pk
 
+  if (verbose) {
+    measurement_vars <- setdiff(
+      output$design$measurements$variable,
+      c(feature_pk, sample_pk)
+      )
+
+    message(glue::glue(
+      "{length(measurement_vars)} measurement variables were defined as the
+      left overs from the specified feature and sample varaibles:
+      {paste(measurement_vars, collapse = ', ')}"
+    ))
+  }
+
   class(output) <- c("tidy_omic", "tomic", omic_type_tag)
   check_tidy_omic(output, fast_check = FALSE)
 
@@ -143,10 +161,14 @@ create_tidy_omic <- function(df,
 #'
 #' @return 0 invisibly
 check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
+
   checkmate::assertClass(tidy_omic, "tidy_omic")
   checkmate::assertLogical(fast_check, len = 1)
   # check design
   check_design(tidy_omic)
+
+  feature_pk <- tidy_omic$design$feature_pk
+  sample_pk <- tidy_omic$design$sample_pk
 
   # check that design matches data
 
@@ -177,17 +199,31 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
     # and sample keys
 
     unique_measurement_keys <- tidy_omic$data %>%
-      dplyr::distinct(
-        !!rlang::sym(tidy_omic$design$feature_pk),
-        !!rlang::sym(tidy_omic$design$sample_pk)
-      )
+      dplyr::count(!!rlang::sym(feature_pk), !!rlang::sym(sample_pk))
 
     n_degenerate_keys <- nrow(tidy_omic$data) - nrow(unique_measurement_keys)
 
     if (n_degenerate_keys != 0) {
+
+      degenerate_key_examples <- unique_measurement_keys %>%
+        dplyr::filter(n > 1) %>%
+        dplyr::sample_n(pmin(10, n_degenerate_keys)) %>%
+        dplyr::arrange(!!rlang::sym(feature_pk), !!rlang::sym(sample_pk)) %>%
+        dplyr::mutate(
+          combined_label = paste(
+            "feature =",
+            {!!rlang::sym(feature_pk)},
+            "; sample =",
+            {!!rlang::sym(sample_pk)}
+            ))
+
       stop(glue::glue(
-        "{nrow(n_degenerate_keys)} measurements were present multiple times with
-        the same feature and sample primary keys"
+      "{n_degenerate_keys} measurements were present multiple times with
+      the same feature and sample primary keys
+
+      For example:
+
+      {paste(degenerate_key_examples$combined_label, collapse = '\n\t')}"
       ))
     }
 
