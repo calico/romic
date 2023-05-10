@@ -10,7 +10,8 @@ create_tidy_omic(
   feature_vars = NULL,
   sample_pk,
   sample_vars = NULL,
-  omic_type_tag = "general"
+  omic_type_tag = "general",
+  verbose = TRUE
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ variables (or NULL if there are no additional variables)}
 
 \item{omic_type_tag}{an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 An S3 \code{tidy_omic}/\code{tomic} object built on a \code{list}:
