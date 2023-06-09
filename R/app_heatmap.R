@@ -271,6 +271,9 @@ app_heatmap <- function(tomic) {
 #'   thresholded to this value.
 #' @param plot_type plotly (for interactivity) or grob (for a static ggplot)
 #' @inheritParams downsample_heatmap
+#' @param x_label label for x-axis (if NULL then use \code{feature_var})
+#' @param y_label label for y-axis (if NULL then use \code{sample_var})
+#' @param colorbar_label label for color-bar; default is log2 abundance
 #'
 #' @returns a ggplot2 grob
 #'
@@ -308,7 +311,11 @@ plot_heatmap <- function(
     hclust_method = "ward.D2",
     change_threshold = Inf,
     plot_type = "grob",
-    max_display_features = 800) {
+    max_display_features = 800,
+    x_label = NULL,
+    y_label = NULL,
+    colorbar_label = NULL
+    ) {
   checkmate::assertClass(tomic, "tomic")
 
   if ("NULL" %in% class(feature_var)) {
@@ -329,6 +336,23 @@ plot_heatmap <- function(
   checkmate::assertNumber(change_threshold, lower = 0)
   checkmate::assertChoice(plot_type, c("plotly", "grob"))
   checkmate::assertNumber(max_display_features)
+
+  if ("NULL" %in% class(x_label)) {
+    x_label <- feature_var
+  }
+  checkmate::assertMultiClass(x_label, c("character", "expression"))
+
+  if ("NULL" %in% class(y_label)) {
+    y_label <- sample_var
+  }
+  checkmate::assertMultiClass(y_label, c("character", "expression"))
+
+  if ("NULL" %in% class(colorbar_label)) {
+    colorbar_label <- expression(log[2] ~ abundance)
+  }
+  checkmate::assertMultiClass(colorbar_label, c("character", "expression"))
+
+  # format convert tomic to tidy format if needed
 
   tidy_omic <- tomic_to(tomic, "tidy_omic")
 
@@ -389,16 +413,17 @@ plot_heatmap <- function(
      theme(
        text = element_text(size = 16, color = "black"),
        title = element_text(size = 20, color = "black"),
-       axis.title.y = element_blank(),
        strip.text = element_text(size = 18),
        legend.position = "top",
        strip.background = element_rect(fill = "gray80")
     )
 
   if (n_features > 200) {
-    heatmap_theme <- heatmap_theme + theme(axis.text.y = element_blank())
+    heatmap_theme <- heatmap_theme +
+      theme(axis.text.y = element_blank())
   } else {
-    heatmap_theme <- heatmap_theme + theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / n_features))))
+    heatmap_theme <- heatmap_theme +
+      theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / n_features))))
   }
 
   if (n_samples > 200) {
@@ -421,17 +446,19 @@ plot_heatmap <- function(
   ) +
     geom_raster() +
     scale_fill_gradient2(
-      expression(log[2] ~ abundance),
+      colorbar_label,
       low = "steelblue1",
       mid = "black",
       high = "yellow",
       midpoint = 0
     ) +
-    scale_x_discrete(sample_var,
+    scale_x_discrete(
+      x_label,
       breaks = augmented_tidy_omic_data$ordered_sampleId,
       labels = augmented_tidy_omic_data$sample_label
     ) +
-    scale_y_discrete(feature_var,
+    scale_y_discrete(
+      y_label,
       breaks = augmented_tidy_omic_data$ordered_featureId,
       labels = augmented_tidy_omic_data$feature_label,
       position = "right"
