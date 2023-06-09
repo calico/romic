@@ -14,7 +14,10 @@ plot_heatmap(
   hclust_method = "ward.D2",
   change_threshold = Inf,
   plot_type = "grob",
-  max_display_features = 800
+  max_display_features = 800,
+  x_label = NULL,
+  y_label = NULL,
+  colorbar_label = NULL
 )
 }
 \arguments{
@@ -44,6 +47,12 @@ thresholded to this value.}
 
 \item{max_display_features}{aggregate and downsample distinct feature to
 this number to speed to up heatmap rendering.}
+
+\item{x_label}{label for x-axis (if NULL then use \code{feature_var})}
+
+\item{y_label}{label for y-axis (if NULL then use \code{sample_var})}
+
+\item{colorbar_label}{label for color-bar; default is log2 abundance}
 }
 \value{
 a ggplot2 grob
