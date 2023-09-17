@@ -86,11 +86,12 @@ create_tidy_omic <- function(
 
   n_var_uses <- table(c(feature_pk, feature_vars, sample_pk, sample_vars))
   if (any(n_var_uses > 1)) {
-    stop(paste0(
-      paste(names(n_var_uses)[n_var_uses > 1], collapse = ", "),
-      ": were assigned to multiple classes of variables
-      each variable should only belong to one class"
-    ))
+    invalid_vars <- names(n_var_uses)[n_var_uses > 1]
+
+    cli::cli_abort(
+      "{paste(invalid_vars, collapse = ', ')} were assigned to multiple
+      classes of variables each variable should only belong to one class"
+    )
   }
 
   # determine the classes of all variables in df
