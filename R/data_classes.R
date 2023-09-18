@@ -208,7 +208,7 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 
       degenerate_key_examples <- unique_measurement_keys %>%
         dplyr::filter(n > 1) %>%
-        dplyr::sample_n(pmin(10, n_degenerate_keys)) %>%
+        dplyr::slice(1:pmin(10, n_degenerate_keys)) %>%
         dplyr::arrange(!!rlang::sym(feature_pk), !!rlang::sym(sample_pk)) %>%
         dplyr::mutate(
           combined_label = paste(
@@ -381,13 +381,13 @@ create_triple_omic <- function(measurement_df,
   # features
   stopifnot(length(feature_pk) == 1, feature_pk %in% colnames(measurement_df))
   if (!is.null(feature_df)) {
-    stopifnot("data.frame" %in% class(measurement_df))
+    stopifnot("data.frame" %in% class(feature_df))
     stopifnot(feature_pk %in% colnames(feature_df))
   }
 
   # samples
   stopifnot(length(sample_pk) == 1, sample_pk %in% colnames(measurement_df))
-  if (!is.null(sample_pk)) {
+  if (!is.null(sample_df)) {
     stopifnot("data.frame" %in% class(sample_df))
     stopifnot(sample_pk %in% colnames(sample_df))
   }
@@ -396,14 +396,14 @@ create_triple_omic <- function(measurement_df,
   if (is.null(feature_df)) {
     feature_df <- measurement_df %>%
       dplyr::ungroup() %>%
-      dplyr::distinct_(feature_pk)
+      dplyr::distinct(!!rlang::sym(feature_pk))
   }
 
   # initialize default sample_df if one is not provided
   if (is.null(sample_df)) {
     sample_df <- measurement_df %>%
       dplyr::ungroup() %>%
-      dplyr::distinct_(sample_pk)
+      dplyr::distinct(!!rlang::sym(sample_pk))
   }
 
   # Format tables as tibbles
@@ -947,6 +947,6 @@ get_tomic_table <- function(tomic, table_type) {
     return(triple_omic[[table_type]])
 
   } else {
-    stop ("Invalid table_type")
+    stop ("This case should not be reached - please contact a dev")
   }
 }
