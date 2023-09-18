@@ -437,7 +437,7 @@ sort_tomic <- function(tomic,
   triple_omic[[sort_table]] <- sorted_attributes_fct %>%
     dplyr::select(-!!rlang::sym(pk)) %>%
     dplyr::rename(!!rlang::sym(pk) := orderedId) %>%
-    dplyr::select(all_of(triple_omic$design[[sort_table]]$variable))
+    dplyr::select(dplyr::all_of(triple_omic$design[[sort_table]]$variable))
 
   # update measurements
 
@@ -449,7 +449,7 @@ sort_tomic <- function(tomic,
     ) %>%
     dplyr::select(-rlang::sym(pk)) %>%
     dplyr::rename(!!rlang::sym(pk) := orderedId) %>%
-    dplyr::select(all_of(triple_omic$design$measurements$variable))
+    dplyr::select(dplyr::all_of(triple_omic$design$measurements$variable))
 
   # convert back to initial class
   return(tomic_to(triple_omic, class(tomic)[1]))
