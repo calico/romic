@@ -950,3 +950,55 @@ get_tomic_table <- function(tomic, table_type) {
     stop ("This case should not be reached - please contact a dev")
   }
 }
+
+
+get_identifying_keys <- function(tomic, table) {
+  checkmate::assertClass(tomic, "tomic")
+  checkmate::assertChoice(table, c("features", "samples", "measurements"))
+
+  if (table == "features") {
+    ids <- tomic$design$feature_pk
+  } else if (table == "samples") {
+    ids <- tomic$design$sample_pk
+  } else if (table == "measurements") {
+    ids <- c(tomic$design$feature_pk, tomic$design$sample_pk)
+  } else {
+    stop(glue::glue("{table} is not a valid choice"))
+  }
+
+  return(ids)
+}
+
+#' Infer Tomic Table Type
+#'
+#' From a tomic_table, choose whether it reflects features, samples or
+#'   measurements
+#'
+#' @inheritParams tomic_to
+#' @inheritParams plot_bivariate
+#'
+#' @returns features, samples or measurements
+infer_tomic_table_type <- function(tomic, tomic_table) {
+  checkmate::assertClass(tomic, "tomic")
+  checkmate::assertClass(tomic_table, "data.frame")
+
+  feature_pk <- tomic$design$feature_pk
+  sample_pk <- tomic$design$sample_pk
+  tomic_table_vars <- colnames(tomic_table)
+
+  table_type <- dplyr::case_when(
+    feature_pk %in% tomic_table_vars && sample_pk %in% tomic_table_vars ~ "measurements",
+    feature_pk %in% tomic_table_vars ~ "features",
+    sample_pk %in% tomic_table_vars ~ "samples"
+  )
+
+  if (is.na(table_type)) {
+    stop(
+      "based on the \"tomic\" primary keys, tomic_table doesn't appear to
+       be features, samples or measurements"
+    )
+  }
+
+  return(table_type)
+}
+

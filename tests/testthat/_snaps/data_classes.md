@@ -47,3 +47,11 @@
     Error <rlang_error>
       measurement were assigned to multiple classes of variables each variable should only belong to one class
 
+# Test that get_tomic_table() can retrieve various tables
+
+    Code
+      infer_tomic_table_type(simple_tidy, samples_df %>% rename(fake_samples = samples))
+    Error <simpleError>
+      based on the "tomic" primary keys, tomic_table doesn't appear to
+             be features, samples or measurements
+

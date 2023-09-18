@@ -56,7 +56,22 @@ test_that("Sort tomic applies a sort to features and/or samples", {
 
   expect_equal(tomic_sort_status(sorted_samples), "sorted_samples, unsorted features")
 
+  sorted_features <- sort_tomic(
+    brauer_2008_tidy,
+    sort_type = "hclust",
+    sort_table = "features",
+    value_var = "expression"
+    )
 
+  expect_equal(tomic_sort_status(sorted_features), "sorted features, unsorted samples")
 
-
+  sorted_features %>%
+    sort_tomic(
+      sort_type = "arrange",
+      sort_table = "samples",
+      sort_variables = c("nutrient", "DR")
+    ) %>%
+    tomic_sort_status() %>%
+    expect_equal("fully sorted")
 })
+

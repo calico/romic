@@ -125,9 +125,28 @@ test_that("Read wide data", {
 })
 
 
+test_that("Find primary or foreign keys in tomic table", {
+
+  expect_equal(get_identifying_keys(brauer_2008_triple, "measurements"), c("name", "sample"))
+  expect_equal(get_identifying_keys(brauer_2008_triple, "features"), "name")
+  expect_equal(get_identifying_keys(brauer_2008_triple, "samples"), "sample")
+
+})
+
 test_that("Test that get_tomic_table() can retrieve various tables", {
 
-  expect_equal(nrow(get_tomic_table(brauer_2008_triple, "tidy")), 18000)
-  expect_equal(dim(get_tomic_table(simple_tidy, "samples")), c(10,1))
+  tidy_df <- get_tomic_table(brauer_2008_triple, "tidy")
 
+  expect_equal(nrow(tidy_df), 18000)
+  expect_equal(infer_tomic_table_type(brauer_2008_triple, tidy_df), "measurements")
+
+  samples_df <- get_tomic_table(simple_tidy, "samples")
+
+  expect_equal(dim(samples_df), c(10,1))
+  expect_equal(infer_tomic_table_type(simple_tidy, samples_df), "samples")
+
+  expect_snapshot(
+    infer_tomic_table_type(simple_tidy, samples_df %>% rename(fake_samples = samples)),
+    error = TRUE
+  )
 })
