@@ -86,11 +86,12 @@ create_tidy_omic <- function(
 
   n_var_uses <- table(c(feature_pk, feature_vars, sample_pk, sample_vars))
   if (any(n_var_uses > 1)) {
-    stop(paste0(
-      paste(names(n_var_uses)[n_var_uses > 1], collapse = ", "),
-      ": were assigned to multiple classes of variables
-      each variable should only belong to one class"
-    ))
+    invalid_vars <- names(n_var_uses)[n_var_uses > 1]
+
+    cli::cli_abort(
+      "{paste(invalid_vars, collapse = ', ')} were assigned to multiple
+      classes of variables each variable should only belong to one class"
+    )
   }
 
   # determine the classes of all variables in df
@@ -207,7 +208,7 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 
       degenerate_key_examples <- unique_measurement_keys %>%
         dplyr::filter(n > 1) %>%
-        dplyr::sample_n(pmin(10, n_degenerate_keys)) %>%
+        dplyr::slice(1:pmin(10, n_degenerate_keys)) %>%
         dplyr::arrange(!!rlang::sym(feature_pk), !!rlang::sym(sample_pk)) %>%
         dplyr::mutate(
           combined_label = paste(
@@ -380,13 +381,13 @@ create_triple_omic <- function(measurement_df,
   # features
   stopifnot(length(feature_pk) == 1, feature_pk %in% colnames(measurement_df))
   if (!is.null(feature_df)) {
-    stopifnot("data.frame" %in% class(measurement_df))
+    stopifnot("data.frame" %in% class(feature_df))
     stopifnot(feature_pk %in% colnames(feature_df))
   }
 
   # samples
   stopifnot(length(sample_pk) == 1, sample_pk %in% colnames(measurement_df))
-  if (!is.null(sample_pk)) {
+  if (!is.null(sample_df)) {
     stopifnot("data.frame" %in% class(sample_df))
     stopifnot(sample_pk %in% colnames(sample_df))
   }
@@ -395,14 +396,14 @@ create_triple_omic <- function(measurement_df,
   if (is.null(feature_df)) {
     feature_df <- measurement_df %>%
       dplyr::ungroup() %>%
-      dplyr::distinct_(feature_pk)
+      dplyr::distinct(!!rlang::sym(feature_pk))
   }
 
   # initialize default sample_df if one is not provided
   if (is.null(sample_df)) {
     sample_df <- measurement_df %>%
       dplyr::ungroup() %>%
-      dplyr::distinct_(sample_pk)
+      dplyr::distinct(!!rlang::sym(sample_pk))
   }
 
   # Format tables as tibbles
@@ -946,6 +947,58 @@ get_tomic_table <- function(tomic, table_type) {
     return(triple_omic[[table_type]])
 
   } else {
-    stop ("Invalid table_type")
+    stop ("This case should not be reached - please contact a dev")
   }
 }
+
+
+get_identifying_keys <- function(tomic, table) {
+  checkmate::assertClass(tomic, "tomic")
+  checkmate::assertChoice(table, c("features", "samples", "measurements"))
+
+  if (table == "features") {
+    ids <- tomic$design$feature_pk
+  } else if (table == "samples") {
+    ids <- tomic$design$sample_pk
+  } else if (table == "measurements") {
+    ids <- c(tomic$design$feature_pk, tomic$design$sample_pk)
+  } else {
+    stop(glue::glue("{table} is not a valid choice"))
+  }
+
+  return(ids)
+}
+
+#' Infer Tomic Table Type
+#'
+#' From a tomic_table, choose whether it reflects features, samples or
+#'   measurements
+#'
+#' @inheritParams tomic_to
+#' @inheritParams plot_bivariate
+#'
+#' @returns features, samples or measurements
+infer_tomic_table_type <- function(tomic, tomic_table) {
+  checkmate::assertClass(tomic, "tomic")
+  checkmate::assertClass(tomic_table, "data.frame")
+
+  feature_pk <- tomic$design$feature_pk
+  sample_pk <- tomic$design$sample_pk
+  tomic_table_vars <- colnames(tomic_table)
+
+  table_type <- dplyr::case_when(
+    feature_pk %in% tomic_table_vars && sample_pk %in% tomic_table_vars ~ "measurements",
+    feature_pk %in% tomic_table_vars ~ "features",
+    sample_pk %in% tomic_table_vars ~ "samples"
+  )
+
+  if (is.na(table_type)) {
+    stop(
+      "based on the \"tomic\" primary keys, tomic_table doesn't appear to
+       be features, samples or measurements"
+    )
+  }
+
+  return(table_type)
+}
+

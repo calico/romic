@@ -20,6 +20,7 @@ Description: Represents high-dimensional data as tables of features, samples and
 Depends: R (>= 3.2.3)
 biocViews:
 Imports: checkmate,
+    cli,
     dplyr,
     ggplot2,
     glue,
@@ -31,15 +32,17 @@ Imports: checkmate,
     stringr,
     tibble,
     tidyr (>= 1.0.0)
-Suggests: knitr,
+Suggests: 
+    knitr,
     impute,
     lazyeval,
     plotly,
     rmarkdown,
     usethis,
-    testthat
+    testthat (>= 3.0.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
+Config/testthat/edition: 3

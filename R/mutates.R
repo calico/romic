@@ -126,7 +126,7 @@ center_tomic <- function(tomic, measurement_vars = "all") {
 }
 
 center <- function(x) {
-  x - mean(x)
+  x - mean(x, na.rm = TRUE)
 }
 
 #' Update Tidy Omic
@@ -435,9 +435,9 @@ sort_tomic <- function(tomic,
   # update features
 
   triple_omic[[sort_table]] <- sorted_attributes_fct %>%
-    dplyr::select(-pk) %>%
+    dplyr::select(-!!rlang::sym(pk)) %>%
     dplyr::rename(!!rlang::sym(pk) := orderedId) %>%
-    dplyr::select(!!!rlang::syms(triple_omic$design[[sort_table]]$variable))
+    dplyr::select(dplyr::all_of(triple_omic$design[[sort_table]]$variable))
 
   # update measurements
 
@@ -447,9 +447,9 @@ sort_tomic <- function(tomic,
         dplyr::select(!!rlang::sym(pk), orderedId),
       by = pk
     ) %>%
-    dplyr::select(-pk) %>%
+    dplyr::select(-rlang::sym(pk)) %>%
     dplyr::rename(!!rlang::sym(pk) := orderedId) %>%
-    dplyr::select(!!!rlang::syms(triple_omic$design$measurements$variable))
+    dplyr::select(dplyr::all_of(triple_omic$design$measurements$variable))
 
   # convert back to initial class
   return(tomic_to(triple_omic, class(tomic)[1]))
@@ -477,7 +477,7 @@ tomic_sort_status <- function(tomic) {
       c("factor", "ordered"))
     is_sorted_samples <- any(class(tomic$data[[tomic$design$sample_pk]]) %in%
       c("factor", "ordered"))
-  } else if ("tidy_omic" %in% class(tomic)) {
+  } else if ("triple_omic" %in% class(tomic)) {
     is_sorted_features <- any(class(tomic$features[[tomic$design$feature_pk]]) %in%
       c("factor", "ordered"))
     is_sorted_samples <- any(class(tomic$samples[[tomic$design$sample_pk]]) %in%

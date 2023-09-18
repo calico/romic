@@ -9,8 +9,9 @@ format_names_for_plotting(chars, width = 40, truncate_at = 80)
 \arguments{
 \item{chars}{a character vector (or a variable that can be converted to one)}
 
-\item{width}{positive integer giving target line width in characters. A
-width less than or equal to 1 will put each word on its own line.}
+\item{width}{Positive integer giving target line width (in number of
+characters). A width less than or equal to 1 will put each word on its
+own line.}
 
 \item{truncate_at}{max character length}
 }

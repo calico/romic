@@ -88,3 +88,5 @@ var_partial_match <- function(x, df) {
     stop(glue::glue("{x} matched 2+ variables: {paste(var_match, collapse = ', ')}. This function treats the provided variable as a regular expression so please pass either a more completely defined variable name or a regular expression which will match a single variable"))
   }
 }
+
+
