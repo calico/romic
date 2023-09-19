@@ -50,7 +50,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">downsample_heatmap</span><span class="op">(</span><span class="va">tidy_data</span>, <span class="va">value_var</span>, <span class="va">design</span>, max_display_features <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">downsample_heatmap</span><span class="op">(</span></span>
+<span>  <span class="va">tidy_data</span>,</span>
+<span>  <span class="va">value_var</span>,</span>
+<span>  <span class="va">design</span>,</span>
+<span>  max_display_features <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,6 +78,10 @@ and ordered_sampleId.</p></dd>
 <dt>max_display_features</dt>
 <dd><p>aggregate and downsample distinct feature to
 this number to speed to up heatmap rendering.</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>extra reporting messages</p></dd>
 
 </dl></div>
     <div id="value">

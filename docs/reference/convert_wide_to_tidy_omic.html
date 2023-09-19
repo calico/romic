@@ -58,7 +58,8 @@
 <span>  feature_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sample_var <span class="op">=</span> <span class="st">"sample"</span>,</span>
 <span>  measurement_var <span class="op">=</span> <span class="st">"abundance"</span>,</span>
-<span>  omic_type_tag <span class="op">=</span> <span class="st">"general"</span></span>
+<span>  omic_type_tag <span class="op">=</span> <span class="st">"general"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -89,6 +90,10 @@ variables (or NULL if there are no additional variables)</p></dd>
 <dt>omic_type_tag</dt>
 <dd><p>an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>extra reporting messages</p></dd>
 
 </dl></div>
     <div id="value">
@@ -121,22 +126,24 @@ lipidomics, proteomics, genomics, general</p></dd>
 <span class="r-in"><span>  feature_pk <span class="op">=</span> <span class="st">"name"</span>,</span></span>
 <span class="r-in"><span>  feature_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BP"</span>, <span class="st">"MF"</span>, <span class="st">"systematic_name"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 measurement variables were defined as the</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> left overs from the specified feature and sample varaibles:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> abundance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18,000 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                                       MF    syste…¹ sample abund…²</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process unknown               mole… YOL029C G0.05    -<span style="color: #BB0000;">0.22</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SCW11   cytokinesis, completion of separation    gluc… YGL028C G0.05    -<span style="color: #BB0000;">0.67</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YHR036W biological process unknown               mole… YHR036W G0.05    -<span style="color: #BB0000;">0.91</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> BGL2    cell wall organization and biogenesis    gluc… YGR282C G0.05    -<span style="color: #BB0000;">0.08</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT1    cell wall organization and biogenesis*   stru… YFL039C G0.05    -<span style="color: #BB0000;">0.04</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FKH1    pseudohyphal growth*                     tran… YIL131C G0.05    -<span style="color: #BB0000;">0.57</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> HOC1    cell wall mannoprotein biosynthesis*     tran… YJR075W G0.05    -<span style="color: #BB0000;">0.42</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> CSN12   adaptation to pheromone during conjugat… mole… YJR084W G0.05    -<span style="color: #BB0000;">0.49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YAL046C biological process unknown               mole… YAL046C G0.05     0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SLG1    cell wall organization and biogenesis*   tran… YOR008C G0.05    -<span style="color: #BB0000;">0.06</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 17,990 more rows, and abbreviated variable names ¹​systematic_name,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​abundance</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                             MF    systematic_name sample abundance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process unknown     mole… YOL029C         G0.05      -<span style="color: #BB0000;">0.22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SCW11   cytokinesis, completion of se… gluc… YGL028C         G0.05      -<span style="color: #BB0000;">0.67</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YHR036W biological process unknown     mole… YHR036W         G0.05      -<span style="color: #BB0000;">0.91</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> BGL2    cell wall organization and bi… gluc… YGR282C         G0.05      -<span style="color: #BB0000;">0.08</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT1    cell wall organization and bi… stru… YFL039C         G0.05      -<span style="color: #BB0000;">0.04</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FKH1    pseudohyphal growth*           tran… YIL131C         G0.05      -<span style="color: #BB0000;">0.57</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> HOC1    cell wall mannoprotein biosyn… tran… YJR075W         G0.05      -<span style="color: #BB0000;">0.42</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> CSN12   adaptation to pheromone durin… mole… YJR084W         G0.05      -<span style="color: #BB0000;">0.49</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YAL046C biological process unknown     mole… YAL046C         G0.05       0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SLG1    cell wall organization and bi… tran… YOR008C         G0.05      -<span style="color: #BB0000;">0.06</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 17,990 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $design$features</span>

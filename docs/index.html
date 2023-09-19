@@ -64,6 +64,7 @@
 
 <p>ROMIC standardizes the formatting of genomic data to open up general visualizations approaches which can be used for exploratory data analysis (EDA).</p>
 <!-- badges: start -->
+
 <div class="section level2">
 <h2 id="package-setup">Package Setup<a class="anchor" aria-label="anchor" href="#package-setup"></a>
 </h2>
@@ -92,9 +93,11 @@
 </h2>
 <p>`Omic datasets are constructed by measuring a common set of features (transcripts, metabolites, ) across a set of samples. With such data, we could represent the same data using several different format:</p>
 <ul>
-<li>Wide <span class="emoji" data-emoji="warning">⚠️</span>:<ul>
+<li>Wide <span class="emoji" data-emoji="warning">⚠️</span>:
+<ul>
 <li>A matrix of I features x J samples including extra columns for feature-level attributes and extra rows for sample-level attributes.</li>
-<li>While ’omic data is often shared in this format, it is problematic for three reasons.<ol style="list-style-type: decimal">
+<li>While ’omic data is often shared in this format, it is problematic for three reasons.
+<ol style="list-style-type: decimal">
 <li>Each column of a dataframe has the same classes, and all values of a matrix have a common class. If sample-level variables are provided (such as the experimental design) then they would need to be tied to column attributes which are difficult to work with, although this is easier with specialized data structures such as H5AD.</li>
 <li>Matrix data is difficult to deal with. We would have to track which columns are measurements and which are feature attributes, and if we wanted to say select a subset of features and color them by a sample attribute, it would be colossal pain.</li>
 <li>If we have two or more observation-level attributes, such as raw, normalized and log-transformed measurements then the information cannot nicely be formatted as a matrix.</li>
@@ -102,18 +105,22 @@
 </li>
 </ul>
 </li>
-<li>Tidy <span class="emoji" data-emoji="star">⭐</span>:<ul>
+<li>Tidy <span class="emoji" data-emoji="star">⭐</span>:
+<ul>
 <li>A table with one row for each measurement (I x J)</li>
 <li>Each measurement is associated with the attributes of its corresponding features and samples. This is helpful for measurement-level operations such as plotting informed by the experimental design.</li>
-<li>A couple of downsides of this representation are that:<ol style="list-style-type: decimal">
+<li>A couple of downsides of this representation are that:
+<ol style="list-style-type: decimal">
 <li>Feature- and sample-level attributes are highly duplicated so the representation is not particularly compact.</li>
 <li>Because feature- and sample attributes are duplicated, its difficult apply feature- or sample-level manipulation. For example, adding a gene’s GO category would involve separately adding it for each measurement of that gene. This invariably adds extra complexity and time to the code and there is a risk that an inconsistent output is produced (such as a gene being associated with different GO categories depending on which measurement it is).</li>
 </ol>
 </li>
 </ul>
 </li>
-<li>Triple <span class="emoji" data-emoji="sparkles">✨</span>:<ul>
-<li>Represent a dataset as three tables:<ul>
+<li>Triple <span class="emoji" data-emoji="sparkles">✨</span>:
+<ul>
+<li>Represent a dataset as three tables:
+<ul>
 <li>Features (I rows) - All unique features and feature-level attributes</li>
 <li>Samples (J rows) - All unique samples and sample-level attributes</li>
 <li>Measurements (I x J rows) - One row per observation. This will look like the tidy table above except the only feature- and sample-level attributes are the feature primary key (a variable which uniquely defines a feature) and the sample primary key (a variable which uniquely defines a sample)</li>
@@ -154,7 +161,8 @@
 <li>
 <strong>plot_univariate</strong> create a histogram of a numeric feature present in features, samples or measurements</li>
 <li>
-<strong>plot_bivariate</strong> creates a bivariate visualization of features, samples or measurements (including feature and sample attributes). If two numeric features are used then a scatter plot is created, while if the x-axis variables is categorical, a boxplot is created. Many types of visualizations can be created using this approach:<ul>
+<strong>plot_bivariate</strong> creates a bivariate visualization of features, samples or measurements (including feature and sample attributes). If two numeric features are used then a scatter plot is created, while if the x-axis variables is categorical, a boxplot is created. Many types of visualizations can be created using this approach:
+<ul>
 <li>plotting PC1 ~ PC2 in the samples tables</li>
 <li>creating a volcano plot of feature significance and effect sizes</li>
 <li>plotting measurement magnitudes for specific features with elements of the experimental design on the y-axis.</li>

@@ -76,20 +76,19 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">center_tomic</span><span class="op">(</span><span class="va">brauer_2008_tidy</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18,000 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP                        MF    syste…¹ sample nutri…²    DR expres…³</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological process unkno… mole… YOL029C G0.05  G        0.05 -<span style="color: #BB0000;">0.149</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> YOL029C biological process unkno… mole… YOL029C G0.1   G        0.1  -<span style="color: #BB0000;">0.109</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YOL029C biological process unkno… mole… YOL029C G0.15  G        0.15  0.341  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> YOL029C biological process unkno… mole… YOL029C G0.2   G        0.2   0.251  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> YOL029C biological process unkno… mole… YOL029C G0.25  G        0.25  0.101  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> YOL029C biological process unkno… mole… YOL029C G0.3   G        0.3   0.031<span style="text-decoration: underline;">1</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> YOL029C biological process unkno… mole… YOL029C N0.05  N        0.05  0.331  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> YOL029C biological process unkno… mole… YOL029C N0.1   N        0.1   0.221  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YOL029C biological process unkno… mole… YOL029C N0.15  N        0.15  0.111  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> YOL029C biological process unkno… mole… YOL029C N0.2   N        0.2   0.001<span style="text-decoration: underline;">11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 17,990 more rows, and abbreviated variable names ¹​systematic_name,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​nutrient, ³​expression</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name    BP             MF    systematic_name sample nutrient    DR expression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> YOL029C biological pr… mole… YOL029C         G0.05  G         0.05   -<span style="color: #BB0000;">0.149</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> YOL029C biological pr… mole… YOL029C         G0.1   G         0.1    -<span style="color: #BB0000;">0.109</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> YOL029C biological pr… mole… YOL029C         G0.15  G         0.15    0.341  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> YOL029C biological pr… mole… YOL029C         G0.2   G         0.2     0.251  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> YOL029C biological pr… mole… YOL029C         G0.25  G         0.25    0.101  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> YOL029C biological pr… mole… YOL029C         G0.3   G         0.3     0.031<span style="text-decoration: underline;">1</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> YOL029C biological pr… mole… YOL029C         N0.05  N         0.05    0.331  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> YOL029C biological pr… mole… YOL029C         N0.1   N         0.1     0.221  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> YOL029C biological pr… mole… YOL029C         N0.15  N         0.15    0.111  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> YOL029C biological pr… mole… YOL029C         N0.2   N         0.2     0.001<span style="text-decoration: underline;">11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 17,990 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $design$features</span>
