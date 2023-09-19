@@ -9,7 +9,8 @@ export_tomic_as_wide(
   dir_path,
   name_preamble,
   value_var = NULL,
-  transpose = FALSE
+  transpose = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ export_tomic_as_wide(
 \item{value_var}{measurement variable to use for the matrix}
 
 \item{transpose}{if TRUE then samples will be stored as rows}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 Export one table which contains metabolites as rows and samples

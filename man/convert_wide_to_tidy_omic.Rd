@@ -10,7 +10,8 @@ convert_wide_to_tidy_omic(
   feature_vars = NULL,
   sample_var = "sample",
   measurement_var = "abundance",
-  omic_type_tag = "general"
+  omic_type_tag = "general",
+  verbose = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ variables (or NULL if there are no additional variables)}
 
 \item{omic_type_tag}{an optional subtype of omic data: metabolomics,
 lipidomics, proteomics, genomics, general}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 A \code{tidy_omic} object as produced by \code{create_tidy_omic}.

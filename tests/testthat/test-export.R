@@ -1,14 +1,14 @@
 test_that("Read and Write Triple Omics", {
   if (dir.exists("/tmp")) {
-    export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
+    export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer", verbose = FALSE)
 
     features_path <- file.path("/tmp", "brauer_features.tsv")
     measurements_path <- file.path("/tmp", "brauer_measurements.tsv")
     samples_path <- file.path("/tmp", "brauer_samples.tsv")
 
-    features <- readr::read_tsv(features_path)
-    measurements <- readr::read_tsv(measurements_path)
-    samples <- readr::read_tsv(samples_path)
+    features <- readr::read_tsv(features_path, show_col_types = FALSE)
+    measurements <- readr::read_tsv(measurements_path, show_col_types = FALSE)
+    samples <- readr::read_tsv(samples_path, show_col_types = FALSE)
 
     # cleanup
     unlink(features_path)
@@ -49,10 +49,10 @@ test_that("Read and Write Triple Omics", {
 
 test_that("Read and Write Tidy Omics", {
   if (dir.exists("/tmp")) {
-    export_tomic_as_tidy(brauer_2008_tidy, "/tmp", "brauer")
+    export_tomic_as_tidy(brauer_2008_tidy, "/tmp", "brauer", verbose = FALSE)
 
     tidy_path <- file.path("/tmp", "brauer_tidy.tsv")
-    tidy_data <- readr::read_tsv(tidy_path)
+    tidy_data <- readr::read_tsv(tidy_path, show_col_types = FALSE)
 
     # cleanup
     unlink(tidy_path)
@@ -63,7 +63,8 @@ test_that("Read and Write Tidy Omics", {
       feature_pk = "name",
       feature_vars = c("BP", "MF", "systematic_name"),
       sample_pk = "sample",
-      sample_vars = c("nutrient", "DR")
+      sample_vars = c("nutrient", "DR"),
+      verbose = FALSE
     )
 
     tomic_fill_nas <- tomic$data %>%
@@ -80,12 +81,17 @@ test_that("Read and Write Tidy Omics", {
 
 test_that("Read and Write Wide Data", {
   if (dir.exists("/tmp")) {
-    export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer")
+    export_tomic_as_wide(brauer_2008_triple, "/tmp", "brauer", verbose = FALSE)
 
     wide_path <- file.path("/tmp", "brauer_wide.tsv")
     # the wide data importer is currently incomplete and doesn't
     # support sample attributes
-    wide_data <- suppressWarnings(readr::read_tsv(wide_path))
+    wide_data <- suppressMessages(suppressWarnings(readr::read_tsv(
+      wide_path,
+      show_col_types = FALSE
+      )))
+
+    expect_s3_class(wide_data, "tbl")
 
     # cleanup
     unlink(wide_path)

@@ -706,6 +706,7 @@ tidy_to_triple <- function(tidy_omic) {
 #' @inheritParams create_tidy_omic
 #' @param sample_var variable name to use for samples
 #' @param measurement_var variable name to use for measurements
+#' @inheritParams create_tidy_omic
 #'
 #' @returns A \code{tidy_omic} object as produced by \code{create_tidy_omic}.
 #'
@@ -724,12 +725,16 @@ tidy_to_triple <- function(tidy_omic) {
 #'   feature_vars = c("BP", "MF", "systematic_name")
 #' )
 #' @export
-convert_wide_to_tidy_omic <- function(wide_df,
-                                      feature_pk,
-                                      feature_vars = NULL,
-                                      sample_var = "sample",
-                                      measurement_var = "abundance",
-                                      omic_type_tag = "general") {
+convert_wide_to_tidy_omic <- function(
+  wide_df,
+  feature_pk,
+  feature_vars = NULL,
+  sample_var = "sample",
+  measurement_var = "abundance",
+  omic_type_tag = "general",
+  verbose = TRUE
+  ) {
+
   checkmate::assertDataFrame(wide_df)
   checkmate::assertChoice(feature_pk, colnames(wide_df))
   stopifnot(class(feature_vars) %in% c("character", "NULL"))
@@ -740,6 +745,7 @@ convert_wide_to_tidy_omic <- function(wide_df,
   checkmate::assertString(sample_var)
   checkmate::assertString(measurement_var)
   checkmate::assertString(omic_type_tag)
+  checkmate::assertLogical(verbose, len = 1)
 
   # test other provided variables
   reserved_variable_names <- c(
@@ -835,7 +841,8 @@ convert_wide_to_tidy_omic <- function(wide_df,
     feature_pk = feature_pk,
     feature_vars = feature_vars,
     sample_pk = sample_var,
-    omic_type_tag = omic_type_tag
+    omic_type_tag = omic_type_tag,
+    verbose = verbose
   )
 
   return(tidy_omic)

@@ -85,7 +85,8 @@ test_that("downsampling features (for creating a heatmap works)", {
     downsample_heatmap(
       value_var = "expression",
       design = brauer_2008_tidy$design,
-      max_display_features = 100
+      max_display_features = 100,
+      verbose = FALSE
     )
 
   expect_equal(nrow(downsampled_df), 3600)

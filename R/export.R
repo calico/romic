@@ -5,6 +5,7 @@
 #' @inheritParams tomic_to
 #' @param dir_path path to save outputs
 #' @param name_preamble start of output file name
+#' @inheritParams create_tidy_omic
 #'
 #' @returns Export three tables:
 #' \itemize{
@@ -19,16 +20,24 @@
 #'   export_tomic_as_triple(brauer_2008_triple, "/tmp", "brauer")
 #' }
 #' @export
-export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
+export_tomic_as_triple <- function(
+    tomic,
+    dir_path,
+    name_preamble,
+    verbose = TRUE
+    ) {
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
+  checkmate::assertLogical(verbose, len = 1)
 
   triple_omic <- tomic_to(tomic, "triple_omic")
 
-  message(glue::glue(
-    "Saving {name_preamble}_features.tsv, {name_preamble}_samples.tsv, and
+  if (verbose) {
+    message(glue::glue(
+      "Saving {name_preamble}_features.tsv, {name_preamble}_samples.tsv, and
      {name_preamble}_measurements.tsv to {dir_path}"
-  ))
+    ))
+  }
 
   for (k in c("features", "samples", "measurements")) {
     readr::write_tsv(
@@ -46,6 +55,7 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
 #'   measurements.
 #'
 #' @inheritParams export_tomic_as_triple
+#' @inheritParams create_tidy_omic
 #'
 #' @returns Export one table which is one row per peak, which includes
 #'   all feature and sample attributes.
@@ -56,14 +66,17 @@ export_tomic_as_triple <- function(tomic, dir_path, name_preamble) {
 #'   export_tomic_as_tidy(brauer_2008_triple, "/tmp", "brauer")
 #' }
 #' @export
-export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
+export_tomic_as_tidy <- function(tomic, dir_path, name_preamble, verbose = TRUE) {
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
+  checkmate::assertLogical(verbose, len = 1)
 
   tidy_omic <- tomic_to(tomic, "tidy_omic")
 
   filename <- paste0(name_preamble, "_tidy.tsv")
-  message(glue::glue("Saving {filename} to {dir_path}"))
+  if (verbose) {
+    message(glue::glue("Saving {filename} to {dir_path}"))
+  }
 
   readr::write_tsv(
     tidy_omic$data,
@@ -81,6 +94,7 @@ export_tomic_as_tidy <- function(tomic, dir_path, name_preamble) {
 #' @inheritParams export_tomic_as_triple
 #' @param value_var measurement variable to use for the matrix
 #' @param transpose if TRUE then samples will be stored as rows
+#' @inheritParams create_tidy_omic
 #'
 #' @returns Export one table which contains metabolites as rows and samples
 #'   as columns.
@@ -96,10 +110,13 @@ export_tomic_as_wide <- function(
     dir_path,
     name_preamble,
     value_var = NULL,
-    transpose = FALSE) {
+    transpose = FALSE,
+    verbose = TRUE
+    ) {
   checkmate::assertDirectory(dir_path)
   checkmate::assertString(name_preamble)
   checkmate::assertLogical(transpose, len = 1)
+  checkmate::assertLogical(verbose, len = 1)
 
   triple_omic <- tomic_to(tomic, "triple_omic")
   design <- triple_omic$design
@@ -245,7 +262,9 @@ export_tomic_as_wide <- function(
   }
 
   filename <- paste0(name_preamble, "_", "wide.tsv")
-  message(glue::glue("Saving {filename} to {dir_path}"))
+  if (verbose) {
+    message(glue::glue("Saving {filename} to {dir_path}"))
+  }
 
   output %>%
     as.data.frame() %>%

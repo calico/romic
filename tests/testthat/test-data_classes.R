@@ -27,6 +27,16 @@ test_that("Test check_tidy_omic edge cases", {
       degen_feature_var = rep(1:10, times = 10)
       )
 
+  # check verbose message
+  expect_message(
+    create_tidy_omic(
+      three_col_df,
+      feature_pk = "features",
+      sample_pk = "samples"
+      ),
+    regexp = "1 measurement variables"
+  )
+
   expect_snapshot(
     create_tidy_omic(
       degenerate_attributes %>% select(-degen_sample_var),
@@ -76,7 +86,7 @@ test_that("Factor primary keys are preserved when converting from a tidy to a tr
   triple_from_tidy_check_status <- romic::check_tomic(triple_from_tidy, fast_check = FALSE)
   expect_equal(triple_from_tidy_check_status, 0)
 
-  tidy_with_pcs <- add_pcs(tidy)
+  tidy_with_pcs <- add_pcs(tidy, verbose = FALSE)
   expect_true(sum(stringr::str_detect(colnames(tidy_with_pcs$data), "^PC")) > 1)
 })
 
@@ -86,7 +96,7 @@ test_that("Numeric primary keys are preserved when converting from a tidy to a t
   triple_from_tidy_check_status <- check_tomic(triple_from_tidy, fast_check = FALSE)
   expect_equal(triple_from_tidy_check_status, 0)
 
-  tidy_with_pcs <- add_pcs(simple_tidy)
+  tidy_with_pcs <- add_pcs(simple_tidy, verbose = FALSE)
   expect_true(sum(stringr::str_detect(colnames(tidy_with_pcs$data), "^PC")) > 1)
 })
 
@@ -100,8 +110,6 @@ test_that("Create triple omic", {
     feature_pk = "feature_id",
     sample_pk = "sample_id"
   )
-
-
 
 })
 
@@ -117,7 +125,8 @@ test_that("Read wide data", {
   tidy_omic <- convert_wide_to_tidy_omic(
     wide_df,
     feature_pk = "name",
-    feature_vars = c("BP", "MF", "systematic_name")
+    feature_vars = c("BP", "MF", "systematic_name"),
+    verbose = FALSE
   )
 
   testthat::expect_s3_class(tidy_omic, "tidy_omic")

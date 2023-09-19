@@ -11,6 +11,7 @@
 #' @inheritParams remove_missing_values
 #' @param label_percent_varex If true then PCs will be labelled by the percent
 #'   of variability they explain.
+#' @inheritParams create_tidy_omic
 #'
 #' @returns A \code{tomic} object with principal components added to samples.
 #'
@@ -24,13 +25,15 @@ add_pcs <- function(
     center_rows = TRUE,
     npcs = NULL,
     missing_val_method = "drop_samples",
-    label_percent_varex = TRUE
+    label_percent_varex = TRUE,
+    verbose = TRUE
     ) {
 
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertLogical(center_rows, len = 1)
   stopifnot(length(npcs) <= 1, class(npcs) %in% c("NULL", "numeric", "integer"))
   checkmate::assertLogical(label_percent_varex, len = 1)
+  checkmate::assertLogical(verbose, len = 1)
 
   design <- tomic$design
   feature_pk <- design$feature_pk
@@ -41,7 +44,8 @@ add_pcs <- function(
   triple_omic <- tomic_to(tomic, "triple_omic") %>%
     remove_missing_values(
       value_var = value_var,
-      missing_val_method = missing_val_method
+      missing_val_method = missing_val_method,
+      verbose = verbose
     )
 
   cast_formula <- stats::as.formula(paste0(feature_pk, " ~ ", sample_pk))
@@ -129,6 +133,7 @@ add_pcs <- function(
 #'     then drop features}
 #'   \item{impute}{Impute missing values}
 #' }
+#' @inheritParams create_tidy_omic
 #'
 #' @returns A \code{tomic} object where missing values have been accounted
 #'   for.
@@ -140,12 +145,15 @@ add_pcs <- function(
 remove_missing_values <- function(
     tomic,
     value_var = NULL,
-    missing_val_method = "drop_samples") {
+    missing_val_method = "drop_samples",
+    verbose = TRUE
+    ) {
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(
     missing_val_method,
     c("drop_features", "drop_samples")
   )
+  checkmate::assertLogical(verbose, len = 1)
 
   triple_omic <- tomic_to(tomic, "triple_omic")
 
@@ -183,7 +191,10 @@ remove_missing_values <- function(
       stop(missing_val_method, " is not an implemented missing value method")
     }
   } else {
-    message("No missing values found; returning input tomic")
+    if (verbose) {
+      message("No missing values found; returning input tomic")
+    }
+
     return(tomic)
   }
 
@@ -198,9 +209,11 @@ remove_missing_values <- function(
   n_dropped_samples <- n_initial_samples - nrow(triple_omic$samples)
 
   if (n_dropped_samples != 0) {
-    print(
-      glue::glue("{n_dropped_samples} samples dropped due to missing values")
-    )
+    if (verbose) {
+      print(
+        glue::glue("{n_dropped_samples} samples dropped due to missing values")
+      )
+    }
   }
 
   n_dropped_features <- observed_measurements %>%
@@ -209,9 +222,11 @@ remove_missing_values <- function(
     nrow()
 
   if (n_dropped_features != 0) {
-    print(
-      glue::glue("{n_dropped_features} features dropped due to missing values")
-    )
+    if (verbose) {
+      print(
+        glue::glue("{n_dropped_features} features dropped due to missing values")
+      )
+    }
   }
 
   return(tomic_to(triple_omic, class(tomic)[1]))
