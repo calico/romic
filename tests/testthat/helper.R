@@ -1,5 +1,7 @@
 # setup tidy omics
 
+suppressPackageStartupMessages(library(dplyr))
+
 three_col_df <- tidyr:::expand_grid(
   features = 1:10,
   samples = 1:10

@@ -10,7 +10,8 @@ add_pcs(
   center_rows = TRUE,
   npcs = NULL,
   missing_val_method = "drop_samples",
-  label_percent_varex = TRUE
+  label_percent_varex = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -33,6 +34,8 @@ add_pcs(
 
 \item{label_percent_varex}{If true then PCs will be labelled by the percent
 of variability they explain.}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 A \code{tomic} object with principal components added to samples.

@@ -322,6 +322,7 @@ apply_hclust <- function(quant_matrix, distance_measure, hclust_method) {
 #' @param design a list summarizing the design of the tidy dataset
 #' @param max_display_features aggregate and downsample distinct feature to
 #'   this number to speed to up heatmap rendering.
+#' @inheritParams create_tidy_omic
 #'
 #' @returns tidy_data with rows collapsed if the number of distinct features is
 #'   greater than \code{max_display_features}
@@ -330,10 +331,13 @@ downsample_heatmap <- function(
     tidy_data,
     value_var,
     design,
-    max_display_features = 1000) {
+    max_display_features = 1000,
+    verbose = TRUE
+    ) {
   checkmate::assertDataFrame(tidy_data)
   checkmate::assertChoice(value_var, colnames(tidy_data))
   checkmate::assertNumber(max_display_features)
+  checkmate::assertLogical(verbose, len = 1)
 
   if (!("ordered_featureId" %in% colnames(tidy_data))) {
     stop("ordered_featureId is a requred variable in tidy_data")
@@ -358,9 +362,11 @@ downsample_heatmap <- function(
   realized_max_display_features <- ceiling(
     n_features / ceiling(n_features / max_display_features)
   )
-  message(glue::glue(
-    "Downsampling {n_features} features to {realized_max_display_features}, targeting {max_display_features}"
-  ))
+  if (verbose) {
+    message(glue::glue(
+      "Downsampling {n_features} features to {realized_max_display_features}, targeting {max_display_features}"
+    ))
+  }
 
   collapsed_rows_merges <- tibble::tibble(ordered_featureId_int = 1:n_features) %>%
     dplyr::mutate(collapsed_row_number = rep(

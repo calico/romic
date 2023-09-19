@@ -438,10 +438,10 @@ plot_heatmap <- function(
 
   heatmap_plot <- ggplot(
     augmented_tidy_omic_data,
-    aes_string(
-      x = "ordered_sampleId",
-      y = "ordered_featureId",
-      fill = value_var
+    aes(
+      x = !!rlang::sym("ordered_sampleId"),
+      y = !!rlang::sym("ordered_featureId"),
+      fill = !!rlang::sym(value_var)
     )
   ) +
     geom_raster() +

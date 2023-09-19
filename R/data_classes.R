@@ -706,7 +706,7 @@ tidy_to_triple <- function(tidy_omic) {
 #' @inheritParams create_tidy_omic
 #' @param sample_var variable name to use for samples
 #' @param measurement_var variable name to use for measurements
-#' @inheritParam create_tidy_omic
+#' @inheritParams create_tidy_omic
 #'
 #' @returns A \code{tidy_omic} object as produced by \code{create_tidy_omic}.
 #'

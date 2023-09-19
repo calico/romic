@@ -4,7 +4,13 @@
 \alias{downsample_heatmap}
 \title{Downsample Heatmap}
 \usage{
-downsample_heatmap(tidy_data, value_var, design, max_display_features = 1000)
+downsample_heatmap(
+  tidy_data,
+  value_var,
+  design,
+  max_display_features = 1000,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{tidy_data}{The data frame from a \code{tidy_omic} object containing
@@ -17,6 +23,8 @@ and ordered_sampleId.}
 
 \item{max_display_features}{aggregate and downsample distinct feature to
 this number to speed to up heatmap rendering.}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 tidy_data with rows collapsed if the number of distinct features is

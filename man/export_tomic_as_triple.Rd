@@ -4,7 +4,7 @@
 \alias{export_tomic_as_triple}
 \title{Export T*Omic as Triple}
 \usage{
-export_tomic_as_triple(tomic, dir_path, name_preamble)
+export_tomic_as_triple(tomic, dir_path, name_preamble, verbose = TRUE)
 }
 \arguments{
 \item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
@@ -12,6 +12,8 @@ export_tomic_as_triple(tomic, dir_path, name_preamble)
 \item{dir_path}{path to save outputs}
 
 \item{name_preamble}{start of output file name}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 Export three tables:

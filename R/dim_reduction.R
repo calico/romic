@@ -133,7 +133,7 @@ add_pcs <- function(
 #'     then drop features}
 #'   \item{impute}{Impute missing values}
 #' }
-#' @inheritParams add_pcs
+#' @inheritParams create_tidy_omic
 #'
 #' @returns A \code{tomic} object where missing values have been accounted
 #'   for.

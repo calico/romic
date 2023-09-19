@@ -7,7 +7,8 @@
 remove_missing_values(
   tomic,
   value_var = NULL,
-  missing_val_method = "drop_samples"
+  missing_val_method = "drop_samples",
+  verbose = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ remove_missing_values(
     then drop features}
   \item{impute}{Impute missing values}
 }}
+
+\item{verbose}{extra reporting messages}
 }
 \value{
 A \code{tomic} object where missing values have been accounted
