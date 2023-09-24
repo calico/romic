@@ -1,9 +1,9 @@
 ## Test environments
-* local OS X install, R 4.1.2
-* Ubuntu 20.04 - Devel (Github Actions), R (2023-02-01 r83747)
-* Ubuntu 20.04 - Release (Github Actions), R 4.2.2
-* Windows - latest (Github Actions), R 4.2.2
-* OSX - latest (Github Actions), R 4.2.2
+* local OS X install, R 4.3.1
+* Ubuntu 22.04.3 LTS - Devel (Github Actions), R 4.4.0 (ge:16)
+* Ubuntu 22.04.3 LTS - Release (Github Actions), 4.3.1 (2023-06-16)
+* Windows - Windows Server 2022 x64 (Github Actions), R 4.3.1
+* OSX - macOS Monterey 12.6.8 (Github Actions), R 4.3.1
 
 ## R CMD check results
 R CMD check --as-cran romic_1.1.1.tar.gz 
