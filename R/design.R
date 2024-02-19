@@ -20,17 +20,51 @@ get_design_tbl <- function(tomic) {
     dplyr::bind_rows()
 }
 
-check_design <- function(tomic) {
+#' Check Design
+#'
+#' Check that the design list embedded in `tomic` objects is properly
+#' formatted.
+#'
+#' @param tomic_design a list with named attributes describing feature,
+#'   sample, and measurement variables.
+#'
+#' @return 0, invisibly
+#'
+#' @examples
+#' check_design(brauer_2008_triple$design)
+#'
+#' @export
+check_design <- function(tomic_design) {
+
+  checkmate::assertList(tomic_design)
+
+  EXPECTED_ATTRIBUTES <- c("feature_pk", "features", "measurements", "sample_pk", "samples")
+  extra_elements <- setdiff(names(tomic_design), EXPECTED_ATTRIBUTES)
+  if (length(extra_elements) > 0) {
+    cli::cli_abort(
+      "The following unexpected attributes were found in the design: {.field {extra_elements}}"
+    )
+  }
+
+  missing_elements <- setdiff(EXPECTED_ATTRIBUTES, names(tomic_design))
+  if (length(missing_elements) > 0) {
+    cli::cli_abort(
+      "The following attributes were missing in the design: {.field {missing_elements}}"
+    )
+  }
+
+  checkmate::assertString(tomic_design$feature_pk)
+  checkmate::assertDataFrame(tomic_design$features)
+  checkmate::assertDataFrame(tomic_design$measurements)
+  checkmate::assertString(tomic_design$sample_pk)
+  checkmate::assertDataFrame(tomic_design$samples)
+}
+
+check_design_in_tomic <- function(tomic) {
+
   checkmate::assertClass(tomic, "tomic")
   stopifnot("design" %in% names(tomic))
-  stopifnot(all(
-    sort(names(tomic$design)) ==
-      c("feature_pk", "features", "measurements", "sample_pk", "samples")
-  ))
+  check_design(tomic$design)
 
-  checkmate::assertString(tomic$design$feature_pk)
-  checkmate::assertDataFrame(tomic$design$features)
-  checkmate::assertDataFrame(tomic$design$measurements)
-  checkmate::assertString(tomic$design$sample_pk)
-  checkmate::assertDataFrame(tomic$design$samples)
 }
+

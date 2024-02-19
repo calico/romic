@@ -166,7 +166,7 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
   checkmate::assertClass(tidy_omic, "tidy_omic")
   checkmate::assertLogical(fast_check, len = 1)
   # check design
-  check_design(tidy_omic)
+  check_design_in_tomic(tidy_omic)
 
   feature_pk <- tidy_omic$design$feature_pk
   sample_pk <- tidy_omic$design$sample_pk
@@ -475,7 +475,7 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
   checkmate::assertClass(triple_omic, "triple_omic")
   checkmate::assertLogical(fast_check, len = 1)
   # check design
-  check_design(triple_omic)
+  check_design_in_tomic(triple_omic)
 
   # variables are same as design
   checkmate::assertNames(

@@ -14,6 +14,15 @@
   interactive shiny apps for exploratory data analysis such as an
   interactive heatmap.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://calico.github.io/romic/}
+  \item \url{https://github.com/calico/romic}
+  \item Report bugs at \url{https://github.com/calico/romic/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Sean Hackett \email{sean@calicolabs.com} (\href{https://orcid.org/0000-0002-9553-4341}{ORCID})
 
