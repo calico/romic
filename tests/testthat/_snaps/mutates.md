@@ -2,8 +2,9 @@
 
     Code
       center_tomic(brauer_2008_tidy, measurement_vars = "foo")
-    Error <simpleError>
-      foo are not valid numeric or integer measurement variables.
+    Condition
+      Error in `center_tomic()`:
+      ! foo are not valid numeric or integer measurement variables.
               Valid measurements are: expression
 
 # Sort tables and update primary keys with new sort
@@ -30,7 +31,8 @@
 
     Code
       .
-    Error <simpleError>
-      bar is not present in measurements, valid value_vars include:
+    Condition
+      Error in `sort_triple_hclust()`:
+      ! bar is not present in measurements, valid value_vars include:
       expression
 

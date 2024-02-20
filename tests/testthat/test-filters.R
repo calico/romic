@@ -42,14 +42,16 @@ test_that("Try all of the filters", {
     expect_equal(1)
 
   # edge cases
-  filter_tomic(
-    brauer_2008_triple,
-    filter_type = "category",
-    filter_table = "features",
-    filter_variable = "bar",
-    filter_value = "biological process unknown"
-    ) %>%
-    expect_snapshot(error = TRUE)
+  expect_snapshot(
+    filter_tomic(
+      brauer_2008_triple,
+      filter_type = "category",
+      filter_table = "features",
+      filter_variable = "bar",
+      filter_value = "biological process unknown"
+    ),
+    error = TRUE
+    )
 
   expect_warning(
     filter_tomic(
