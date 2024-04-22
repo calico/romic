@@ -338,12 +338,12 @@ plot_heatmap <- function(
   checkmate::assertNumber(max_display_features)
 
   if ("NULL" %in% class(x_label)) {
-    x_label <- feature_var
+    x_label <- sample_var
   }
   checkmate::assertMultiClass(x_label, c("character", "expression"))
 
   if ("NULL" %in% class(y_label)) {
-    y_label <- sample_var
+    y_label <- feature_var
   }
   checkmate::assertMultiClass(y_label, c("character", "expression"))
 
@@ -470,7 +470,7 @@ plot_heatmap <- function(
     return(heatmap_plot)
   } else if (plot_type == "plotly") {
     suppressWarnings(
-      plotly::ggplotly(heatmap_plot) %>%
+      plotly::ggplotly(p = heatmap_plot) %>%
         plotly::layout(margin = 0)
     )
   } else {

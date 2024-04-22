@@ -26,3 +26,18 @@ test_that("Removing missing values works", {
   expect_equal(nrow(filtered_brauer$samples), 34)
   expect_equal(nrow(filtered_brauer$measurements), 15674)
 })
+
+test_that("Matrices keys are reconstructed with appropriate classes", {
+
+  tomic_with_missing_values <- simple_triple
+  tomic_with_missing_values$measurements <- tomic_with_missing_values$measurements %>%
+    dplyr::slice(-c(1:5))
+
+  if (!("impute" %in% rownames(utils::installed.packages()))) {
+    cli::cli_alert("{.pkg impute} is not available for testing; imputation tests will be skipped")
+  } else{
+    imputed_tomic <- impute_missing_values(tomic_with_missing_values)
+    expect_s3_class(imputed_tomic, "triple_omic")
+  }
+
+})

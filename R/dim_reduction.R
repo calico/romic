@@ -251,7 +251,9 @@ impute_missing_values <- function(
     tomic,
     impute_var_name = "imputed",
     value_var = NULL,
-    ...) {
+    ...
+    ){
+
   if (!("impute" %in% rownames(utils::installed.packages()))) {
     stop("Install \"impute\" using remotes::install_bioc(\"impute\") to use this function")
   }
@@ -309,6 +311,20 @@ impute_missing_values <- function(
     ) %>%
     dplyr::as_tibble()
 
+  # coerce feature and/or sample variables to their original classes
+  # (they will be converted to characters by impute.knn)
+
+  imputed_measurements[[feature_pk]] <- coerce_to_classes(
+    imputed_measurements[[feature_pk]],
+    triple_omic$features[[feature_pk]]
+  )
+
+  imputed_measurements[[sample_pk]] <- coerce_to_classes(
+    imputed_measurements[[sample_pk]],
+    triple_omic$samples[[sample_pk]]
+  )
+
+  # if in-place imputation is desired then remove the old variable
   updated_measurements <- triple_omic$measurements
   if (value_var == impute_var_name) {
     updated_measurements <- updated_measurements %>%
