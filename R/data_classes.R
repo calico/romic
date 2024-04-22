@@ -638,6 +638,11 @@ triple_to_tidy <- function(triple_omic) {
   output$data <- tidy_output
   output$design <- triple_omic$design
 
+  if ("unstructured" %in% names(triple_omic)) {
+    # copy unstructured data as-is
+    output$unstructured <- triple_omic$unstructured
+  }
+
   class(output) <- c("tidy_omic", "tomic", class(triple_omic)[3])
 
   output
@@ -690,6 +695,11 @@ tidy_to_triple <- function(tidy_omic) {
     measurements = measurement_df,
     design = tidy_omic$design
   )
+
+  if ("unstructured" %in% names(tidy_omic)) {
+    # copy unstructured data as-is
+    output$unstructured <- tidy_omic$unstructured
+  }
 
   class(output) <- c("triple_omic", "tomic", class(tidy_omic)[3])
 

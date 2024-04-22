@@ -251,7 +251,9 @@ impute_missing_values <- function(
     tomic,
     impute_var_name = "imputed",
     value_var = NULL,
-    ...) {
+    ...
+    ){
+
   if (!("impute" %in% rownames(utils::installed.packages()))) {
     stop("Install \"impute\" using remotes::install_bioc(\"impute\") to use this function")
   }

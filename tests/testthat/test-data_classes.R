@@ -111,6 +111,19 @@ test_that("Create triple omic", {
     sample_pk = "sample_id"
   )
 
+  testthat::expect_s3_class(simple_triple, "triple_omic")
+})
+
+test_that("Unstructured data preserved using tomic_to", {
+
+  triple_omic <- tomic_to(simple_triple, "triple_omic")
+  triple_omic$unstructured$dat <- "test"
+
+  tidy_copy <- triple_to_tidy(triple_omic)
+  expect_equal(tidy_copy$unstructured$dat, "test")
+
+  triple_restore <- tidy_to_triple(tidy_copy)
+  expect_equal(triple_restore$unstructured$dat, "test")
 })
 
 
