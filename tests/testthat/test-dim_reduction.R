@@ -40,5 +40,4 @@ test_that("Matrices keys are reconstructed with appropriate classes", {
     expect_s3_class(imputed_tomic, "triple_omic")
   }
 
-
 })

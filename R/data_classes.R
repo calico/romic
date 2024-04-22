@@ -1026,7 +1026,7 @@ infer_tomic_table_type <- function(tomic, tomic_table) {
 #'
 #' @param tidy_data A tibble containing measurements along with sample metadata. This
 #'   table can be obtained as the "data" attribute from a romic "tidy_omic" object.
-#' @inheritParams romic::check_design
+#' @inheritParams check_design
 #'
 #' @details This is handy for passing data and metadata through approaches like parsnip
 #' which expect data to be formatted as a data.frame
