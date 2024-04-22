@@ -159,3 +159,10 @@ test_that("Test that get_tomic_table() can retrieve various tables", {
     error = TRUE
   )
 })
+
+test_that("reform_tidy_omic() can create a tidy_omic object from its attributes", {
+  tidy_data <- romic::brauer_2008_tidy$data
+  tomic <- reform_tidy_omic(tidy_data, romic::brauer_2008_tidy$design)
+
+  expect_s3_class(tomic, "tidy_omic")
+})

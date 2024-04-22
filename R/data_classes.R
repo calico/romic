@@ -1009,3 +1009,40 @@ infer_tomic_table_type <- function(tomic, tomic_table) {
   return(table_type)
 }
 
+#' Reform Tidy Omic
+#'
+#' This function recreates a `tidy_omic` object from the "data" and "design"
+#' attributes of this object.
+#'
+#' @param tidy_data A tibble containing measurements along with sample metadata. This
+#'   table can be obtained as the "data" attribute from a romic "tidy_omic" object.
+#' @inheritParams romic::check_design
+#'
+#' @details This is handy for passing data and metadata through approaches like parsnip
+#' which expect data to be formatted as a data.frame
+#'
+#' @examples
+#' tidy_data <- romic::brauer_2008_tidy$data
+#' reform_tidy_omic(tidy_data, romic::brauer_2008_tidy$design)
+#'
+#' @export
+reform_tidy_omic <- function(tidy_data, tomic_design) {
+
+  checkmate::assertTibble(tidy_data)
+  romic::check_design(tomic_design)
+
+  feature_attributes <- tomic_design$features$variable[tomic_design$features$type != "feature_primary_key"]
+  sample_attributes <- tomic_design$samples$variable[tomic_design$samples$type != "sample_primary_key"]
+
+  tidy_omic <- romic::create_tidy_omic(
+    df = tidy_data,
+    feature_pk = tomic_design$feature_pk,
+    feature_vars = feature_attributes,
+    sample_pk = tomic_design$sample_pk,
+    sample_vars = sample_attributes,
+    verbose = FALSE
+  )
+
+  return(tidy_omic)
+}
+
