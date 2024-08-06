@@ -358,15 +358,15 @@ value_var_handler <- function(value_var = NULL, design) {
   if (length(possible_value_vars) == 0) {
     stop(
       "no quantitative (numeric or integer) variables were found in the
-      triple_omic measurements table pca can only be applied to quantitative
-      variables"
+      triple_omic measurements table."
     )
   }
 
   if (length(possible_value_vars) > 1 && is.null(value_var)) {
-    stop(
-      "value_var must be specified since multiple quantitative measurement
-      variables exist"
+    cli::cli_abort(
+      "{.var \"value_var\"} was not provided and an appropriate value could not
+        be automatically chosen since there are {length(possible_value_vars)}
+        valid value variables: {.field {possible_value_vars}}"
     )
   }
 

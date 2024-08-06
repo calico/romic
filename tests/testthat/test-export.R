@@ -98,3 +98,7 @@ test_that("Read and Write Wide Data", {
     stopifnot(!file.exists(wide_path))
   }
 })
+
+test_that("Format results as a matrix", {
+  expect_equal(dim(tomic_to_matrix(brauer_2008_triple)), c(500, 36))
+})
