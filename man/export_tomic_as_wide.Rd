@@ -22,7 +22,8 @@ export_tomic_as_wide(
 
 \item{value_var}{measurement variable to use for the matrix}
 
-\item{transpose}{if TRUE then samples will be stored as rows}
+\item{transpose}{if TRUE then samples will be stored as rows.
+If FALSE (default) then samples will be columns.}
 
 \item{verbose}{extra reporting messages}
 }
