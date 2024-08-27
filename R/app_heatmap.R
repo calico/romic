@@ -430,7 +430,7 @@ plot_heatmap <- function(
     dplyr::distinct(ordered_sampleId, sample_label)
 
   if (transpose) {
-    x_features = n_features
+    x_features = pmin(max_display_features, n_features)
     x_ordered_by = "ordered_featureId"
     x_breaks <- distinct_features$ordered_featureId
     x_labels <- distinct_features$feature_label
@@ -444,7 +444,7 @@ plot_heatmap <- function(
     x_title <- y_title
     y_title <- tmp
   } else {
-    y_features = n_features
+    y_features = pmin(max_display_features, n_features)
     y_ordered_by = "ordered_featureId"
     y_breaks <- distinct_features$ordered_featureId
     y_labels <- distinct_features$feature_label
@@ -461,7 +461,7 @@ plot_heatmap <- function(
   } else {
     heatmap_theme <- heatmap_theme +
       theme(axis.text.x = element_text(
-        size = pmin(20, 60 * sqrt(1 / y_features)),
+        size = pmin(20, 60 * sqrt(1 / x_features)),
         angle = 90,
         hjust = 1
       ))
@@ -472,7 +472,7 @@ plot_heatmap <- function(
       theme(axis.text.y = element_blank())
   } else {
     heatmap_theme <- heatmap_theme +
-      theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / x_features))))
+      theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / y_features))))
   }
 
   heatmap_plot <- ggplot(
