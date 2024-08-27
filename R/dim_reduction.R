@@ -342,15 +342,28 @@ impute_missing_values <- function(
   return(tomic_to(updated_triple, class(tomic)[1]))
 }
 
-plot_missing_values <- function(triple_omic, value_var = NULL) {
+#' Plot Missing Values
+#'
+#' Create a simple plot of missing values.
+#'
+#' @inheritParams tomic_to
+#' @param value_var the measurement variable to check for missingness (NA or no entry)
+#'
+#' @returns a ggplot2 grob
+#'
+#' @export
+#'
+#' @examples
+#' plot_missing_values(brauer_2008_triple)
+plot_missing_values <- function(tomic, value_var = NULL) {
 
-  checkmate::assertClass(triple_omic, "triple_omic")
-  design <- triple_omic$design
+  checkmate::assertClass(tomic, "tomic")
+  design <- tomic$design
   value_var = value_var_handler(value_var, design)
 
   cast_formula <- stats::as.formula(paste0(design$feature_pk, " ~ ", design$sample_pk))
 
-  omic_matrix <- triple_omic$measurements %>%
+  omic_matrix <- get_tomic_table(tomic, "measurements") %>%
     reshape2::acast(formula = cast_formula, value.var = value_var)
 
   graphics::image(t(is.na(omic_matrix)))

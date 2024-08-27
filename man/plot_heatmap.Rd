@@ -15,9 +15,10 @@ plot_heatmap(
   change_threshold = Inf,
   plot_type = "grob",
   max_display_features = 800,
-  x_label = NULL,
-  y_label = NULL,
-  colorbar_label = NULL
+  x_title = NULL,
+  y_title = NULL,
+  colorbar_title = NULL,
+  transpose = FALSE
 )
 }
 \arguments{
@@ -48,11 +49,14 @@ thresholded to this value.}
 \item{max_display_features}{aggregate and downsample distinct feature to
 this number to speed to up heatmap rendering.}
 
-\item{x_label}{label for x-axis (if NULL then use \code{feature_var})}
+\item{x_title}{label for x-axis (if NULL then use \code{feature_var})}
 
-\item{y_label}{label for y-axis (if NULL then use \code{sample_var})}
+\item{y_title}{label for y-axis (if NULL then use \code{sample_var})}
 
-\item{colorbar_label}{label for color-bar; default is log2 abundance}
+\item{colorbar_title}{label for color-bar; default is log2 abundance}
+
+\item{transpose}{if TRUE then samples will be rows and features will be columns.
+Set all other variables as if transpose was FALSE.}
 }
 \value{
 a ggplot2 grob
@@ -82,6 +86,7 @@ plot_heatmap(
   change_threshold = 5,
   cluster_dim = "rows",
   plot_type = "grob",
-  distance_measure = "corr"
+  distance_measure = "corr",
+  transpose = FALSE
 )
 }
