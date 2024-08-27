@@ -271,9 +271,11 @@ app_heatmap <- function(tomic) {
 #'   thresholded to this value.
 #' @param plot_type plotly (for interactivity) or grob (for a static ggplot)
 #' @inheritParams downsample_heatmap
-#' @param x_label label for x-axis (if NULL then use \code{feature_var})
-#' @param y_label label for y-axis (if NULL then use \code{sample_var})
-#' @param colorbar_label label for color-bar; default is log2 abundance
+#' @param x_title label for x-axis (if NULL then use \code{feature_var})
+#' @param y_title label for y-axis (if NULL then use \code{sample_var})
+#' @param colorbar_title label for color-bar; default is log2 abundance
+#' @param transpose if TRUE then samples will be rows and features will be columns.
+#'   Set all other variables as if transpose was FALSE.
 #'
 #' @returns a ggplot2 grob
 #'
@@ -298,7 +300,8 @@ app_heatmap <- function(tomic) {
 #'   change_threshold = 5,
 #'   cluster_dim = "rows",
 #'   plot_type = "grob",
-#'   distance_measure = "corr"
+#'   distance_measure = "corr",
+#'   transpose = FALSE
 #' )
 #' @export
 plot_heatmap <- function(
@@ -312,9 +315,10 @@ plot_heatmap <- function(
     change_threshold = Inf,
     plot_type = "grob",
     max_display_features = 800,
-    x_label = NULL,
-    y_label = NULL,
-    colorbar_label = NULL
+    x_title = NULL,
+    y_title = NULL,
+    colorbar_title = NULL,
+    transpose = FALSE
     ) {
   checkmate::assertClass(tomic, "tomic")
 
@@ -336,21 +340,22 @@ plot_heatmap <- function(
   checkmate::assertNumber(change_threshold, lower = 0)
   checkmate::assertChoice(plot_type, c("plotly", "grob"))
   checkmate::assertNumber(max_display_features)
+  checkmate::assertLogical(transpose, len = 1)
 
-  if ("NULL" %in% class(x_label)) {
-    x_label <- sample_var
+  if ("NULL" %in% class(x_title)) {
+    x_title <- sample_var
   }
-  checkmate::assertMultiClass(x_label, c("character", "expression"))
+  checkmate::assertMultiClass(x_title, c("character", "expression"))
 
-  if ("NULL" %in% class(y_label)) {
-    y_label <- feature_var
+  if ("NULL" %in% class(y_title)) {
+    y_title <- feature_var
   }
-  checkmate::assertMultiClass(y_label, c("character", "expression"))
+  checkmate::assertMultiClass(y_title, c("character", "expression"))
 
-  if ("NULL" %in% class(colorbar_label)) {
-    colorbar_label <- expression(log[2] ~ abundance)
+  if ("NULL" %in% class(colorbar_title)) {
+    colorbar_title <- expression(log[2] ~ abundance)
   }
-  checkmate::assertMultiClass(colorbar_label, c("character", "expression"))
+  checkmate::assertMultiClass(colorbar_title, c("character", "expression"))
 
   # format convert tomic to tidy format if needed
 
@@ -418,49 +423,83 @@ plot_heatmap <- function(
        strip.background = element_rect(fill = "gray80")
     )
 
-  if (n_features > 200) {
+  distinct_features <- augmented_tidy_omic_data %>%
+    dplyr::distinct(ordered_featureId, feature_label)
+
+  distinct_samples <- augmented_tidy_omic_data %>%
+    dplyr::distinct(ordered_sampleId, sample_label)
+
+  if (transpose) {
+    x_features = n_features
+    x_ordered_by = "ordered_featureId"
+    x_breaks <- distinct_features$ordered_featureId
+    x_labels <- distinct_features$feature_label
+
+    y_features = n_samples
+    y_ordered_by = "ordered_sampleId"
+    y_breaks <- distinct_samples$ordered_sampleId
+    y_labels <- distinct_samples$sample_label
+
+    tmp <- x_title
+    x_title <- y_title
+    y_title <- tmp
+  } else {
+    y_features = n_features
+    y_ordered_by = "ordered_featureId"
+    y_breaks <- distinct_features$ordered_featureId
+    y_labels <- distinct_features$feature_label
+
+    x_features = n_samples
+    x_ordered_by = "ordered_sampleId"
+    x_breaks <- distinct_samples$ordered_sampleId
+    x_labels <- distinct_samples$sample_label
+  }
+
+  if (x_features > 200) {
+    heatmap_theme <- heatmap_theme +
+      theme(axis.text.x = element_blank())
+  } else {
+    heatmap_theme <- heatmap_theme +
+      theme(axis.text.x = element_text(
+        size = pmin(20, 60 * sqrt(1 / y_features)),
+        angle = 90,
+        hjust = 1
+      ))
+  }
+
+  if (y_features > 200) {
     heatmap_theme <- heatmap_theme +
       theme(axis.text.y = element_blank())
   } else {
     heatmap_theme <- heatmap_theme +
-      theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / n_features))))
-  }
-
-  if (n_samples > 200) {
-    heatmap_theme <- heatmap_theme + theme(axis.text.x = element_blank())
-  } else {
-    heatmap_theme <- heatmap_theme + theme(axis.text.x = element_text(
-      size = pmin(20, 60 * sqrt(1 / n_samples)),
-      angle = 90,
-      hjust = 1
-    ))
+      theme(axis.text.y = element_text(size = pmin(20, 60 * sqrt(1 / x_features))))
   }
 
   heatmap_plot <- ggplot(
     augmented_tidy_omic_data,
     aes(
-      x = !!rlang::sym("ordered_sampleId"),
-      y = !!rlang::sym("ordered_featureId"),
+      x = !!rlang::sym(x_ordered_by),
+      y = !!rlang::sym(y_ordered_by),
       fill = !!rlang::sym(value_var)
     )
   ) +
     geom_raster() +
     scale_fill_gradient2(
-      colorbar_label,
+      colorbar_title,
       low = "steelblue1",
       mid = "black",
       high = "yellow",
       midpoint = 0
     ) +
     scale_x_discrete(
-      x_label,
-      breaks = augmented_tidy_omic_data$ordered_sampleId,
-      labels = augmented_tidy_omic_data$sample_label
+      x_title,
+      breaks = x_breaks,
+      labels = x_labels
     ) +
     scale_y_discrete(
-      y_label,
-      breaks = augmented_tidy_omic_data$ordered_featureId,
-      labels = augmented_tidy_omic_data$feature_label,
+      y_title,
+      breaks = y_breaks,
+      labels = y_labels,
       position = "right"
     ) +
     expand_limits(fill = c(-1 * change_threshold, change_threshold)) +

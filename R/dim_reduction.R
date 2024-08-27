@@ -199,7 +199,7 @@ remove_missing_values <- function(
   }
 
   if (nrow(triple_omic$measurement) == 0) {
-    plot_missing_values(triple_omic, value_var)
+    plot_missing_values(tomic %>% tomic_to("triple_omic"), value_var)
     stop(
       "All measurements were filtered using missing_val_method = ",
       missing_val_method, "\na missing value plot was printed"
@@ -342,13 +342,31 @@ impute_missing_values <- function(
   return(tomic_to(updated_triple, class(tomic)[1]))
 }
 
-plot_missing_values <- function(triple_omic, value_var) {
-  cast_formula <- stats::as.formula(paste0(feature_pk, " ~ ", sample_pk))
+#' Plot Missing Values
+#'
+#' Create a simple plot of missing values.
+#'
+#' @inheritParams tomic_to
+#' @param value_var the measurement variable to check for missingness (NA or no entry)
+#'
+#' @returns a ggplot2 grob
+#'
+#' @export
+#'
+#' @examples
+#' plot_missing_values(brauer_2008_triple)
+plot_missing_values <- function(tomic, value_var = NULL) {
 
-  omic_matrix <- triple_omic$measurements %>%
+  checkmate::assertClass(tomic, "tomic")
+  design <- tomic$design
+  value_var = value_var_handler(value_var, design)
+
+  cast_formula <- stats::as.formula(paste0(design$feature_pk, " ~ ", design$sample_pk))
+
+  omic_matrix <- get_tomic_table(tomic, "measurements") %>%
     reshape2::acast(formula = cast_formula, value.var = value_var)
 
-  graphics::image(t(omic_matrix))
+  graphics::image(t(is.na(omic_matrix)))
 }
 
 value_var_handler <- function(value_var = NULL, design) {
