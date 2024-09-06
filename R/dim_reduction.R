@@ -133,6 +133,8 @@ add_pcs <- function(
 #'     then drop features}
 #'   \item{impute}{Impute missing values}
 #' }
+#' @param missing_value_types Types of values to treat as missing. One or more
+#'   of "NA", "NaN" and "Inf"
 #' @inheritParams create_tidy_omic
 #'
 #' @returns A \code{tomic} object where missing values have been accounted
@@ -143,17 +145,23 @@ add_pcs <- function(
 #'
 #' @export
 remove_missing_values <- function(
-    tomic,
-    value_var = NULL,
-    missing_val_method = "drop_samples",
-    verbose = TRUE
-    ) {
+  tomic,
+  value_var = NULL,
+  missing_val_method = "drop_samples",
+  missing_value_types = c("NA", "NaN", "Inf"),
+  verbose = FALSE
+  ) {
+
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(
     missing_val_method,
     c("drop_features", "drop_samples")
   )
+  checkmate::assertCharacter(missing_value_types, min.len = 1)
   checkmate::assertLogical(verbose, len = 1)
+
+  VALID_MISSING_VALUE_TYPES <- c("NA", "NaN", "Inf")
+  purrr::walk(missing_value_types, checkmate::assertChoice, VALID_MISSING_VALUE_TYPES)
 
   triple_omic <- tomic_to(tomic, "triple_omic")
 
@@ -167,7 +175,8 @@ remove_missing_values <- function(
   # find missing values of value_var
   found_missing_values <- find_triple_omic_missing_values(
     triple_omic,
-    value_var
+    value_var,
+    missing_value_types
   )
   observed_measurements <- found_missing_values$observed_measurements
   missing_values <- found_missing_values$missing_values
@@ -248,11 +257,11 @@ remove_missing_values <- function(
 #'
 #' @export
 impute_missing_values <- function(
-    tomic,
-    impute_var_name = "imputed",
-    value_var = NULL,
-    ...
-    ){
+  tomic,
+  impute_var_name = "imputed",
+  value_var = NULL,
+  ...
+  ){
 
   if (!("impute" %in% rownames(utils::installed.packages()))) {
     stop("Install \"impute\" using remotes::install_bioc(\"impute\") to use this function")
@@ -296,7 +305,7 @@ impute_missing_values <- function(
   omic_matrix <- triple_omic$measurements %>%
     reshape2::acast(formula = cast_formula, value.var = value_var)
 
-  # imput data
+  # impute
   imputed_measurements <- impute::impute.knn(
     omic_matrix,
     ...
@@ -397,15 +406,39 @@ value_var_handler <- function(value_var = NULL, design) {
   return(value_var)
 }
 
-find_triple_omic_missing_values <- function(triple_omic, value_var) {
+find_triple_omic_missing_values <- function(
+  triple_omic,
+  value_var,
+  missing_values_types = c("NA", "NaN", "Inf")
+  ) {
+
   all_expected_obs <- tidyr::expand_grid(
     triple_omic$features[triple_omic$design$feature_pk],
     triple_omic$samples[triple_omic$design$sample_pk]
   )
 
-  observed_measurements <- triple_omic$measurements %>%
-    # drop missing values
-    dplyr::filter_at(value_var, function(x) !is.na(x))
+  observed_measurements <- triple_omic$measurements
+
+  if ("NA" %in% missing_values_types) {
+    observed_measurements <- observed_measurements %>%
+      dplyr::filter(
+        !is.na(!!rlang::sym(value_var))
+      )
+  }
+
+  if ("NaN" %in% missing_values_types) {
+    observed_measurements <- observed_measurements %>%
+      dplyr::filter(
+        !is.nan(!!rlang::sym(value_var))
+      )
+  }
+
+  if ("Inf" %in% missing_values_types) {
+    observed_measurements <- observed_measurements %>%
+      dplyr::filter(
+        is.finite(!!rlang::sym(value_var))
+      )
+  }
 
   missing_values <- all_expected_obs %>%
     dplyr::anti_join(
