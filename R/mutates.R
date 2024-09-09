@@ -495,3 +495,95 @@ tomic_sort_status <- function(tomic) {
 
   return(status)
 }
+
+#' Update Sample Factors
+#'
+#' Update sample metadata to order categorical variables based on a
+#' specified factor order.
+#'
+#' @inheritParams tomic_to
+#' @param factor_levels a character vector specifying the ordering of factor levels.
+#'
+#' @returns a tomic object with updated sample metadata
+#'
+#' @examples
+#' update_sample_factors(
+#'   brauer_2008_tidy, list(nutrient = c("G", "N", "P", "S", "L", "U"))
+#' )
+#'
+#' @export
+update_sample_factors <- function (tomic, factor_levels) {
+
+  checkmate::assertClass(tomic, "tomic")
+  checkmate::assertNamed(factor_levels)
+  checkmate::assertList(factor_levels)
+
+  samples <- romic::get_tomic_table(tomic, "samples")
+  purrr::walk(names(factor_levels), checkmate::assertChoice, colnames(samples))
+
+  # update all categorical variables with specified factor orders
+  for (fct in names(factor_levels)) {
+    samples[[fct]] <- set_factor_levels(samples[[fct]], factor_levels[[fct]], fct)
+  }
+
+  out <- romic::update_tomic(tomic, samples)
+
+  return(out)
+}
+
+set_factor_levels <- function(samples_vec, fct_levels, fct_label = "?") {
+
+  # validate factor orders
+  if (!("character" %in% class(fct_levels))) {
+    cli::cli_abort(
+      "The factor levels for {fct_label} were {.val {class(fct_levels)}}.
+      This should be a character vector."
+    )
+  }
+
+  duplicated_levels <- unique(fct_levels[duplicated(fct_levels)])
+  if (length(duplicated_levels) > 0) {
+    cli::cli_abort(
+      "{length(duplicated_levels)} factor levels {?was/were} duplicated in the `factor_levels` specification for
+    {.val {fct_label}}: {duplicated_levels}"
+    )
+  }
+
+  if ("character" %in% class(samples_vec)) {
+
+    extra_sample_vars <- setdiff(samples_vec, fct_levels)
+    if (length(extra_sample_vars)) {
+      cli::cli_alert_warning(
+        "{.val {extra_sample_vars}} {?was/were} present in the sample metadata's {.field {fct_label}} field but did not have a corresponding factor level in the {.arg factor_levels} list. They will be added to the end of the specified factor levels"
+      )
+
+      fct_levels <- c(fct_levels, extra_sample_vars)
+    }
+
+    missing_sample_vars <- setdiff(fct_levels, samples_vec)
+    if (length(missing_sample_vars)) {
+      cli::cli_alert_warning(
+        "{.val {missing_sample_vars}} {?was/were} present in {.arg factor_levels} for {.field {fct_label}} but did not have a corresponding entry in the sample metadata."
+      )
+    }
+
+    if (any(is.na(samples_vec))) {
+      cli::cli_alert_warning(
+        "The {.field {fct_label}} field in the sample metadata contains {sum(is.na(samples_vec))} NA values. These entries will be replaced with an {.val unspecified} level.")
+
+      samples_vec[is.na(samples_vec)] <- "unspecified"
+      fct_levels <- c(fct_levels, "unspecified")
+    }
+
+    samples_fct_vec <- factor(
+      samples_vec,
+      levels = fct_levels
+    )
+  } else {
+    cli::cli_abort(
+      "The factor levels for fct were {.val {class(fct)}} and cannot be converted
+    to factors using the specified factor orders.")
+  }
+
+  return(samples_fct_vec)
+}

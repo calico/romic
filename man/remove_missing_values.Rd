@@ -8,7 +8,8 @@ remove_missing_values(
   tomic,
   value_var = NULL,
   missing_val_method = "drop_samples",
-  verbose = TRUE
+  missing_value_types = c("NA", "NaN", "Inf"),
+  verbose = FALSE
 )
 }
 \arguments{
@@ -23,6 +24,9 @@ remove_missing_values(
     then drop features}
   \item{impute}{Impute missing values}
 }}
+
+\item{missing_value_types}{Types of values to treat as missing. One or more
+of "NA", "NaN" and "Inf"}
 
 \item{verbose}{extra reporting messages}
 }
