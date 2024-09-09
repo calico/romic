@@ -489,7 +489,7 @@ calculate_sample_mahalanobis_distances <- function (
   ) {
 
   checkmate::assertClass(tomic, "tomic")
-  value_var <- romic:::value_var_handler(value_var, tomic$design)
+  value_var <- value_var_handler(value_var, tomic$design)
   checkmate::assertIntegerish(max_pcs, len = 1)
 
   n_features <- nrow(romic::get_tomic_table(tomic, "features"))
@@ -518,7 +518,7 @@ calculate_sample_mahalanobis_distances <- function (
     !!rlang::sym(tomic$design$sample_pk) := rownames(X_std_v),
     pc_distance = rowSums(X_std_v^2)
   ) %>%
-    arrange(desc(pc_distance))
+    dplyr::arrange(dplyr::desc(pc_distance))
 
   # validate calculation
   varex_leading_components <- sum(svd_results$d^2) * sum((svd_results$d^2 / sum(svd_results$d^2))[1:npcs])

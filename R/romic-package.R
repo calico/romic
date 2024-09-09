@@ -40,6 +40,7 @@ utils::globalVariables(c(
   "sample_label",
   "ordered_sampleId",
   "orderedId",
+  "pc_distance",
   "valid_tables",
   "NAME",
   "name",

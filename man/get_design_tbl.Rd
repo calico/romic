@@ -4,10 +4,10 @@
 \alias{get_design_tbl}
 \title{Get Design Table}
 \usage{
-get_design_tbl(tomic)
+get_design_tbl(tomic_or_design)
 }
 \arguments{
-\item{tomic}{Either a \code{tidy_omic} or \code{triple_omic} object}
+\item{tomic_or_design}{Either a \code{tomic} object or its embedded design list}
 }
 \value{
 a tibble reflecting the \code{tomic} object's design.
@@ -17,4 +17,6 @@ Get a tabular summary of all variables.
 }
 \examples{
 get_design_tbl(brauer_2008_triple)
+get_design_tbl(brauer_2008_triple$design)
+
 }
