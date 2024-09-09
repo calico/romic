@@ -456,3 +456,77 @@ find_triple_omic_missing_values <- function(
 
   return(output)
 }
+
+#' Calculate Sample Mahalanobis Distances
+#'
+#' Determine each samples distance from the center of the data using Mahalanobis distance.
+#'
+#' @inheritParams tomic_to
+#' @param value_var the measurement variable to use for calculating distances
+#' @param max_pcs the maximum number of principal components to used for
+#'   representing the covariance matrix.
+#' @param scale if TRUE then the data will be scaled before calculating distances
+#'
+#' @returns The samples tibble with a new column `pc_distance` which contains the
+#'   Mahalanobis distances of individual samples from the PC elipsoid
+#'
+#' @details
+#' Since `romic` is built around using tall data where there are more features than
+#' samples calculating Mahalanobis distance off of the covariance matrix is not
+#' possible. Instead, we use SVD to create a low-dimensional representation of the
+#' covariance matrix and calculate distances from the center of the data in this
+#' space. This essentially involves weighting the principal components by their
+#' loadings.
+#'
+#' @examples
+#' calculate_sample_mahalanobis_distances(brauer_2008_tidy)
+#' @export
+calculate_sample_mahalanobis_distances <- function (
+  tomic,
+  value_var = NULL,
+  max_pcs = 10,
+  scale = FALSE
+  ) {
+
+  checkmate::assertClass(tomic, "tomic")
+  value_var <- value_var_handler(value_var, tomic$design)
+  checkmate::assertIntegerish(max_pcs, len = 1)
+
+  n_features <- nrow(romic::get_tomic_table(tomic, "features"))
+  n_samples <- nrow(romic::get_tomic_table(tomic, "samples"))
+  npcs <- pmin(max_pcs, n_features, n_samples)
+
+  X_std <- tomic %>%
+    # remove features with missing values
+    romic::remove_missing_values(value_var, "drop_features", verbose = FALSE) %>%
+    # convert to a matrix
+    romic::tomic_to_matrix(value_var) %>%
+    {scale(t(.), scale = scale) %>% t()}
+
+  # if X is constant for a feature (such all reads are 0) then
+  # scaling will put it to NaN. We need to remove these features
+  valid_X_std <- X_std[rowSums(is.nan(X_std)) == 0,]
+
+  # perform a singular value decomposition
+  svd_results <- svd(valid_X_std, nv = npcs)
+
+  # re-weight principal components by eigenvalues
+  X_std_v <- svd_results$v * matrix(svd_results$d[1:npcs], ncol = npcs, nrow = ncol(valid_X_std), byrow = TRUE)
+  rownames(X_std_v) <- colnames(valid_X_std)
+
+  pc_distances_by_sample <- tibble::tibble(
+    !!rlang::sym(tomic$design$sample_pk) := rownames(X_std_v),
+    pc_distance = rowSums(X_std_v^2)
+  ) %>%
+    dplyr::arrange(dplyr::desc(pc_distance))
+
+  # validate calculation
+  varex_leading_components <- sum(svd_results$d^2) * sum((svd_results$d^2 / sum(svd_results$d^2))[1:npcs])
+
+  stopifnot((sum(pc_distances_by_sample$pc_distance) - varex_leading_components)/varex_leading_components < 0.01)
+
+  samples_w_pc_distances <- romic::get_tomic_table(tomic, "samples") %>%
+    dplyr::left_join(pc_distances_by_sample, by = tomic$design$sample_pk)
+
+  return(samples_w_pc_distances)
+}

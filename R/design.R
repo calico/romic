@@ -2,15 +2,25 @@
 #'
 #' Get a tabular summary of all variables.
 #'
-#' @inheritParams tomic_to
+#' @param tomic_or_design Either a \code{tomic} object or its embedded design list
 #'
 #' @returns a tibble reflecting the \code{tomic} object's design.
 #'
 #' @examples
 #' get_design_tbl(brauer_2008_triple)
+#' get_design_tbl(brauer_2008_triple$design)
+#'
 #' @export
-get_design_tbl <- function(tomic) {
-  tomic$design[c("features", "samples", "measurements")] %>%
+get_design_tbl <- function(tomic_or_design) {
+
+  if (inherits(tomic_or_design, "tomic")) {
+    design <- tomic_or_design$design
+  } else {
+    check_design(tomic_or_design)
+    design <- tomic_or_design
+  }
+
+  design[c("features", "samples", "measurements")] %>%
     {
       purrr::map2(unname(.), names(.), function(x, y) {
         x %>%

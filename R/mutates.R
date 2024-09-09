@@ -151,9 +151,11 @@ center <- function(x) {
 #'   select(-DR)
 #' new_variable_tables <- c("new_sample_var" = "samples")
 #' @export
-update_tidy_omic <- function(tidy_omic,
-                             updated_tidy_data,
-                             new_variable_tables = c()) {
+update_tidy_omic <- function(
+    tidy_omic,
+    updated_tidy_data,
+    new_variable_tables = c()
+    ) {
   checkmate::assertClass(tidy_omic, "tomic")
   checkmate::assertClass(tidy_omic, "tidy_omic")
   checkmate::assertDataFrame(updated_tidy_data)
