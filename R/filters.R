@@ -141,7 +141,7 @@ filter_tomic <- function(
       dplyr::filter(type %in% c("feature_primary_key", "sample_primary_key")) %>%
       dplyr::pull(variable)
 
-    updated_filtered_table <- anti_join(
+    updated_filtered_table <- dplyr::anti_join(
       triple_omic[[filter_table]],
       updated_filtered_table,
       by = join_keys

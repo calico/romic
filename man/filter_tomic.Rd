@@ -9,7 +9,8 @@ filter_tomic(
   filter_type,
   filter_table,
   filter_value,
-  filter_variable = NULL
+  filter_variable = NULL,
+  invert = FALSE
 )
 }
 \arguments{
@@ -20,7 +21,7 @@ filter_tomic(
     filter_value}
   \item{range}{filter filter_variable to using the range (i.e., lower and
     upper limit) provided in filter_value}
-  \item{apply}{a quosure as a \code{filter_value} to a table of interest}
+  \item{quo}{a quosure as a \code{filter_value} to a table of interest}
 }}
 
 \item{filter_table}{table where the filter should be applied}
@@ -28,6 +29,9 @@ filter_tomic(
 \item{filter_value}{values to filter based on}
 
 \item{filter_variable}{variable to apply the filter to}
+
+\item{invert}{If FALSE (default) entities will be retained; if TRUE, they
+will be removed.}
 }
 \value{
 A \code{tomic} object where a subset of features, samples or
