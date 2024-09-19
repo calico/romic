@@ -9,11 +9,13 @@
 #'     filter_value}
 #'   \item{range}{filter filter_variable to using the range (i.e., lower and
 #'     upper limit) provided in filter_value}
-#'   \item{apply}{a quosure as a \code{filter_value} to a table of interest}
+#'   \item{quo}{a quosure as a \code{filter_value} to a table of interest}
 #' }
 #' @param filter_table table where the filter should be applied
 #' @param filter_variable variable to apply the filter to
 #' @param filter_value values to filter based on
+#' @param invert If FALSE (default) entities will be retained; if TRUE, they
+#'  will be removed.
 #'
 #' @returns A \code{tomic} object where a subset of features, samples or
 #'   measurmenets have been filtered.
@@ -51,17 +53,22 @@
 #'   filter_value = rlang::quo(BP == "biological process unknown")
 #' )
 #' @export
-filter_tomic <- function(tomic,
-                         filter_type,
-                         filter_table,
-                         filter_value,
-                         filter_variable = NULL) {
+filter_tomic <- function(
+  tomic,
+  filter_type,
+  filter_table,
+  filter_value,
+  filter_variable = NULL,
+  invert = FALSE
+  ) {
+
   checkmate::assertClass(tomic, "tomic")
   checkmate::assertChoice(filter_type, c("category", "range", "quo"))
   checkmate::assertChoice(
     filter_table,
     c("features", "samples", "measurements")
   )
+  checkmate::assertLogical(invert, len = 1)
 
   # convert to triple_omic
   triple_omic <- tomic_to(tomic, "triple_omic")
