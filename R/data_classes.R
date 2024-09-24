@@ -552,7 +552,7 @@ check_triple_omic <- function(triple_omic, fast_check = TRUE) {
 
     if (nrow(samples_not_unique) != 0) {
       stop(glue::glue(
-        "{nrow(samples_not_unique)} features were present multiple times with
+        "{nrow(samples_not_unique)} samples were present multiple times with
         the same sample primary key"
       ))
     }

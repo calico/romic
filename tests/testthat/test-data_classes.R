@@ -57,6 +57,24 @@ test_that("Test check_tidy_omic edge cases", {
     ),
     error = TRUE)
 
+  # inconsistencies between data and design
+  simple_tidy_missing_join_1 <- simple_tidy
+  simple_tidy_missing_join_1$data <- simple_tidy_missing_join_1$data %>%
+    dplyr::select(-features)
+
+  expect_error(
+    check_tomic(simple_tidy_missing_join_1),
+    regex = "features: are present in the design but not data.frames"
+  )
+
+  simple_tidy_missing_join_2 <- simple_tidy
+  simple_tidy_missing_join_2$data <- simple_tidy_missing_join_2$data %>%
+    dplyr::mutate(foo = "bar")
+
+  expect_error(
+    check_tomic(simple_tidy_missing_join_2),
+    regex = "foo: are present in the data.frames but not in the design"
+  )
 })
 
 
@@ -112,6 +130,77 @@ test_that("Create triple omic", {
   )
 
   testthat::expect_s3_class(simple_triple, "triple_omic")
+
+  # works when providing features and samples df
+
+  triple_omic_full <- create_triple_omic(
+    triple_setup$measurement_df,
+    feature_df = triple_setup$feature_df,
+    sample_df = triple_setup$samples_df,
+    feature_pk = "feature_id",
+    sample_pk = "sample_id"
+  )
+
+  testthat::expect_s3_class(simple_triple, "triple_omic")
+})
+
+test_that("Test check_triple_omic edge cases", {
+
+  # inconsistent classes of primary and foreign keys
+  simple_triple_class_inconsistency <- simple_triple
+  simple_triple_class_inconsistency$features$feature_id <-
+    factor(simple_triple_class_inconsistency$features$feature_id)
+
+  expect_error(
+    check_triple_omic(simple_triple_class_inconsistency),
+    "feature_id classes differ between the features"
+  )
+
+
+  simple_triple_class_inconsistency_samples <- simple_triple
+  simple_triple_class_inconsistency_samples$samples$sample_id <-
+    factor(simple_triple_class_inconsistency_samples$samples$sample_id)
+
+  expect_error(
+    check_triple_omic(simple_triple_class_inconsistency_samples),
+    "sample_id classes differ between the features"
+  )
+
+
+  # degenerate entries
+  nonunique_feature_ids <- simple_triple
+  nonunique_feature_ids$features <- dplyr::bind_rows(
+    nonunique_feature_ids$features,
+    nonunique_feature_ids$features
+    )
+
+  expect_error(
+    check_triple_omic(nonunique_feature_ids, fast_check = FALSE),
+    "10 features were present multiple times with"
+  )
+
+  nonunique_sample_ids <- simple_triple
+  nonunique_sample_ids$samples <- dplyr::bind_rows(
+    nonunique_sample_ids$samples,
+    nonunique_sample_ids$samples
+  )
+
+  expect_error(
+    check_triple_omic(nonunique_sample_ids, fast_check = FALSE),
+    "5 samples were present multiple times with"
+  )
+
+  nonunique_measurements <- simple_triple
+  nonunique_measurements$measurements <- dplyr::bind_rows(
+    nonunique_measurements$measurements,
+    nonunique_measurements$measurements
+  )
+
+  expect_error(
+    check_triple_omic(nonunique_measurements, fast_check = FALSE),
+    "50 measurements were present multiple times with"
+  )
+
 })
 
 test_that("Unstructured data preserved using tomic_to", {
@@ -147,12 +236,49 @@ test_that("Read wide data", {
 })
 
 
+test_that("Catch corner cases when reading wide data", {
+
+  wide_measurements <- brauer_2008_triple[["measurements"]] %>%
+    tidyr::spread(sample, expression)
+
+  wide_df <- brauer_2008_triple[["features"]] %>%
+    left_join(wide_measurements, by = "name")
+
+  # reserved name is used
+  wide_df_w_reserved <- wide_df %>%
+    dplyr::rename(entry_number = name)
+
+  expect_error(
+    convert_wide_to_tidy_omic(
+      wide_df_w_reserved,
+      feature_pk = "entry_number"
+    ),
+    "entry_number are reserved variable names"
+  )
+
+  wide_df_nonunique_feature_id <- wide_df
+  wide_df_nonunique_feature_id$name[1:5] <- wide_df_nonunique_feature_id$name[1]
+
+  expect_snapshot(
+    convert_wide_to_tidy_omic(
+      wide_df_nonunique_feature_id,
+      feature_pk = "name"
+    )
+  )
+})
+
+
 test_that("Find primary or foreign keys in tomic table", {
 
   expect_equal(get_identifying_keys(brauer_2008_triple, "measurements"), c("name", "sample"))
   expect_equal(get_identifying_keys(brauer_2008_triple, "features"), "name")
   expect_equal(get_identifying_keys(brauer_2008_triple, "samples"), "sample")
 
+  # enable
+  expect_snapshot(
+    get_identifying_keys(brauer_2008_triple, "foo"),
+    error = TRUE
+  )
 })
 
 test_that("Test that get_tomic_table() can retrieve various tables", {
@@ -178,4 +304,27 @@ test_that("reform_tidy_omic() can create a tidy_omic object from its attributes"
   tomic <- reform_tidy_omic(tidy_data, romic::brauer_2008_tidy$design)
 
   expect_s3_class(tomic, "tidy_omic")
+})
+
+test_that("Catch corner cases when interconverting tomics", {
+  # check tomic only works on tidy and triple omics
+  expect_snapshot(
+    check_tomic(mtcars),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    tomic_to(romic::brauer_2008_tidy, "foo"),
+    error = TRUE
+  )
+
+  # tomic but not a tidy or triple
+  weird_s3_classes_tomic <- romic::brauer_2008_tidy
+  class(weird_s3_classes_tomic) <- "tomic"
+
+  expect_error(
+    check_tomic(weird_s3_classes_tomic),
+    "tomic is not a tidy_omic or triple_omic. This is unexpected since"
+  )
+
 })
