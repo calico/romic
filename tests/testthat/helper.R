@@ -7,7 +7,7 @@ three_col_df <- tidyr:::expand_grid(
   samples = 1:10
 ) %>%
   dplyr::mutate(
-    measurement = 1
+    measurement = 1:100
   )
 
 simple_tidy <- create_tidy_omic(

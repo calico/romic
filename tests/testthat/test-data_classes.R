@@ -163,9 +163,8 @@ test_that("Test check_triple_omic edge cases", {
 
   expect_error(
     check_triple_omic(simple_triple_class_inconsistency_samples),
-    "sample_id classes differ between the features"
+    "sample_id classes differ between the samples"
   )
-
 
   # degenerate entries
   nonunique_feature_ids <- simple_triple

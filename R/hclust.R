@@ -1,11 +1,13 @@
 hclust_tidy_omic <- function(
-    tidy_omic,
-    feature_var,
-    sample_var,
-    value_var,
-    cluster_dim,
-    distance_measure = "dist",
-    hclust_method = "ward.D2") {
+  tidy_omic,
+  feature_var,
+  sample_var,
+  value_var,
+  cluster_dim,
+  distance_measure = "dist",
+  hclust_method = "ward.D2"
+  ) {
+
   check_tidy_omic(tidy_omic)
 
   checkmate::assertChoice(feature_var, tidy_omic$design$features$variable)
@@ -37,7 +39,7 @@ hclust_tidy_omic <- function(
   cluster_orders$columns <-
     coerce_to_classes(
       cluster_orders$columns,
-      tidy_omic$data[[tidy_omic$design$feature_pk]]
+      tidy_omic$data[[tidy_omic$design$sample_pk]]
     )
 
   # order rows and columns
@@ -49,7 +51,7 @@ hclust_tidy_omic <- function(
     )
 
   if (cluster_dim == "columns") {
-    # order by factor or alpha-numerically
+    # order features by factor or alpha-numerically
 
     if (
       any(class(distinct_features[[feature_var]]) %in% c("factor", "ordered"))
@@ -93,7 +95,7 @@ hclust_tidy_omic <- function(
     )
 
   if (cluster_dim == "rows") {
-    # order by factor or alpha-numerically
+    # order samples by factor or alpha-numerically
 
     if (any(class(distinct_samples[[sample_var]]) %in% c("factor", "ordered"))) {
       # retain previous ordering
@@ -208,13 +210,15 @@ hclust_tidy_omic <- function(
 #' hclust_order(df, "letters", "numbers", "noise", "rows")
 #' @export
 hclust_order <- function(
-    df,
-    feature_pk,
-    sample_pk,
-    value_var,
-    cluster_dim,
-    distance_measure = "dist",
-    hclust_method = "ward.D2") {
+  df,
+  feature_pk,
+  sample_pk,
+  value_var,
+  cluster_dim,
+  distance_measure = "dist",
+  hclust_method = "ward.D2"
+  ) {
+
   checkmate::assertDataFrame(df)
   checkmate::assertChoice(feature_pk, colnames(df))
   checkmate::assertChoice(sample_pk, colnames(df))
