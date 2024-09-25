@@ -17,3 +17,19 @@
        9 sample          sample_primary_key  measurements
       10 expression      numeric             measurements
 
+# Catch malformed design objects
+
+    Code
+      check_design(malformed_design)
+    Condition
+      Error in `check_design()`:
+      ! The following unexpected attributes were found in the design: foo
+
+---
+
+    Code
+      check_design(malformed_design)
+    Condition
+      Error in `check_design()`:
+      ! The following attributes were missing in the design: feature_pk
+
