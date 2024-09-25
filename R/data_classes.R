@@ -59,14 +59,14 @@
 #' )
 #' @export
 create_tidy_omic <- function(
-    df,
-    feature_pk,
-    feature_vars = NULL,
-    sample_pk,
-    sample_vars = NULL,
-    omic_type_tag = "general",
-    verbose = TRUE
-    ) {
+  df,
+  feature_pk,
+  feature_vars = NULL,
+  sample_pk,
+  sample_vars = NULL,
+  omic_type_tag = "general",
+  verbose = TRUE
+  ) {
 
   checkmate::assertDataFrame(df)
   checkmate::assertString(omic_type_tag)
@@ -367,12 +367,14 @@ check_tidy_omic <- function(tidy_omic, fast_check = TRUE) {
 #'   "feature_id", "sample_id"
 #' )
 #' @export
-create_triple_omic <- function(measurement_df,
-                               feature_df = NULL,
-                               sample_df = NULL,
-                               feature_pk,
-                               sample_pk,
-                               omic_type_tag = "general") {
+create_triple_omic <- function(
+  measurement_df,
+  feature_df = NULL,
+  sample_df = NULL,
+  feature_pk,
+  sample_pk,
+  omic_type_tag = "general"
+  ) {
   # testing
 
   checkmate::assertClass(measurement_df, "data.frame")

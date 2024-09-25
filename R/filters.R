@@ -9,11 +9,13 @@
 #'     filter_value}
 #'   \item{range}{filter filter_variable to using the range (i.e., lower and
 #'     upper limit) provided in filter_value}
-#'   \item{apply}{a quosure as a \code{filter_value} to a table of interest}
+#'   \item{quo}{a quosure as a \code{filter_value} to a table of interest}
 #' }
 #' @param filter_table table where the filter should be applied
 #' @param filter_variable variable to apply the filter to
 #' @param filter_value values to filter based on
+#' @param invert If FALSE (default) entities will be retained; if TRUE, they
+#'  will be removed.
 #'
 #' @returns A \code{tomic} object where a subset of features, samples or
 #'   measurmenets have been filtered.
@@ -51,33 +53,36 @@
 #'   filter_value = rlang::quo(BP == "biological process unknown")
 #' )
 #' @export
-filter_tomic <- function(tomic,
-                         filter_type,
-                         filter_table,
-                         filter_value,
-                         filter_variable = NULL) {
+filter_tomic <- function(
+  tomic,
+  filter_type,
+  filter_table,
+  filter_value,
+  filter_variable = NULL,
+  invert = FALSE
+  ) {
+
   checkmate::assertClass(tomic, "tomic")
-  checkmate::assertChoice(filter_type, c("category", "range", "quo"))
+  checkmate::assertString(filter_type)
   checkmate::assertChoice(
     filter_table,
     c("features", "samples", "measurements")
   )
+  checkmate::assertLogical(invert, len = 1)
 
   # convert to triple_omic
   triple_omic <- tomic_to(tomic, "triple_omic")
 
+  VALID_FILTER_TYPES <-  c("category", "range", "quo")
   if (filter_type %in% c("category", "range")) {
     checkmate::assertString(filter_variable)
 
     valid_variables <- colnames(triple_omic[[filter_table]])
     if (!(filter_variable %in% valid_variables)) {
-      stop(
-        filter_variable,
-        " is not a valid value for \"filter_type\",
-        valid values are all variables within the \"",
-        filter_table,
-        "\" table: ",
-        paste(valid_variables, collapse = ", ")
+      cli::cli_abort(
+      "{.field {filter_variable}} is is not a valid value for {.arg filter_type},
+      valid values are all variables within the {filter_table} table:
+      {.field {valid_variables}}"
       )
     }
 
@@ -87,19 +92,19 @@ filter_tomic <- function(tomic,
     filter_var_type <- filter_var_type$type[1]
   } else if (filter_type == "quo") {
     if (!("NULL" %in% class(filter_variable))) {
-      warning(
-        "filter_variable was provided when filter_type is quo
+      cli::cli_alert_warning(
+        "{.arg filter_variable} was provided when {.arg filter_type} is {.field quo}
         only a filter_value should be passed. filter_variable will be ignored"
       )
     }
   } else {
-    stop("invalid filter type")
+    cli::cli_abort("{filter_type} is not a valid {.arg filter_type}. Valid types are {.field {VALID_FILTER_TYPES}}")
   }
 
   if (filter_type == "category") {
     checkmate::assertVector(filter_value)
 
-    triple_omic[[filter_table]] <- triple_omic[[filter_table]] %>%
+    updated_filtered_table <- triple_omic[[filter_table]] %>%
       dplyr::filter(
         !!rlang::sym(filter_variable) %in% !!rlang::quo(filter_value)
       )
@@ -116,7 +121,7 @@ filter_tomic <- function(tomic,
       )
     }
 
-    triple_omic[[filter_table]] <- triple_omic[[filter_table]] %>%
+    updated_filtered_table <- triple_omic[[filter_table]] %>%
       dplyr::filter(
         !!rlang::sym(filter_variable) >= !!rlang::quo(filter_value[1]),
         !!rlang::sym(filter_variable) <= !!rlang::quo(filter_value[2])
@@ -124,11 +129,26 @@ filter_tomic <- function(tomic,
   } else if (filter_type == "quo") {
     checkmate::assertClass(filter_value, "quosure")
 
-    triple_omic[[filter_table]] <- triple_omic[[filter_table]] %>%
+    updated_filtered_table <- triple_omic[[filter_table]] %>%
       dplyr::filter(!!filter_value)
   } else {
-    stop("invalid filter_type")
+    stop("Unexpected behavior")
   }
+
+  # invert filter if invert is TRUE
+  if (invert) {
+    join_keys <- triple_omic$design[[filter_table]] %>%
+      dplyr::filter(type %in% c("feature_primary_key", "sample_primary_key")) %>%
+      dplyr::pull(variable)
+
+    updated_filtered_table <- dplyr::anti_join(
+      triple_omic[[filter_table]],
+      updated_filtered_table,
+      by = join_keys
+    )
+  }
+
+  triple_omic[[filter_table]] <- updated_filtered_table
 
   # clear out data impacted by filters
   triple_omic <- reconcile_triple_omic(triple_omic)
