@@ -150,6 +150,9 @@ center <- function(x) {
 #'   mutate(new_sample_var = "foo") %>%
 #'   select(-DR)
 #' new_variable_tables <- c("new_sample_var" = "samples")
+#'
+#' update_tidy_omic(tidy_omic, updated_tidy_data, new_variable_tables)
+#'
 #' @export
 update_tidy_omic <- function(
     tidy_omic,

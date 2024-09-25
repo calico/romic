@@ -24,19 +24,18 @@ format_names_for_plotting <- function(chars, width = 40, truncate_at = 80) {
 }
 
 coerce_to_classes <- function(obj, reference_obj) {
-  reference_obj_class <- class(reference_obj)
+  reference_obj_class <- class(reference_obj)[1]
 
   if (any(reference_obj_class %in% "glue")) {
     out <- glue::as_glue(obj)
   } else if (any(reference_obj_class %in% c("factor", "ordered"))) {
-    out <-
-      do.call(
-        reference_obj_class,
-        list(
-          x = obj,
-          levels = levels(reference_obj)
-        )
+    out <- do.call(
+      reference_obj_class,
+      list(
+        x = obj,
+        levels = levels(reference_obj)
       )
+    )
   } else if (reference_obj_class == "character") {
     out <- as.character(obj)
   } else if (reference_obj_class == "numeric") {

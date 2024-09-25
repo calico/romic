@@ -41,3 +41,10 @@ test_that("Matrices keys are reconstructed with appropriate classes", {
   }
 
 })
+
+test_that("Sample mahalanobis distances are calculated", {
+
+  pc_distances <- calculate_sample_mahalanobis_distances(brauer_2008_tidy)
+  expect_snapshot(pc_distances)
+
+})
